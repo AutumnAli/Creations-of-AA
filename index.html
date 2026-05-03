@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <title>Creations of AA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 
   <style>
     :root {
@@ -595,7 +598,6 @@
       if (!cart[id]) cart[id] = { product, qty: 1 };
       else cart[id].qty++;
       renderCart();
-      attachEventListeners();
     }
 
     function updateQty(id, delta) {
@@ -603,7 +605,6 @@
       cart[id].qty += delta;
       if (cart[id].qty <= 0) delete cart[id];
       renderCart();
-      attachEventListeners();
     }
 
     function calculateTotals() {
@@ -642,14 +643,14 @@
       }
 
       const { subtotal, shipping, total } = calculateTotals();
-      cartCountEl.textContent = entries.length;
+      const totalQty = entries.reduce((sum, item) => sum + item.qty, 0);
+      cartCountEl.textContent = totalQty;
       cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
       cartShippingEl.textContent = `$${shipping}`;
       cartTotalEl.textContent = `$${total.toFixed(2)}`;
     }
 
     function renderProducts() {
-      alert("Rendering products...");
       if (!productGrid) {
         console.error("productGrid element not found");
         return;
@@ -674,34 +675,28 @@
         productGrid.appendChild(card);
       });
       console.log("Products rendered");
-      alert("Products rendered!");
-    }
-
-    function attachEventListeners() {
-      // Add to cart buttons
-      document.querySelectorAll("[data-add]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          addToCart(btn.dataset.add);
-        });
-      });
-
-      // Increase quantity buttons
-      document.querySelectorAll("[data-plus]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          updateQty(btn.dataset.plus, 1);
-        });
-      });
-
-      // Decrease quantity buttons
-      document.querySelectorAll("[data-minus]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          updateQty(btn.dataset.minus, -1);
-        });
-      });
     }
 
     renderProducts();
-    attachEventListeners();
+
+    productGrid.addEventListener("click", (event) => {
+      const addButton = event.target.closest("[data-add]");
+      if (!addButton) return;
+      addToCart(addButton.dataset.add);
+    });
+
+    cartItemsEl.addEventListener("click", (event) => {
+      const plusButton = event.target.closest("[data-plus]");
+      if (plusButton) {
+        updateQty(plusButton.dataset.plus, 1);
+        return;
+      }
+      const minusButton = event.target.closest("[data-minus]");
+      if (minusButton) {
+        updateQty(minusButton.dataset.minus, -1);
+      }
+    });
+
     renderCart();
 
     checkoutForm.addEventListener("submit", (e) => {
