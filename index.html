@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Creations of AA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <style>
+    :root {
+      /* ===== YOUR COLOR PALETTE ===== */
+      --cream: #fffdf7;
+      --orange: #ff9f50;
+      --orange-dark: #e57f2c;
+      --blue: #5ca8ff;
+      --yellow: #ffe66d;
+      --mint: #b8f2e6;
+
+      /* ===== SITE COLORS ===== */
+      --bg: var(--cream);
+      --accent: var(--orange);
+      --accent-dark: var(--orange-dark);
+      --text: #2b2b2b;
+      --muted: #666;
+      --card-bg: #ffffff;
+      --border: #e8e2d9;
+      --radius: 12px;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+  background: radial-gradient(circle at center,
+    #d4af37,
+    #5c3b2e,
+    #c0c0c0
+  );
+  background-size: 200% 200%;
+  animation: shimmer 10s ease-in-out infinite;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 1rem;
+      color: var(--accent-dark);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-dark);
+    }
+
+    .cart-button {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cart-count {
+      background: #fff;
+      color: var(--accent-dark);
+      padding: 0 0.4rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 1.5rem auto 2.5rem;
+      padding: 0 1.25rem;
+      display: grid;
+      grid-template-columns: minmax(0, 2.5fr) minmax(280px, 1.2fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 850px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--mint), var(--cream));
+      padding: 1.8rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+
+    .hero-subtitle {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .hero-tagline {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    /* ===== PRODUCT GRID ===== */
+    .product-section-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .product-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      background: #f0f0f0;
+      padding: 1rem;
+      border: 2px solid red;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* Placeholder gradients using your palette */
+    .img-1 { background: linear-gradient(135deg, var(--yellow), var(--orange)); }
+    .img-2 { background: linear-gradient(135deg, var(--mint), var(--blue)); }
+    .img-3 { background: linear-gradient(135deg, var(--orange), var(--cream)); }
+    .img-4 { background: linear-gradient(135deg, var(--blue), var(--yellow)); }
+    .img-5 { background: linear-gradient(135deg, var(--mint), var(--yellow)); }
+
+    .product-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-price {
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+
+    .product-tag {
+      background: var(--yellow);
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: #6b5a00;
+      font-weight: 600;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent-dark);
+    }
+
+    /* ===== CART ===== */
+    .cart {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: sticky;
+      top: 5rem;
+      max-height: calc(100vh - 8rem);
+      overflow-y: auto;
+    }
+
+    .cart-items {
+      flex: 1 1 auto;
+      min-height: 180px;
+      max-height: calc(100vh - 26rem);
+      overflow-y: auto;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 0;
+    }
+
+    .cart-empty {
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 0.75rem 0.1rem;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.25rem 0.5rem;
+      padding: 0.6rem 0.1rem;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.85rem;
+    }
+
+    .qty-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .checkout {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      text-align: left;
+      align-items: stretch;
+    }
+
+    .checkout h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .checkout label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      width: 100%;
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.4;
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+
+    .checkout input,
+    .checkout textarea {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      padding: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .checkout textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .checkout button {
+      width: 100%;
+    }
+
+    .checkout-message {
+      min-height: 1.5rem;
+      color: var(--accent-dark);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo">Creations of AA</div>
+      <nav class="nav-links">
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="cart-button" id="cartButton">
+        🛒 Cart <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <section class="hero">
+        <h1 class="hero-title">Bright, handmade jewelry for joyful souls</h1>
+        <p class="hero-subtitle">
+          Crafted with intention, color, and care — each piece is made by hand and infused with personality.
+        </p>
+        <p class="hero-tagline">
+          Free customization on most pieces. Just leave a note at checkout.
+        </p>
+      </section>
+
+      <section id="shop">
+        <h2 class="product-section-title">Featured Pieces</h2>
+        <div class="product-grid" id="productGrid"></div>
+      </section>
+
+      <section id="about" style="margin-top: 2rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
+        <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
+          About the Studio
+        </h2>
+        <p>
+          Every piece is handmade with care, using thoughtfully sourced materials and a love for color.
+          Your jewelry is crafted in small batches to ensure uniqueness and quality.
+        </p>
+      </section>
+
+      <section id="contact" style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
+        <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
+          Contact
+        </h2>
+        <p>
+          Questions or custom requests? Email:
+          <a href="autumnaa2110@gmail.com">autumnaa2110@gmail.com</a>
+        </p>
+      </section>
+    </section>
+
+    <aside class="cart">
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">Your cart is empty</div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-row">
+          <span>Shipping</span>
+          <span id="cartShipping">$0.00</span>
+        </div>
+        <div class="cart-row">
+          <span class="cart-total">Total</span>
+          <span class="cart-total" id="cartTotal">$0.00</span>
+        </div>
+      </div>
+
+      <form id="checkoutForm" class="checkout" action="https://formspree.io/f/xpqbqqyz" method="POST">
+        <input type="hidden" name="orderDetails" id="orderDetailsField">
+        <h2>Checkout</h2>
+
+        <label>
+          Full Name
+          <input type="text" id="customerName" required>
+        </label>
+
+        <label>
+          Email Address
+          <input type="email" id="customerEmail" required>
+        </label>
+
+        <label>
+          Shipping Address
+          <textarea id="customerAddress" required></textarea>
+        </label>
+
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+
+        <div id="checkoutMessage" class="checkout-message"></div>
+      </form>
+    </aside>
+  </main>
+
+  <footer>
+    © <span id="year"></span> Creations of AA · Handmade with love
+  </footer>
+
+  <script>
+   const products = [
+  {
+    id: "shooting-star",
+    name: "Shooting Star",
+    description: "Turn everyday style into a statement with these eye-catching handcrafted hoop earrings ✨ Featuring a sleek silver-toned hoop wrapped in an intricate woven design, these earrings catch the light from every angle—giving you that subtle sparkle without being over-the-top. These earrings are durable—whether you’re dressing up for a night out or adding a unique twist to your everyday look. The handcrafted texture gives each pair a one-of-a-kind feel, so you’re not just wearing jewelry—you’re wearing something truly special.",
+    price: 10,
+    tag: "Bright",
+    image: "shooting-star.png"
+  },
+  {
+    id: "the-ants",
+    name: "The Ants",
+    description: "Add a touch of effortless elegance to your look with these stunning drop earrings ✨ Designed with sleek, glossy black beads stacked in a graceful line and accented by shimmering gold-tone spacers, these earrings bring just the right mix of bold and sophisticated. The gentle dangle creates beautiful movement, catching attention without saying a word. Lightweight and easy to wear, they’re perfect for everything from casual days to dressed-up nights—making them a versatile staple you’ll reach for again and again.",
+    price: 10,
+    tag: "Popular",
+    image: "the-ants.png"
+  },
+  {
+    id: "constellations",
+    name: "Constellations",
+    description: "Get ready to add a burst of vibrant charm to your style with this stunning beaded necklace! Featuring a playful mix of warm orange and rich brown beads, this piece is perfect for anyone who loves a touch of earthy elegance with a pop of color. The large, glossy beads at the center create a bold focal point, while the smaller beads add a fun, rhythmic pattern that catches the eye. Whether you're dressing up for a casual day out or adding a unique twist to your evening look, this necklace is your go-to accessory for effortless style and personality. Its lightweight design ensures comfort, making it easy to wear all day long. Embrace the spirit of creativity and nature with this delightful necklace that’s sure to spark compliments and brighten your wardrobe!",
+    price: 10,
+    tag: "Cosmic",
+    image: "constellations.png"
+  },
+  {
+    id: "expansions",
+    name: "Expansions",
+    description: "Add a touch of natural elegance and timeless charm to your collection with this beautifully handcrafted wooden bead necklace! Featuring a harmonious blend of rich brown tones and subtle white accents, this necklace is perfect for those who appreciate earthy, organic style with a sophisticated twist. Its sleek, elongated design makes it versatile—wear it solo for a minimalist look or layer it with other pieces to create a boho-chic vibe. Lightweight and comfortable, this necklace is ideal for everyday wear or special occasions where you want to stand out with understated beauty.",
+    price: 12,
+    tag: "Intricate",
+    image: "expansions.png"
+  },
+  {
+    id: "keiper",
+    name: "Keiper",
+    description: "Elevate your accessory collection with this beautifully crafted wooden bead bracelet that radiates natural warmth and timeless style! Each smooth, polished bead showcases rich, deep brown hues that bring a touch of earthy sophistication to any outfit. Perfectly sized to fit comfortably on your wrist, this bracelet is lightweight yet durable—ideal for everyday wear or special occasions. Whether you're dressing up a casual look or adding a subtle statement to your ensemble, this bracelet effortlessly blends simplicity with elegance.",
+    price: 5,
+    tag: "Cosmic",
+    image: "keiper.png"
+  },
+  {
+    id: "cerulean",
+    name: "Cerulean",
+    description: "Get ready to dazzle with this stunning set of jewelry that perfectly blends boldness and elegance! Featuring vibrant turquoise beads paired with sleek silver spheres, these earrings and bracelet create a captivating look that’s both playful and sophisticated. Whether you're dressing up for a night out or adding a pop of color to your everyday style, this set is your new go-to for effortless charm. Lightweight, eye-catching, and full of personality—grab this beautiful combo and let your style shine bright!",
+    price: 10,
+    tag: "Bright",
+    image: "cerulean.png"
+  },
+  {
+    id: "aligned",
+    name: "Aligned",
+    description: "Add a touch of natural elegance to your look with these gorgeous handcrafted earrings! Featuring rich, earthy brown beads that bring warmth and sophistication, accented by subtle silver spacers for a hint of shine. Perfect for both casual days and special occasions, these earrings are lightweight, comfortable, and sure to become your favorite statement piece. Embrace the beauty of nature and let your style speak volumes with this charming accessory!",
+    price: 10,
+    tag: "Classic",
+    image: "aligned.png"
+  },
+  {
+    id: "AA-collectable",
+    name: "AA-collectable (Customizable)",
+    description: "Get ready to shine with our exclusive limited-time AA-shaped earrings—an absolute must-have for anyone who loves to stand out and represent our brand in style! These unique earrings aren’t just accessories; they’re a bold statement of identity and creativity. Crafted with beautiful beads in warm earthy tones and sleek black, they perfectly embody the spirit of our brand’s iconic AA shape. What makes these earrings truly special? They’re customizable, allowing you to add your personal touch while proudly showcasing the AA design that symbolizes our community and values. Wearing these earrings means you’re not just accessorizing—you’re joining a movement, celebrating individuality, and carrying a piece of our brand wherever you go. Don’t miss out on this limited-time opportunity to own a piece of our story and express your unique style with the AA-collectable earrings!",
+    price: 10,
+    tag: "Limited-Time (Custom)",
+    image: "AA-collectable.png"
+  },
+  {
+    id: "M&Ms",
+    name: "M&Ms",
+    description: "Introducing the ultimate customizable earrings that are as unique as you are! These playful, beaded beauties let you express your personal style with every twist and turn. Crafted with charming white beads arranged in a fun, zigzag pattern, these earrings are perfect for anyone who loves to make a statement with their accessories. The best part? You can customize them to your heart’s content! Whether you want to add a pop of color, mix in some metallic accents, or even incorporate your favorite charms, these earrings are the perfect canvas for your creativity. They’re lightweight and comfortable, making them ideal for everyday wear or special occasions when you want to stand out. Embrace your individuality and let your style shine with these one-of-a-kind customizable earrings that are sure to turn heads and spark conversations wherever you go!",
+    price: 10,
+    tag: "Custom",
+    image: "M&Ms.png"
+  },
+  {
+    id: "the-mice",
+    name: "The Mice",
+    description: "Step up your accessory game with these charming and unique earrings that blend natural warmth with a touch of metallic shine! Featuring a bold, earthy orange bead perfectly framed by sleek metallic spheres, these earrings bring a delightful balance of rustic and modern vibes to any outfit. Whether you're dressing up for a night out or adding a pop of personality to your everyday look, these earrings are your new go-to for effortless style. Lightweight and comfortable, they’re designed to make you feel as good as you look. Embrace the playful yet sophisticated spirit of these earrings and let them become your signature statement piece!",
+    price: 5,
+    tag: "Unique",
+    image: "the-mice.png"
+  },
+  {
+    id: "saturn",
+    name: "Saturn",
+    description: "Discover the perfect blend of natural charm and bold style with this stunning beaded bracelet, featuring a beautiful mix of warm wooden beads in rich browns and honey tones that bring a cozy, earthy vibe to any outfit. Its versatile design makes it ideal for layering or wearing solo as a standout piece, crafted for comfort and durability to add a touch of nature-inspired elegance to your everyday look or to gift someone special. Whether you’re dressing up or keeping it casual, this bracelet is sure to become your new favorite go-to accessory. Don’t wait—grab this eye-catching bracelet now and let your wrist do the talking with effortless style and natural beauty!",
+    price: 5,
+    tag: "Cosmic",
+    image: "saturn.png"
+  },
+  {
+    id: "solar",
+    name: "Solar",
+    description: "Add a touch of natural elegance and vibrant charm to your look with this beautifully crafted beaded bracelet! Featuring a delightful mix of smooth, colorful beads in earthy tones and soft pastels, this bracelet brings a fresh, playful vibe to any outfit. The unique combination of shapes and colors makes it a versatile accessory perfect for layering or wearing on its own as a statement piece. Lightweight and comfortable, it’s designed to brighten your day and complement your style effortlessly. Don’t miss out—grab this eye-catching bracelet now and let your wrist shine with personality and flair!",
+    price: 5,
+    tag: "Cosmic",
+    image: "solar.png"
+  },
+  {
+    id: "newton",
+    name: "Newton",
+    description: "Elevate your style with this stunning beaded necklace that perfectly blends rich, warm tones with natural elegance! Featuring a beautiful gradient of wooden beads—from deep, dark browns to soft, creamy hues—this necklace adds a cozy, earthy vibe to any outfit. Its simple yet striking design makes it a versatile accessory, perfect for layering or wearing solo as a statement piece. Lightweight and comfortable, it’s ideal for everyday wear or special occasions when you want to add a touch of natural charm. Don’t miss out—grab this eye-catching necklace now and let your look shine with effortless style and warmth!",
+    price: 10,
+    tag: "Symbolic",
+    image: "newton.png"
+  },
+  {
+    id: "life",
+    name: "Life",
+    description: "Add a touch of natural beauty and beachy vibes to your look with this gorgeous beaded necklace! Featuring a harmonious blend of smooth wooden beads in warm browns and creamy tones, accented by delicate seashell charms, this necklace is the perfect accessory to bring a fresh, earthy feel to any outfit. Whether you're dressing up for a casual day out or adding a unique statement to your ensemble, this lightweight and versatile piece will quickly become your go-to favorite. Don’t wait—grab this charming necklace now and let your style shine with effortless, nature-inspired elegance!",
+    price: 9,
+    tag: "Symbolic",
+    image: "life.png"
+  },
+];
+    const cart = {};
+    const productGrid = document.getElementById("productGrid");
+    const cartItemsEl = document.getElementById("cartItems");
+    const cartCountEl = document.getElementById("cartCount");
+    const cartSubtotalEl = document.getElementById("cartSubtotal");
+    const cartShippingEl = document.getElementById("cartShipping");
+    const cartTotalEl = document.getElementById("cartTotal");
+    const checkoutForm = document.getElementById("checkoutForm");
+    const checkoutMessage = document.getElementById("checkoutMessage");
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function addToCart(id) {
+      const product = products.find((p) => p.id === id);
+      if (!cart[id]) cart[id] = { product, qty: 1 };
+      else cart[id].qty++;
+      renderCart();
+    }
+
+    function updateQty(id, delta) {
+      if (!cart[id]) return;
+      cart[id].qty += delta;
+      if (cart[id].qty <= 0) delete cart[id];
+      renderCart();
+    }
+
+    function calculateTotals() {
+      let subtotal = 0;
+      Object.values(cart).forEach(({ product, qty }) => {
+        subtotal += product.price * qty;
+      });
+
+      let shipping = subtotal > 0 && subtotal < 60 ? 5 : 0;
+      return { subtotal, shipping, total: subtotal + shipping };
+    }
+
+    function renderCart() {
+      const entries = Object.values(cart);
+      cartItemsEl.innerHTML = "";
+
+      if (entries.length === 0) {
+        cartItemsEl.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
+      } else {
+        entries.forEach(({ product, qty }) => {
+          const item = document.createElement("div");
+          item.className = "cart-item";
+          item.innerHTML = `
+            <div>
+              <div>${product.name}</div>
+              <div style="color: var(--muted); font-size: 0.8rem;">$${product.price.toFixed(2)} each</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.25rem;">
+              <button class="qty-btn" data-minus="${product.id}">-</button>
+              <span>${qty}</span>
+              <button class="qty-btn" data-plus="${product.id}">+</button>
+            </div>
+          `;
+          cartItemsEl.appendChild(item);
+        });
+      }
+
+      const { subtotal, shipping, total } = calculateTotals();
+      const totalQty = entries.reduce((sum, item) => sum + item.qty, 0);
+      cartCountEl.textContent = totalQty;
+      cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+      cartShippingEl.textContent = `$${shipping}`;
+      cartTotalEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    function renderProducts() {
+      if (!productGrid) {
+        console.error("productGrid element not found");
+        return;
+      }
+      productGrid.innerHTML = "";
+      console.log("Rendering", products.length, "products");
+      products.forEach((p) => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.innerHTML = `
+          <img class="product-image" src="${p.image}" alt="${p.name}" />
+          <div class="product-body">
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.description}</div>
+            <div class="product-meta">
+              <span class="product-price">$${p.price.toFixed(2)}</span>
+              <span class="product-tag">${p.tag}</span>
+            </div>
+            <button class="btn btn-primary" data-add="${p.id}">Add to cart</button>
+          </div>
+        `;
+        productGrid.appendChild(card);
+      });
+      console.log("Products rendered");
+    }
+
+    renderProducts();
+
+    productGrid.addEventListener("click", (event) => {
+      const addButton = event.target.closest("[data-add]");
+      if (!addButton) return;
+      addToCart(addButton.dataset.add);
+    });
+
+    cartItemsEl.addEventListener("click", (event) => {
+      const plusButton = event.target.closest("[data-plus]");
+      if (plusButton) {
+        updateQty(plusButton.dataset.plus, 1);
+        return;
+      }
+      const minusButton = event.target.closest("[data-minus]");
+      if (minusButton) {
+        updateQty(minusButton.dataset.minus, -1);
+      }
+    });
+
+    renderCart();
+
+    checkoutForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("customerName").value;
+  const email = document.getElementById("customerEmail").value;
+  const address = document.getElementById("customerAddress").value;
+
+  const orderDetails = Object.values(cart)
+    .map(({ product, qty }) => `${product.name} (x${qty})`)
+    .join(", ");
+
+  // Put order details into hidden field for Formspree
+  document.getElementById("orderDetailsField").value = `
+Name: ${name}
+Email: ${email}
+Address: ${address}
+Order: ${orderDetails}
+  `;
+
+  checkoutMessage.textContent =
+    `Thank you, ${name}! Your order has been sent. ` +
+    `We will contact you at ${email} to arrange payment.`;
+
+  // Clear cart
+  for (let key in cart) delete cart[key];
+  renderCart();
+
+  // Now actually submit the form to Formspree
+  checkoutForm.submit();
+});
+  </script>
+</body>
+
+</html>
