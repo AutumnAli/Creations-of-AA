@@ -139,3 +139,68 @@ body {
   gap: 25px;
   padding: 20px;
 }
+
+/* HERO SECTION */
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+/* Subtle starry overlay */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('https://i.imgur.com/9Q9QZQp.png'); /* soft stars texture */
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* HERO CONTENT */
+.hero-content {
+  z-index: 2;
+  max-width: 700px;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+/* TITLE — elegant + bold */
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: white;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+/* TAGLINE — minimal + celestial */
+.hero-tagline {
+  font-size: 1.3rem;
+  margin-top: 15px;
+  color: #f5e9c8;
+  opacity: 0.9;
+}
+
+/* BUTTON — elegant + bold */
+.hero-button {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 28px;
+  background: linear-gradient(90deg, #d4af37, #f7e98e);
+  color: black;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+.hero-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+}
