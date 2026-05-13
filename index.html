@@ -734,3 +734,137 @@ Order: ${orderDetails}
 </body>
 
 </html>
+
+<div class="art-card">
+  <img src="aligned.png" alt="Aligned Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+</div>
+
+<div class="art-card">
+  <img src="AA-collectable.png" alt="AA-collectable Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+</div>
+
+<div class="art-card">
+  <img src="cerulean.png" alt="Cerulean Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+</div>
+
+<div class="art-card">
+  <img src="constellations.png" alt="Constellations Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+</div>
+
+<div class="art-card">
+  <img src="Custo M's.png" alt="Custo M's Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+
+<div class="art-card">
+  <img src="shooting-star.png" alt="Shooting Star Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+</div>
+
+<div class="art-card">
+  <img src="the-ants.png" alt="The Ants Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+</div>
+
+<div class="art-card">
+  <img src="the-mice.png" alt="The Mice Earrings" class="art-image" />
+  <div class="caption">This piece was inspired by…</div>
+</div>
+
+<div class="reveal">Welcome to Creations of AA!</div>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+
+  function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+
+    reveals.forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if (top < windowHeight - 100) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+</script>
+
+<div class="gallery">
+  <img src="AA-collectable.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<div class="gallery">
+  <img src="aligned.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<div class="gallery">
+  <img src="cerulean.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<div class="gallery">
+  <img src="constellations.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<div class="gallery">
+  <img src="Custo M's.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<div class="gallery">
+  <img src="shooting-star.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<div class="gallery">
+  <img src="the-ants.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<div class="gallery">
+  <img src="the-mice.png" class="thumb" onclick="openLightbox(this.src)">
+</div>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img">
+</div>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').style.display = 'flex';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+  }
+</script>
