@@ -275,6 +275,12 @@ img:hover {
   color: #ffffff;
 }
 
+.hero {
+  position: relative;
+  z-index: 1;
+}
+
+.reveal,
 .reveal img,
 .product-card img,
 .item img {
