@@ -1,9 +1,10 @@
 .product-card img {
-  width: 200px;
-  height: 150px;
+  width: 100%;
+  height: auto;
   border-radius: 10px;
   display: block;
   margin: 0 auto;
+  transition: 0.3s ease;
 }
 
 .product-grid {
@@ -123,7 +124,10 @@ body {
 
 .product-card img {
   width: 100%;
+  height: auto;
   border-radius: 10px;
+  display: block;
+  margin: 0 auto;
   transition: 0.3s ease;
 }
 
@@ -374,13 +378,4 @@ copyright {
 
 section {
   text-align: center;
-}
-
-.reveal img,
-.item img {
-  display: block !important;
-  width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
-  opacity: 1 !important;
 }
