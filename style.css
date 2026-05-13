@@ -280,3 +280,9 @@ body {
   max-height: 90%;
   border-radius: 12px;
 }
+
+section {
+  margin: 40px auto;
+  max-width: 800px;
+  text-align: center;
+}
