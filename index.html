@@ -369,6 +369,16 @@
 
 <body>
   <header>
+
+    <nav class="navbar">
+  <div class="nav-logo">Creations of AA</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="image.html">Gallery</a></li>
+    <li><a href="#support">Support</a></li>
+  </ul>
+</nav>
+
     <div class="nav">
       <div class="logo">Creations of AA</div>
       <nav class="nav-links">
@@ -464,6 +474,29 @@
     </aside>
   </main>
 
+  </main>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+
+  function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+
+    reveals.forEach(el => {
+      const top = el.getBoundingClientRect().top;
+      if (top < windowHeight - 100) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+</script>
+
+</body>
+</html>
+
   <footer>
     © <span id="year"></span> Creations of AA · Handmade with love
   </footer>
@@ -478,6 +511,7 @@
     tag: "Bright",
     image: "shooting-star.png"
   },
+
   {
     id: "the-ants",
     name: "The Ants",
@@ -486,6 +520,7 @@
     tag: "Popular",
     image: "the-ants.png"
   },
+
   {
     id: "constellations",
     name: "Constellations",
@@ -494,6 +529,7 @@
     tag: "Cosmic",
     image: "constellations.png"
   },
+
   {
     id: "expansions",
     name: "Expansions",
@@ -502,6 +538,7 @@
     tag: "Intricate",
     image: "expansions.png"
   },
+
   {
     id: "keiper",
     name: "Keiper",
@@ -510,6 +547,7 @@
     tag: "Cosmic",
     image: "keiper.png"
   },
+
   {
     id: "cerulean",
     name: "Cerulean",
@@ -518,6 +556,7 @@
     tag: "Bright",
     image: "cerulean.png"
   },
+
   {
     id: "aligned",
     name: "Aligned",
@@ -526,6 +565,7 @@
     tag: "Classic",
     image: "aligned.png"
   },
+
   {
     id: "AA-collectable",
     name: "AA-collectable (Customizable)",
@@ -534,6 +574,7 @@
     tag: "Limited-Time (Custom)",
     image: "AA-collectable.png"
   },
+
   {
     id: "custom m's",
     name: "Custo M's",
@@ -542,6 +583,7 @@
     tag: "Custom",
     image: "Custo M's.png"
   },
+
   {
     id: "the-mice",
     name: "The Mice",
@@ -550,6 +592,7 @@
     tag: "Unique",
     image: "the-mice.png"
   },
+
   {
     id: "saturn",
     name: "Saturn",
@@ -558,6 +601,7 @@
     tag: "Cosmic",
     image: "saturn.png"
   },
+
   {
     id: "solar",
     name: "Solar",
@@ -731,64 +775,64 @@ Order: ${orderDetails}
   checkoutForm.submit();
 });
   </script>
+
+  <footer class="site-footer" id="support">
+  <h3>Support My Art</h3>
+  <p>If you’d like to support my creations, you can send to my Cash App:</p>
+  <p class="cashtag">$Seraph21</p>
+
+  <div class="social-links">
+    <a href="https://instagram.com/creations.of.aa" target="_blank">Instagram</a>
+    <a href="https://tiktok.com/@creations.of.aa" target="_blank">TikTok</a>
+  </div>
+
+  <p class="copyright">© 2026 Creations of AA — All Rights Reserved</p>
+</footer>
+
 </body>
 
 </html>
 
 <div class="art-card">
   <img src="aligned.png" alt="Aligned Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by the alignment of celestial bodies</div>
 </div>
 
 <div class="art-card">
   <img src="AA-collectable.png" alt="AA-collectable Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by our passion for our business</div>
 </div>
 
 <div class="art-card">
   <img src="cerulean.png" alt="Cerulean Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by the vastness of the ocean and beauty of moonlight</div>
 </div>
 
 <div class="art-card">
   <img src="constellations.png" alt="Constellations Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by the patterns of stars and planets in the night sky</div>
 </div>
 
 <div class="art-card">
   <img src="Custo M's.png" alt="Custo M's Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by pure creativity with our natural corny nature lol</div>
 
 <div class="art-card">
   <img src="shooting-star.png" alt="Shooting Star Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by the thrill of a shooting star</div>
 </div>
 
 <div class="art-card">
   <img src="the-ants.png" alt="The Ants Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by the industriousness of ants</div>
 </div>
 
 <div class="art-card">
   <img src="the-mice.png" alt="The Mice Earrings" class="art-image" />
-  <div class="caption">This piece was inspired by…</div>
+  <div class="caption">This piece was inspired by the curiosity of mice</div>
 </div>
 
 <div class="reveal">Welcome to Creations of AA!</div>
-
-<script>
-  const reveals = document.querySelectorAll('.reveal');
-
-  function revealOnScroll() {
-    const windowHeight = window.innerHeight;
-
-    reveals.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < windowHeight - 100) {
-        el.classList.add('visible');
-      }
-    });
-  }
 
   window.addEventListener('scroll', revealOnScroll);
   revealOnScroll();
