@@ -375,3 +375,12 @@ copyright {
 section {
   text-align: center;
 }
+
+.reveal img,
+.item img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  opacity: 1 !important;
+}
