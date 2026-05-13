@@ -1,81 +1,6 @@
-.product-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto;
-  transition: 0.3s ease;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.product-card {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  backdrop-filter: blur(4px);
-}
-
-/* Layout container */
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-/* Sidebar */
-.sidebar {
-  width: 220px;
-  background: rgba(255, 255, 255, 0.15);
-  padding: 20px;
-  backdrop-filter: blur(6px);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.sidebar h2 {
-  margin-bottom: 15px;
-  font-size: 22px;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin-bottom: 12px;
-}
-
-.sidebar a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-.sidebar a:hover {
-  text-decoration: underline;
-}
-
-/* Main content area */
-.content {
-  flex: 1;
-  padding-left: 40px;
-  padding-top: 20px;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-
+/* ===========================
+   GLOBAL STYLES
+=========================== */
 body {
   background: url('backgrounds/Radial gold brown si.png');
   background-size: cover;
@@ -84,67 +9,57 @@ body {
   font-family: sans-serif;
 }
 
-.sidebar {
-  width: 220px;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.35); /* soft dark overlay */
-  backdrop-filter: blur(6px);      /* frosted glass effect */
-  border-radius: 0 12px 12px 0;    /* rounded right side */
-}
-
-.sidebar ul li a {
-  display: block;
-  padding: 10px 5px;
-  color: white;
-  text-decoration: none;
-  transition: 0.3s;
-  border-radius: 6px;
-}
-
-.sidebar ul li a:hover {
-  background: rgba(255, 215, 0, 0.25); /* soft gold glow */
-  color: #ffd700; /* gold text */
-  transform: translateX(5px); /* slight slide */
-}
-
-.sidebar ul li a.active {
-  background: rgba(255, 215, 0, 0.45);
-  color: black;
-  font-weight: bold;
-}
-
-.product-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 15px;
+section {
+  margin: 40px auto;
+  max-width: 800px;
   text-align: center;
-  transition: 0.3s ease;
-  backdrop-filter: blur(4px);
 }
 
-.product-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto;
+img:hover {
+  transform: scale(1.03);
   transition: 0.3s ease;
 }
 
-.product-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-  background: rgba(255, 255, 255, 0.18);
+/* ===========================
+   NAVIGATION BAR
+=========================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: #f7d44c;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
   gap: 25px;
-  padding: 20px;
 }
 
-/* HERO SECTION */
+.nav-links a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #3b4cca;
+}
+
+/* ===========================
+   HERO SECTION
+=========================== */
 .hero {
   height: 100vh;
   display: flex;
@@ -155,17 +70,15 @@ body {
   position: relative;
 }
 
-/* Subtle starry overlay */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url('https://i.imgur.com/9Q9QZQp.png'); /* soft stars texture */
+  background: url('https://i.imgur.com/9Q9QZQp.png');
   opacity: 0.15;
   pointer-events: none;
 }
 
-/* HERO CONTENT */
 .hero-content {
   z-index: 2;
   max-width: 700px;
@@ -173,7 +86,6 @@ body {
   backdrop-filter: blur(4px);
 }
 
-/* TITLE — elegant + bold */
 .hero-title {
   font-size: 3.5rem;
   font-weight: 700;
@@ -182,7 +94,6 @@ body {
   text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
 
-/* TAGLINE — minimal + celestial */
 .hero-tagline {
   font-size: 1.3rem;
   margin-top: 15px;
@@ -190,7 +101,6 @@ body {
   opacity: 0.9;
 }
 
-/* BUTTON — elegant + bold */
 .hero-button {
   display: inline-block;
   margin-top: 25px;
@@ -209,6 +119,45 @@ body {
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
 }
 
+/* ===========================
+   PRODUCT GRID + CARDS
+=========================== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.product-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+  transition: 0.3s ease;
+}
+
+/* ===========================
+   ART CARD (HOVER CAPTION)
+=========================== */
 .art-card {
   position: relative;
   display: inline-block;
@@ -245,17 +194,9 @@ body {
   transform: translateY(0);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+/* ===========================
+   LIGHTBOX
+=========================== */
 .thumb {
   width: 200px;
   border-radius: 10px;
@@ -285,56 +226,28 @@ body {
   border-radius: 12px;
 }
 
-section {
-  margin: 40px auto;
-  max-width: 800px;
-  text-align: center;
+/* ===========================
+   SCROLL REVEAL
+=========================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
 }
 
-img:hover {
-  transform: scale(1.03);
-  transition: 0.3s ease;
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  background: #f7d44c; /* your yellow */
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.nav-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1a1a1a;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #1a1a1a;
-  font-weight: 600;
-  transition: 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #3b4cca; /* your blue */
-}
-
+/* ===========================
+   FOOTER
+=========================== */
 .site-footer {
   background: #1a1a1a;
   color: white;
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
   margin-top: 60px;
 }
 
@@ -360,22 +273,4 @@ img:hover {
 
 .social-links a:hover {
   color: #ffffff;
-}
-
-copyright {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-.navbar {
-  padding: 20px 40px;
-}
-
-.site-footer {
-  padding: 60px 20px;
-}
-
-section {
-  text-align: center;
 }
