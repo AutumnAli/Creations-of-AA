@@ -355,3 +355,18 @@ img:hover {
   background: #ffe680;
   transform: scale(1.05);
 }
+
+.logo-container {
+  width: 22px;     /* final visible size */
+  height: 22px;    /* final visible size */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-container img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
