@@ -39,12 +39,12 @@ img:hover {
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
 }
 
 .nav-left img {
-  max-height: 20px;   /* tiny height */
-  max-width: 20px;    /* tiny width */
+  max-height: 16px;   /* tiny height */
+  max-width: 16px;    /* tiny width */
   width: auto;
   height: auto;
   object-fit: contain;
