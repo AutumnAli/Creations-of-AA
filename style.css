@@ -287,3 +287,51 @@ img:hover {
   position: relative;
   z-index: 5;
 }
+
+/* SIMPLE CLEAN SIDEBAR LINKS (Option A) */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 12px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 0;
+  display: block;
+  transition: 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+  color: #ffd700;
+}
+
+.sidebar ul li a.active {
+  font-weight: bold;
+  color: #ffd700;
+  text-decoration: underline;
+}
+
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background: #f7d44c;
+  color: black;
+  font-weight: bold;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.back-button:hover {
+  background: #ffe680;
+  transform: scale(1.05);
+}
