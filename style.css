@@ -43,7 +43,7 @@ img:hover {
 }
 
 .nav-left img {
-  height: 40px;   /* adjust this number to make it bigger or smaller */
+  height: 5px;   /* adjust this number to make it bigger or smaller */
   width: auto;
   object-fit: contain;
 }
