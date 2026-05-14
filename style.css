@@ -43,11 +43,15 @@ img:hover {
 }
 
 .nav-left img {
-  max-height: 28px;   /* this will finally shrink it */
+  max-height: 20px;   /* tiny height */
+  max-width: 20px;    /* tiny width */
   width: auto;
-  display: block;
+  height: auto;
   object-fit: contain;
+  display: block;
 }
+
+
 
 .nav-left h1 {
   font-size: 26px;
