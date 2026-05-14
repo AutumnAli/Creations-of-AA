@@ -51,8 +51,6 @@ img:hover {
   display: block;
 }
 
-
-
 .nav-left h1 {
   font-size: 26px;
   margin: 0;
@@ -75,6 +73,11 @@ img:hover {
 
 .nav-links a:hover {
   color: white;
+}
+
+.logo-image {
+  width: 90px;
+  height: auto;
 }
 
 /* ===========================
