@@ -2,64 +2,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Earrings</title>
+  <title>Necklaces</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <div class="layout">
 
-<div class="layout">
+    <aside class="sidebar">
+      <h2>Shop</h2>
+      <ul>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="earrings.html">Earrings</a></li>
+        <li><a href="necklaces.html" class="active">Necklaces</a></li>
+        <li><a href="bracelets.html">Bracelets</a></li>
+      </ul>
+    </aside>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>Shop</h2>
-    <ul>
-      <li><a href="products.html">All Products</a></li>
-      <li><a href="earrings.html">Earrings</a></li>
-      <li><a href="necklaces.html" class="active">Necklaces</a></li>
-      <li><a href="bracelets.html">Bracelets</a></li>
-    </ul>
-  </aside>
+    <main class="content">
+      <h1 class="page-title">Necklaces</h1>
 
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <h1>Necklaces</h1>
+      <section class="product-grid">
 
-    <section class="product-grid">
-      <!-- Only necklace product cards go here -->
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/expansions.html">
-          <img src="products/expansions.png" alt="Expansions Necklace" style="max-width: 100%; height: auto;">
+        <div class="product-card reveal">
+          <a href="products/expansions.html">
+            <img src="products/expansions.png" alt="Expansions">
+            <h3>Expansions</h3>
+            <p class="price">$18.00</p>
+          </a>
+        </div>
 
+        <div class="product-card reveal">
+          <a href="products/newton.html">
+            <img src="products/newton.png" alt="Newton">
+            <h3>Newton</h3>
+            <p class="price">$15.00</p>
+          </a>
+        </div>
 
-          <h3>Expansions Necklace</h3>
-          <p class="price">$18.00</p>
-        </a>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/life.html">
+            <img src="products/life.png" alt="Life">
+            <h3>Life</h3>
+            <p class="price">$10.00</p>
+          </a>
+        </div>
 
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/newton.html">
-          <img src="products/newton.png" alt="Newton Necklace" style="max-width: 100%; height: auto;">
-          <h3>Newton Necklace</h3>
-          <p class="price">$15.00</p>
-        </a>
-      </div>
+      </section>
+    </main>
+  </div>
 
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/life.html">
-          <img src="products/life.png" alt="Life Necklace" style="max-width: 100%; height: auto;">
-          <h3>Life Necklace</h3>
-          <p class="price">$10.00</p>
-        </a>
-      </div>
-      <!-- Add more necklaces here -->
-    </section>
-  </main>
-
-</div>
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < windowHeight - 100) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
 
 </body>
 </html>

@@ -7,59 +7,63 @@
 </head>
 
 <body>
+  <div class="layout">
 
-<div class="layout">
+    <aside class="sidebar">
+      <h2>Shop</h2>
+      <ul>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="earrings.html">Earrings</a></li>
+        <li><a href="necklaces.html">Necklaces</a></li>
+        <li><a href="bracelets.html" class="active">Bracelets</a></li>
+      </ul>
+    </aside>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>Shop</h2>
-    <ul>
-      <li><a href="products.html">All Products</a></li>
-      <li><a href="earrings.html">Earrings</a></li>
-      <li><a href="necklaces.html">Necklaces</a></li>
-      <li><a href="bracelets.html" class="active">Bracelets</a></li>
-    </ul>
-  </aside>
+    <main class="content">
+      <h1 class="page-title">Bracelets</h1>
 
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <h1>Bracelets</h1>
+      <section class="product-grid">
 
-    <section class="product-grid">
-      <!-- Only bracelet product cards go here -->
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/keiper.html">
-          <img src="products/keiper.png" alt="Keiper Bracelet" style="max-width: 100%; height: auto;">
+        <div class="product-card reveal">
+          <a href="products/keiper.html">
+            <img src="products/keiper.png" alt="Keiper">
+            <h3>Keiper</h3>
+            <p class="price">$5.00</p>
+          </a>
+        </div>
 
+        <div class="product-card reveal">
+          <a href="products/solar.html">
+            <img src="products/solar.png" alt="Solar">
+            <h3>Solar</h3>
+            <p class="price">$5.00</p>
+          </a>
+        </div>
 
-          <h3>Keiper Bracelet</h3>
-          <p class="price">$5.00</p>
-        </a>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/saturn.html">
+            <img src="products/saturn.png" alt="Saturn">
+            <h3>Saturn</h3>
+            <p class="price">$5.00</p>
+          </a>
+        </div>
 
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/solar.html">
-          <img src="products/solar.png" alt="Solar Bracelet" style="max-width: 100%; height: auto;">
-          <h3>Solar Bracelet</h3>
-          <p class="price">$5.00</p>
-        </a>
-      </div>
+      </section>
+    </main>
+  </div>
 
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/saturn.html">
-          <img src="products/saturn.png" alt="Saturn Bracelet" style="max-width: 100%; height: auto;">
-          <h3>Saturn Bracelet</h3>
-          <p class="price">$5.00</p>
-        </a>
-      </div>
-      <!-- Add more bracelets here -->
-    </section>
-  </main>
-
-</div>
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < windowHeight - 100) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
 
 </body>
 </html>

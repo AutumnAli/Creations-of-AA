@@ -7,103 +7,90 @@
 </head>
 
 <body>
+  <div class="layout">
 
-<div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h2>Shop</h2>
+      <ul>
+        <li><a href="products.html">All Products</a></li>
+        <li><a href="earrings.html" class="active">Earrings</a></li>
+        <li><a href="necklaces.html">Necklaces</a></li>
+        <li><a href="bracelets.html">Bracelets</a></li>
+      </ul>
+    </aside>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>Shop</h2>
-    <ul>
-      <li><a href="products.html">All Products</a></li>
-      <li><a href="earrings.html" class="active">Earrings</a></li>
-      <li><a href="necklaces.html">Necklaces</a></li>
-      <li><a href="bracelets.html">Bracelets</a></li>
-    </ul>
-  </aside>
+    <!-- MAIN CONTENT -->
+    <main class="content">
+      <h1 class="page-title">Earrings</h1>
 
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <h1>Earrings</h1>
+      <section class="product-grid">
 
-    <section class="product-grid">
-      <!-- Only earring product cards go here -->
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/shooting-star.html">
-          <img src="products/shooting-star.png" alt="Shooting Star Earrings" style="max-width: 100%; height: auto;">
-          <h3>Shooting Star Earrings</h3>
-          <p class="price">$15.00</p>
-        </a>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/shooting-star.html">
+            <img src="products/shooting-star.png" alt="Shooting Star">
+            <h3>Shooting Star</h3>
+            <p class="price">$10.00</p>
+          </a>
+        </div>
 
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/the-ants.html">
-          <img src="products/the-ants.png" alt="The Ants Earrings" style="max-width: 100%; height: auto;">
-          <h3>The Ants Earrings</h3>
-          <p class="price">$10.00</p>
-        </a>
-      </div>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/the-ants.html">
+            <img src="products/the-ants.png" alt="The Ants">
+            <h3>The Ants</h3>
+            <p class="price">$10.00</p>
+          </a>
+        </div>
 
-      <div class="reveal">
-      <div class="product-card">
-        <a href="products/aligned.html">
-          <img src="products/aligned.png" alt="Aligned Earrings" style="max-width: 100%; height: auto;">
-          <h3>Aligned Earrings</h3>
-          <p class="price">$10.00</p>
-        </a>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/aligned.html">
+            <img src="products/aligned.png" alt="Aligned">
+            <h3>Aligned</h3>
+            <p class="price">$10.00</p>
+          </a>
+        </div>
 
-        <div class="reveal">
-       <div class="product-card">
-        <a href="products/constellations.html">
-          <img src="products/constellations.png" alt="Constellations Earrings" style="max-width: 100%; height: auto;">
-          <h3>Constellations Earrings</h3>
-          <p class="price">$10.00</p>
-        </a>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/constellations.html">
+            <img src="products/constellations.png" alt="Constellations">
+            <h3>Constellations</h3>
+            <p class="price">$15.00</p>
+          </a>
+        </div>
 
-        <div class="reveal">
-       <div class="product-card">
-        <a href="products/cerulean.html">
-          <img src="products/cerulean.png" alt="Cerulean Earrings" style="max-width: 100%; height: auto;">
-          <h3>Cerulean Earrings</h3>
-          <p class="price">$10.00</p>
-        </a>
-      </div>
-      
-        <div class="reveal">
-       <div class="product-card">
-        <a href="products/AA-collectable.html">
-          <img src="products/AA-collectable.png" alt="AA Collectable Earrings" style="max-width: 100%; height: auto;">
-          <h3>AA Collectable Earrings</h3>
-          <p class="price">$15.00</p>
-        </a>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/cerulean.html">
+            <img src="products/cerulean.png" alt="Cerulean">
+            <h3>Cerulean</h3>
+            <p class="price">$10.00</p>
+          </a>
+        </div>
 
-        <div class="reveal">
-       <div class="product-card">
-        <a href="products/Custo M's.html">
-          <img src="products/Custo M's.png" alt="Custo M's Earrings" style="max-width: 100%; height: auto;">
-          <h3>Custo M's Earrings</h3>
-          <p class="price">$15.00</p>
-        </a>
-      </div>
+        <div class="product-card reveal">
+          <a href="products/AA-collectable.html">
+            <img src="products/AA-collectable.png" alt="AA Collectable">
+            <h3>AA Collectable</h3>
+            <p class="price">$15.00</p>
+          </a>
+        </div>
 
-        <div class="reveal">
-       <div class="product-card">
-        <a href="products/the-mice.html">
-          <img src="products/the-mice.png" alt="The Mice Earrings" style="max-width: 100%; height: auto;">
-          <h3>The Mice Earrings</h3>
-          <p class="price">$5.00</p>
-        </a>
-      </div>
-      
-    </section>
-  </main>
+      </section>
+    </main>
+  </div>
 
-</div>
+  <!-- SCROLL REVEAL SCRIPT -->
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < windowHeight - 100) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
 
 </body>
 </html>
