@@ -43,8 +43,8 @@ img:hover {
 }
 
 .nav-left img {
-  max-height: 16px;   /* tiny height */
-  max-width: 16px;    /* tiny width */
+  max-height: 8px;   /* tiny height */
+  max-width: 8px;    /* tiny width */
   width: auto;
   height: auto;
   object-fit: contain;
