@@ -43,8 +43,9 @@ img:hover {
 }
 
 .nav-left img {
-  height: 40px; /* adjust logo size */
+  height: 40px;   /* adjust this number to make it bigger or smaller */
   width: auto;
+  object-fit: contain;
 }
 
 .nav-left h1 {
