@@ -43,8 +43,9 @@ img:hover {
 }
 
 .nav-left img {
-  height: 30px;   /* adjust this number to make it bigger or smaller */
+  max-height: 28px;   /* this will finally shrink it */
   width: auto;
+  display: block;
   object-fit: contain;
 }
 
