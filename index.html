@@ -71,6 +71,19 @@
     justify-content: space-between;
     }
     
+    .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.logo-image {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
     .logo {
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -364,40 +377,31 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
-  </style>
-</head>
 
-</style>
-</head>
+    </style>
+    </head>
 
 <body>
   <header>
-
-   <div class="nav-left">
-  <div class="logo-container">
-    <img src="Creations of AA Logo.png" alt="Creations of AA Logo">
-  </div>
-  <h1>Creations of AA</h1>
-</div>
-
   <div class="nav">
-  <img src="Creations of AA Logo.png" alt="Logo" class="logo-image">
 
-  <div class="logo">Creations of AA</div>
-
-  <div class="nav-links">
-    <a href="products.html">Shop</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </div>
-
-</div>
-      <button class="cart-button" id="cartButton">
-        🛒 Cart <span class="cart-count" id="cartCount">0</span>
-      </button>
+    <div class="brand">
+      <img src="Creations of AA Logo.png" alt="Creations of AA Logo" class="logo-image">
+      <div class="logo">Creations of AA</div>
     </div>
-    </header>
-<div>
+
+    <div class="nav-links">
+      <a href="products.html">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <button class="cart-button" id="cartButton">
+      🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+  </div>
+</header>
 
 </div>
 <main>
