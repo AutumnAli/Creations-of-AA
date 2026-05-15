@@ -76,8 +76,9 @@ img:hover {
 }
 
 .logo-image {
-  width: 20px;
+  width: 65px;
   height: auto;
+  margin-right: 10px;
 }
 
 /* ===========================
