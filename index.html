@@ -399,6 +399,15 @@
   cursor: pointer;
 }
 
+.art-image {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.art-image:hover {
+  transform: scale(1.02);
+}
+
 
     </style>
     </head>
@@ -427,7 +436,6 @@
 
 </div>
 <main>
-    <section>
      <section class="hero">
   <div class="hero-content">
     <p class="hero-tagline">Handcrafted jewelry inspired by elegance, artistry, and the cosmos</p>
@@ -456,7 +464,7 @@
         </h2>
         <p>
           Questions or custom requests? Email:
-          <a href="autumnaa2110@gmail.com">autumnaa2110@gmail.com</a>
+          <a href="mailto:autumnaa2110@gmail.com"></a>
         </p>
       </section>
     </section>
@@ -817,121 +825,50 @@ Order: ${orderDetails}
   </div>
 
   <p class="copyright">© 2026 Creations of AA — All Rights Reserved</p>
-</footer>
 
-</body>
-
-</html>
-
-<div class="art-card">
-  <img src="aligned.png" alt="Aligned Earrings" class="art-image" />
+ <div class="art-card">
+  <img src="aligned.png" alt="Aligned Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by the alignment of celestial bodies</div>
 </div>
 
 <div class="art-card">
-  <img src="AA-collectable.png" alt="AA-collectable Earrings" class="art-image" />
+  <img src="AA-collectable.png" alt="AA-collectable Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by our passion for our business</div>
 </div>
 
 <div class="art-card">
-  <img src="cerulean.png" alt="Cerulean Earrings" class="art-image" />
+  <img src="cerulean.png" alt="Cerulean Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by the vastness of the ocean and beauty of moonlight</div>
 </div>
 
 <div class="art-card">
-  <img src="constellations.png" alt="Constellations Earrings" class="art-image" />
+  <img src="constellations.png" alt="Constellations Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by the patterns of stars and planets in the night sky</div>
 </div>
 
 <div class="art-card">
-  <img src="Custo M's.png" alt="Custo M's Earrings" class="art-image" />
+  <img src="Custo M's.png" alt="Custo M's Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by pure creativity with our natural corny nature lol</div>
 </div>
 
 <div class="art-card">
-  <img src="shooting-star.png" alt="Shooting Star Earrings" class="art-image" />
+  <img src="shooting-star.png" alt="Shooting Star Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by the thrill of a shooting star</div>
 </div>
 
 <div class="art-card">
-  <img src="the-ants.png" alt="The Ants Earrings" class="art-image" />
+  <img src="the-ants.png" alt="The Ants Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by the industriousness of ants</div>
 </div>
 
 <div class="art-card">
-  <img src="the-mice.png" alt="The Mice Earrings" class="art-image" />
+  <img src="the-mice.png" alt="The Mice Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by the curiosity of mice</div>
 </div>
 
-<script>
-  const reveal = document.querySelectorAll('.art-card');
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll();
-</script>
+</body>
 
-<div class="gallery">
-  <img src="AA-collectable.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
-
-<div class="gallery">
-  <img src="aligned.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
-
-<div class="gallery">
-  <img src="cerulean.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
-
-<div class="gallery">
-  <img src="constellations.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
-
-<div class="gallery">
-  <img src="Custo M's.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
-
-<div class="gallery">
-  <img src="shooting-star.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
-
-<div class="gallery">
-  <img src="the-ants.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
-
-<div class="gallery">
-  <img src="the-mice.png" class="thumb" onclick="openLightbox(this.src)">
-</div>
-
-<div id="lightbox" onclick="closeLightbox()">
-  <img id="lightbox-img">
-</div>
+</html>
 
 <script>
   function openLightbox(src) {
