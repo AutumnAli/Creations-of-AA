@@ -9,6 +9,7 @@
   <meta http-equiv="Expires" content="0" />
 
   <style>
+
     :root {
       /* ===== YOUR COLOR PALETTE ===== */
       --cream: #fffdf7;
@@ -245,6 +246,14 @@
       font-weight: 600;
     }
 
+    .product-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
     .btn {
       border-radius: 999px;
       border: none;
@@ -378,34 +387,48 @@
       color: var(--muted);
     }
 
-    .art-image {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
+   .art-card {
+  display: flex;
+  flex-direction: column;
 }
 
-.gallery {
-  display: inline-block;
-  margin: 0.5rem;
-}
-
-.thumb {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 10px;
-  cursor: pointer;
+.art-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 20px;
 }
 
 .art-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .art-image:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
+}
+
+.caption {
+  font-size: 0.8rem;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.hero-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--accent);
+  color: white;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.hero-button:hover {
+  background: var(--accent-dark);
 }
 
 
@@ -434,7 +457,6 @@
   </div>
 </header>
 
-</div>
 <main>
      <section class="hero">
   <div class="hero-content">
@@ -464,10 +486,9 @@
         </h2>
         <p>
           Questions or custom requests? Email:
-          <a href="mailto:autumnaa2110@gmail.com"></a>
+         <a href="mailto:autumnaa2110@gmail.com">autumnaa2110@gmail.com</a>
         </p>
       </section>
-    </section>
 
     <aside class="cart">
       <div class="cart-items" id="cartItems">
@@ -826,6 +847,7 @@ Order: ${orderDetails}
 
   <p class="copyright">© 2026 Creations of AA — All Rights Reserved</p>
 
+  <div class="art-gallery">
  <div class="art-card">
   <img src="aligned.png" alt="Aligned Earrings" class="art-image" onclick="openLightbox(this.src)" />
   <div class="caption">This piece was inspired by the alignment of celestial bodies</div>
@@ -866,6 +888,10 @@ Order: ${orderDetails}
   <div class="caption">This piece was inspired by the curiosity of mice</div>
 </div>
 
+  <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
+  <img id="lightbox-img" style="max-width:90%; max-height:90%; margin:auto; display:block;" />
+</div>
+
 </body>
 
 </html>
@@ -879,4 +905,5 @@ Order: ${orderDetails}
   function closeLightbox() {
     document.getElementById('lightbox').style.display = 'none';
   }
+
 </script>
