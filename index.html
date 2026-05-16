@@ -182,9 +182,7 @@
       display: grid;
       gap: 1.5rem;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      background: #f0f0f0;
       padding: 1rem;
-      border: 2px solid red;
     }
 
     .product-card {
@@ -458,38 +456,54 @@
 </header>
 
 <main>
-     <section class="hero">
-  <div class="hero-content">
-    <p class="hero-tagline">Handcrafted jewelry inspired by elegance, artistry, and the cosmos</p>
-    <a href="products.html" class="hero-button">Shop Now</a>
+
+  <div>
+     <main>
+
+  <!-- LEFT COLUMN -->
+  <div>
+
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-tagline">
+          Handcrafted jewelry inspired by elegance, artistry, and the cosmos
+        </p>
+
+        <a href="products.html" class="hero-button">Shop Now</a>
+      </div>
+    </section>
+
+    <section id="shop">
+      <h2 class="product-section-title">Featured Pieces</h2>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section id="about"
+      style="margin-top: 2rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
+      <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
+        About the Studio
+      </h2>
+
+      <p>
+        Every piece is handmade with care, using thoughtfully sourced materials and a love for color.
+        Your jewelry is crafted in small batches to ensure uniqueness and quality.
+      </p>
+    </section>
+
+    <section id="contact"
+      style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
+      <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
+        Contact
+      </h2>
+
+      <p>
+        Questions or custom requests? Email:
+        <a href="mailto:autumnaa2110@gmail.com">autumnaa2110@gmail.com</a>
+      </p>
+
   </div>
-</section>
 
-      <section id="shop">
-        <h2 class="product-section-title">Featured Pieces</h2>
-        <div class="product-grid" id="productGrid"></div>
-      </section>
-
-      <section id="about" style="margin-top: 2rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
-        <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
-          About the Studio
-        </h2>
-        <p>
-          Every piece is handmade with care, using thoughtfully sourced materials and a love for color.
-          Your jewelry is crafted in small batches to ensure uniqueness and quality.
-        </p>
-      </section>
-
-      <section id="contact" style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
-        <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
-          Contact
-        </h2>
-        <p>
-          Questions or custom requests? Email:
-         <a href="mailto:autumnaa2110@gmail.com">autumnaa2110@gmail.com</a>
-        </p>
-      </section>
-
+  <!-- RIGHT COLUMN -->
     <aside class="cart">
       <div class="cart-items" id="cartItems">
         <div class="cart-empty">Your cart is empty</div>
@@ -888,13 +902,13 @@ Order: ${orderDetails}
   <div class="caption">This piece was inspired by the curiosity of mice</div>
 </div>
 
-  <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
-  <img id="lightbox-img" style="max-width:90%; max-height:90%; margin:auto; display:block;" />
-</div>
-
 </body>
 
 </html>
+
+ <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
+  <img id="lightbox-img" style="max-width:90%; max-height:90%; margin:auto; display:block;" />
+</div>
 
 <script>
   function openLightbox(src) {
