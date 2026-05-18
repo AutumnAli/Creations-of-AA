@@ -78,6 +78,11 @@ header {
   border-radius: 10px;
   background: #fff;
 }
+
+.rec-card img {
+  height: 120px;
+  object-fit: cover;
+}
 </style>
 </head>
 
@@ -138,12 +143,12 @@ header {
    PRODUCTS (must match homepage IDs)
 ========================= */
 const products = [
-  {id:"shooting-star",name:"Shooting Star",price:15,tag:"Bright"},
-  {id:"the-ants",name:"The Ants",price:10,tag:"Popular"},
-  {id:"constellations",name:"Constellations",price:15,tag:"Cosmic"},
-  {id:"expansions",name:"Expansions",price:18,tag:"Earthy"},
-  {id:"cerulean",name:"Cerulean",price:10,tag:"Bright"},
-  {id:"saturn",name:"Saturn",price:5,tag:"Cosmic"}
+  {id:"shooting-star",name:"Shooting Star",price:15,tag:"Bright",image:"shooting-star.png"},
+  {id:"the-ants",name:"The Ants",price:10,tag:"Popular",image:"the-ants.png"},
+  {id:"constellations",name:"Constellations",price:15,tag:"Cosmic",image:"constellations.png"},
+  {id:"expansions",name:"Expansions",price:18,tag:"Earthy",image:"expansions.png"},
+  {id:"cerulean",name:"Cerulean",price:10,tag:"Bright",image:"cerulean.png"},
+  {id:"saturn",name:"Saturn",price:5,tag:"Cosmic",image:"saturn.png"}
 ];
 
 /* =========================
@@ -164,15 +169,15 @@ function renderCart() {
     total += i.product.price * i.qty;
 
     el.innerHTML += `
-      <div class="item">
-        <div>
-          <b>${i.product.name}</b>
-          <div class="small">x${i.qty}</div>
-        </div>
-        <div>$${(i.product.price * i.qty).toFixed(2)}</div>
-      </div>
-    `;
-  });
+  <div class="rec-card">
+    <img src="${p.image}" style="width:100%; border-radius:8px; margin-bottom:6px;">
+    <b>${p.name}</b>
+    <div class="small">${p.tag}</div>
+    <div>$${p.price}</div>
+    <button class="btn" onclick="add('${p.id}')">Add</button>
+  </div>
+`;
+    });
 
   document.getElementById("total").innerText = "$" + total.toFixed(2);
 
