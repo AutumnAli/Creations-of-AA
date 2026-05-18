@@ -1,335 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Smart Cart</title>
+<meta charset="UTF-8">
+<title>Cart | Creations of AA</title>
 
 <style>
-:root {
-  --orange:#ff9f50;
-  --dark:#e57f2c;
-  --bg1:#d4af37;
-  --bg2:#a97458;
-  --bg3:#c0c0c0;
-  --card:#fff;
-  --shadow:0 8px 20px rgba(0,0,0,0.08);
-  --radius:12px;
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at center,
+    #d4af37 0%,
+    #a97458 50%,
+    #c0c0c0 100%);
+  color: #2b2b2b;
 }
 
-body{
-  margin:0;
-  font-family:sans-serif;
-  background: radial-gradient(circle at center,var(--bg1),var(--bg2),var(--bg3));
+header {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: white;
 }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:radial-gradient(#fff 1px,transparent 1px);
-  background-size:120px 120px;
-  opacity:.08;
-  pointer-events:none;
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
 }
 
-.page{
-  max-width:1100px;
-  margin:auto;
-  padding:2rem;
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-.card,.item{
-  background:var(--card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:12px;
-  margin:10px 0;
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
 }
 
-.item{
-  display:flex;
-  justify-content:space-between;
+.small {
+  font-size: 0.85rem;
+  color: #666;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:12px;
+.btn {
+  background: #ff9f50;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 100%;
 }
 
-button{
-  background:var(--orange);
-  border:none;
-  color:#fff;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
+.btn:hover {
+  background: #e57f2c;
 }
 
-button:hover{background:var(--dark)}
-img{width:100%;border-radius:10px}
-.small{opacity:.7;font-size:.9rem}
+.rec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.rec-card {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
+}
 </style>
 </head>
 
 <body>
 
-<div class="page">
+<header>🛒 Your Cart</header>
 
-<h1>Your Cart</h1>
-<div id="cart"></div>
+<div class="container">
 
-<h2>Total</h2>
-<h3 id="total"></h3>
+  <!-- LEFT: CART + CHECKOUT -->
+  <div>
 
-<h2>AI Insight</h2>
-<p id="insight" class="small"></p>
+    <div class="card">
+      <h2>Cart Items</h2>
+      <div id="cart"></div>
+      <h3>Total: <span id="total">$0.00</span></h3>
+      <p class="small" id="insight"></p>
+    </div>
 
-<h2>Recommended For You</h2>
-<div id="recs" class="grid"></div>
+    <!-- CHECKOUT -->
+    <div class="card" style="margin-top:15px;">
+      <h2>Checkout</h2>
 
-<h2>Trending Now 🔥</h2>
-<div id="trending" class="grid"></div>
+      <form id="checkoutForm"
+        action="https://formspree.io/f/xpqbqqyz"
+        method="POST">
+
+        <input type="hidden" name="orderDetails" id="orderDetailsField">
+
+        <input id="name" placeholder="Full Name" required
+          style="width:100%;padding:8px;margin:5px 0;">
+
+        <input id="email" placeholder="Email" type="email" required
+          style="width:100%;padding:8px;margin:5px 0;">
+
+        <textarea id="address" placeholder="Address" required
+          style="width:100%;padding:8px;margin:5px 0;"></textarea>
+
+        <button class="btn" type="submit">Place Order</button>
+
+        <p id="msg" class="small"></p>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: AI RECOMMENDATIONS -->
+  <div class="card">
+    <h2>Recommended for you</h2>
+    <div class="rec-grid" id="recs"></div>
+  </div>
 
 </div>
 
 <script>
 
-/* ================= DATA ================= */
-const products = JSON.parse(localStorage.getItem("products")) || [];
-const cart = JSON.parse(localStorage.getItem("cart")) || {};
-const profile = JSON.parse(localStorage.getItem("profile")) || {
-  vector: {},
-  history: [],
-  interactions: {}
-};
+/* =========================
+   PRODUCTS (must match homepage IDs)
+========================= */
+const products = [
+  {id:"shooting-star",name:"Shooting Star",price:15,tag:"Bright"},
+  {id:"the-ants",name:"The Ants",price:10,tag:"Popular"},
+  {id:"constellations",name:"Constellations",price:15,tag:"Cosmic"},
+  {id:"expansions",name:"Expansions",price:18,tag:"Earthy"},
+  {id:"cerulean",name:"Cerulean",price:10,tag:"Bright"},
+  {id:"saturn",name:"Saturn",price:5,tag:"Cosmic"}
+];
 
-/* ================= SAVE ================= */
-function save(){
-  localStorage.setItem("profile", JSON.stringify(profile));
-  localStorage.setItem("cart", JSON.stringify(cart));
-  localStorage.setItem("products", JSON.stringify(products));
-}
+/* =========================
+   CART LOAD
+========================= */
+let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
-/* ================= FEATURE VECTOR SYSTEM ================= */
-/*
-We simulate embeddings:
-Each product becomes a weighted vector like:
-{
-  cosmic: 2,
-  wood: 0,
-  bright: 1,
-  custom: 3
-}
-*/
+/* =========================
+   RENDER CART
+========================= */
+function renderCart() {
+  const el = document.getElementById("cart");
+  el.innerHTML = "";
 
-function getVector(p){
-  const v = {cosmic:0, wood:0, bright:0, custom:0};
+  let total = 0;
 
-  (p.features || []).forEach(f=>{
-    v[f] = (v[f] || 0) + 1;
+  Object.values(cart).forEach(i => {
+    total += i.product.price * i.qty;
+
+    el.innerHTML += `
+      <div class="item">
+        <div>
+          <b>${i.product.name}</b>
+          <div class="small">x${i.qty}</div>
+        </div>
+        <div>$${(i.product.price * i.qty).toFixed(2)}</div>
+      </div>
+    `;
   });
 
-  // price dimension normalization
-  v.price = Math.min(1, (p.price || 0) / 50);
+  document.getElementById("total").innerText = "$" + total.toFixed(2);
 
-  return v;
+  updateInsight();
 }
 
-/* ================= COSINE SIMILARITY ================= */
-function cosine(a,b){
-  let dot=0, magA=0, magB=0;
+/* =========================
+   SIMPLE AI INSIGHT
+========================= */
+function updateInsight() {
+  if (Object.keys(cart).length === 0) {
+    document.getElementById("insight").innerText =
+      "Add items to unlock AI recommendations.";
+    return;
+  }
 
-  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
-
-  keys.forEach(k=>{
-    const x = a[k] || 0;
-    const y = b[k] || 0;
-
-    dot += x*y;
-    magA += x*x;
-    magB += y*y;
+  let tags = {};
+  Object.values(cart).forEach(i => {
+    tags[i.product.tag] = (tags[i.product.tag] || 0) + i.qty;
   });
 
-  return dot / (Math.sqrt(magA)*Math.sqrt(magB) + 0.0001);
+  let top = Object.entries(tags).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById("insight").innerText =
+    "AI Insight: You prefer " + top[0] + " styles.";
 }
 
-/* ================= PROFILE VECTOR UPDATE ================= */
-function updateProfile(){
-  const v = {cosmic:0, wood:0, bright:0, custom:0};
-
-  Object.values(cart).forEach(({product})=>{
-    (product.features||[]).forEach(f=>{
-      v[f] = (v[f] || 0) + 2;
-    });
-  });
-
-  profile.vector = v;
-  save();
-}
-
-/* ================= NEURAL SCORING ================= */
-function score(p){
-  const pVec = getVector(p);
-  const uVec = profile.vector;
-
-  // similarity score (core "neural" logic)
-  let sim = cosine(pVec, uVec);
-
-  // behavioral boost (click + purchase memory)
-  let historyBoost = (profile.interactions[p.id] || 0) * 0.15;
-
-  // trending momentum (sales velocity simulation)
-  let trend = ((p.views || 0) * 0.2 + (p.adds || 0) * 0.6);
-
-  // novelty boost (avoid repeating same category too much)
-  let diversityPenalty = (profile.history.includes(p.id)) ? -0.2 : 0;
-
-  return sim * 3 + historyBoost + trend + diversityPenalty;
-}
-
-/* ================= LEARNING LOOP ================= */
-function learn(){
-  Object.values(cart).forEach(({product})=>{
-    profile.history.push(product.id);
-
-    profile.interactions[product.id] =
-      (profile.interactions[product.id] || 0) + 1;
-  });
-
-  updateProfile();
-}
-
-/* ================= TRENDING ENGINE ================= */
-function trending(){
-  return [...products]
-    .map(p=>{
-      const velocity = (p.adds || 0) / ((p.age || 1) + 1);
-      return {p, score:velocity};
-    })
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,6)
-    .map(x=>x.p);
-}
-
-/* ================= “NEXT BEST PRODUCT” ENGINE ================= */
-function recommend(){
-  const cartIds = new Set(Object.values(cart).map(i=>i.product.id));
+/* =========================
+   RECOMMENDATIONS ENGINE
+========================= */
+function getRecs() {
+  const owned = new Set(Object.keys(cart));
 
   return products
-    .filter(p=>!cartIds.has(p.id))
-    .map(p=>({p,score:score(p)}))
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,6)
-    .map(x=>x.p);
+    .filter(p => !owned.has(p.id))
+    .sort((a,b) => (b.price + Math.random()*10) - (a.price + Math.random()*10))
+    .slice(0,4);
 }
 
-/* ================= BUNDLE AI ================= */
-function bundles(){
-  const last = Object.values(cart).map(i=>i.product);
+/* =========================
+   RENDER RECS
+========================= */
+function renderRecs() {
+  const el = document.getElementById("recs");
+  el.innerHTML = "";
 
-  const scores = {};
-
-  last.forEach(p=>{
-    products.forEach(x=>{
-      if(cart[x.id]) return;
-
-      let s = cosine(getVector(p), getVector(x));
-
-      scores[x.id] = (scores[x.id] || 0) + s;
-    });
-  });
-
-  return Object.entries(scores)
-    .sort((a,b)=>b[1]-a[1])
-    .slice(0,4)
-    .map(x=>products.find(p=>p.id===x[0]))
-    .filter(Boolean);
-}
-
-/* ================= CONVERSION PREDICTION ================= */
-function conversionScore(p){
-  const base = score(p);
-
-  const priceFactor = p.price < 20 ? 0.3 : 0.1;
-  const popularity = (p.adds || 0) * 0.2;
-
-  return base + priceFactor + popularity;
-}
-
-/* ================= INSIGHT ENGINE ================= */
-function insight(){
-  const top = Object.entries(profile.vector)
-    .sort((a,b)=>b[1]-a[1])[0];
-
-  if(!top) return "Training AI model on your shopping behavior...";
-
-  return `Your neural profile strongly aligns with "${top[0]}" aesthetic patterns.`;
-}
-
-/* ================= RENDER ================= */
-function renderCart(){
-  let el=document.getElementById("cart");
-  el.innerHTML="";
-  let total=0;
-
-  Object.values(cart).forEach(({product,qty})=>{
-    total += product.price*qty;
-
-    let d=document.createElement("div");
-    d.className="item";
-    d.innerHTML=`
-      <span>${product.name} x${qty}</span>
-      <span>$${(product.price*qty).toFixed(2)}</span>
+  getRecs().forEach(p => {
+    el.innerHTML += `
+      <div class="rec-card">
+        <b>${p.name}</b>
+        <div class="small">${p.tag}</div>
+        <div>$${p.price}</div>
+        <button class="btn" onclick="add('${p.id}')">Add</button>
+      </div>
     `;
-    el.appendChild(d);
-  });
-
-  document.getElementById("total").innerText="$"+total.toFixed(2);
-}
-
-/* ================= GENERIC RENDER ================= */
-function render(id,list,label){
-  const el=document.getElementById(id);
-  el.innerHTML="";
-
-  list.forEach(p=>{
-    let c=document.createElement("div");
-    c.className="card";
-    c.innerHTML=`
-      <img src="${p.image}">
-      <p><b>${p.name}</b></p>
-      <p>$${p.price}</p>
-      <p class="small">${label}</p>
-      <button onclick="add('${p.id}')">Add</button>
-    `;
-    el.appendChild(c);
   });
 }
 
-/* ================= ADD ================= */
-function add(id){
-  const p = products.find(x=>x.id===id);
+/* =========================
+   ADD TO CART
+========================= */
+function add(id) {
+  const p = products.find(x => x.id === id);
 
-  if(!cart[id]) cart[id]={product:p,qty:1};
+  if (!cart[id]) cart[id] = {product:p, qty:1};
   else cart[id].qty++;
 
-  p.adds = (p.adds || 0) + 1;
+  localStorage.setItem("cart", JSON.stringify(cart));
 
-  save();
-  location.reload();
+  renderCart();
+  renderRecs();
 }
 
-/* ================= INIT ================= */
-learn();
-updateProfile();
+/* =========================
+   CHECKOUT
+========================= */
+document.getElementById("checkoutForm").addEventListener("submit", function(e){
+  e.preventDefault();
 
-document.getElementById("insight").innerText = insight();
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const address = document.getElementById("address").value;
 
+  const order = Object.values(cart)
+    .map(i => `${i.product.name} x${i.qty}`)
+    .join(", ");
+
+  document.getElementById("orderDetailsField").value =
+`Name: ${name}
+Email: ${email}
+Address: ${address}
+Order: ${order}`;
+
+  document.getElementById("msg").innerText =
+    "Thanks " + name + "! Order sent.";
+
+  cart = {};
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  renderCart();
+  renderRecs();
+
+  this.submit();
+});
+
+/* INIT */
 renderCart();
-render("recs", recommend(), "AI Match");
-render("trending", trending(), "🔥 Trending Velocity");
-render("bundles", bundles(), "Frequently Bought Together");
+renderRecs();
 
 </script>
 
