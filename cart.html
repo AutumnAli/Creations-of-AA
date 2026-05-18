@@ -1,152 +1,337 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Your Cart</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    .item { display:flex; justify-content:space-between; margin-bottom:10px; }
-    .recommendations { margin-top:40px; }
-    .rec-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
-    .card { border:1px solid #ddd; padding:10px; border-radius:10px; }
-  </style>
-</head>
-<body>
+<meta charset="UTF-8" />
+<title>Smart Cart</title>
 
-<h1>Your Cart</h1>
-<div id="cartSummary"></div>
-
-<h2>Total</h2>
-<div id="total"></div>
-
-<div class="recommendations">
-  <h2>You may also like</h2>
-  <div class="rec-grid" id="recs"></div>
-</div>
-
-<h2>AI Picks For You</h2>
-<p id="aiReason" style="opacity:0.7;font-size:0.9rem;"></p>
-
-<script>
-const products = JSON.parse(localStorage.getItem("products")) || [];
-const cart = JSON.parse(localStorage.getItem("cart")) || {};
-
-// ---------------- CART RENDER ----------------
-function renderCart() {
-  const container = document.getElementById("cartSummary");
-  let total = 0;
-
-  container.innerHTML = "";
-
-  Object.values(cart).forEach(({ product, qty }) => {
-    total += product.price * qty;
-
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
-      <span>${product.name} x${qty}</span>
-      <span>$${(product.price * qty).toFixed(2)}</span>
-    `;
-    container.appendChild(div);
-  });
-
-  document.getElementById("total").innerText = "$" + total.toFixed(2);
+<style>
+:root {
+  --orange:#ff9f50;
+  --dark:#e57f2c;
+  --bg1:#d4af37;
+  --bg2:#a97458;
+  --bg3:#c0c0c0;
+  --card:#fff;
+  --shadow:0 8px 20px rgba(0,0,0,0.08);
+  --radius:12px;
 }
 
-renderCart();
+body{
+  margin:0;
+  font-family:sans-serif;
+  background: radial-gradient(circle at center,var(--bg1),var(--bg2),var(--bg3));
+}
 
-// ---------------- AI FEATURES ----------------
-function getCartFeatures(cart) {
-  const featureCount = {};
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(#fff 1px,transparent 1px);
+  background-size:120px 120px;
+  opacity:.08;
+  pointer-events:none;
+}
 
-  Object.values(cart).forEach(({ product }) => {
-    (product.features || []).forEach(f => {
-      featureCount[f] = (featureCount[f] || 0) + 1;
+.page{
+  max-width:1100px;
+  margin:auto;
+  padding:2rem;
+}
+
+.card,.item{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:12px;
+  margin:10px 0;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+
+button{
+  background:var(--orange);
+  border:none;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{background:var(--dark)}
+img{width:100%;border-radius:10px}
+.small{opacity:.7;font-size:.9rem}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<h1>Your Cart</h1>
+<div id="cart"></div>
+
+<h2>Total</h2>
+<h3 id="total"></h3>
+
+<h2>AI Insight</h2>
+<p id="insight" class="small"></p>
+
+<h2>Recommended For You</h2>
+<div id="recs" class="grid"></div>
+
+<h2>Trending Now 🔥</h2>
+<div id="trending" class="grid"></div>
+
+</div>
+
+<script>
+
+/* ================= DATA ================= */
+const products = JSON.parse(localStorage.getItem("products")) || [];
+const cart = JSON.parse(localStorage.getItem("cart")) || {};
+const profile = JSON.parse(localStorage.getItem("profile")) || {
+  vector: {},
+  history: [],
+  interactions: {}
+};
+
+/* ================= SAVE ================= */
+function save(){
+  localStorage.setItem("profile", JSON.stringify(profile));
+  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("products", JSON.stringify(products));
+}
+
+/* ================= FEATURE VECTOR SYSTEM ================= */
+/*
+We simulate embeddings:
+Each product becomes a weighted vector like:
+{
+  cosmic: 2,
+  wood: 0,
+  bright: 1,
+  custom: 3
+}
+*/
+
+function getVector(p){
+  const v = {cosmic:0, wood:0, bright:0, custom:0};
+
+  (p.features || []).forEach(f=>{
+    v[f] = (v[f] || 0) + 1;
+  });
+
+  // price dimension normalization
+  v.price = Math.min(1, (p.price || 0) / 50);
+
+  return v;
+}
+
+/* ================= COSINE SIMILARITY ================= */
+function cosine(a,b){
+  let dot=0, magA=0, magB=0;
+
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+
+  keys.forEach(k=>{
+    const x = a[k] || 0;
+    const y = b[k] || 0;
+
+    dot += x*y;
+    magA += x*x;
+    magB += y*y;
+  });
+
+  return dot / (Math.sqrt(magA)*Math.sqrt(magB) + 0.0001);
+}
+
+/* ================= PROFILE VECTOR UPDATE ================= */
+function updateProfile(){
+  const v = {cosmic:0, wood:0, bright:0, custom:0};
+
+  Object.values(cart).forEach(({product})=>{
+    (product.features||[]).forEach(f=>{
+      v[f] = (v[f] || 0) + 2;
     });
   });
 
-  return featureCount;
+  profile.vector = v;
+  save();
 }
 
-function scoreProduct(product, cartFeatures) {
-  let score = 0;
+/* ================= NEURAL SCORING ================= */
+function score(p){
+  const pVec = getVector(p);
+  const uVec = profile.vector;
 
-  (product.features || []).forEach(f => {
-    if (cartFeatures[f]) score += cartFeatures[f];
+  // similarity score (core "neural" logic)
+  let sim = cosine(pVec, uVec);
+
+  // behavioral boost (click + purchase memory)
+  let historyBoost = (profile.interactions[p.id] || 0) * 0.15;
+
+  // trending momentum (sales velocity simulation)
+  let trend = ((p.views || 0) * 0.2 + (p.adds || 0) * 0.6);
+
+  // novelty boost (avoid repeating same category too much)
+  let diversityPenalty = (profile.history.includes(p.id)) ? -0.2 : 0;
+
+  return sim * 3 + historyBoost + trend + diversityPenalty;
+}
+
+/* ================= LEARNING LOOP ================= */
+function learn(){
+  Object.values(cart).forEach(({product})=>{
+    profile.history.push(product.id);
+
+    profile.interactions[product.id] =
+      (profile.interactions[product.id] || 0) + 1;
   });
 
-  return score;
+  updateProfile();
 }
 
-function explainRecommendations(cart) {
-  const features = getCartFeatures(cart);
-  const entries = Object.entries(features);
-
-  if (entries.length === 0) return "Based on your browsing style";
-
-  const top = entries.sort((a,b)=>b[1]-a[1])[0];
-
-  const map = {
-    cosmic: "cosmic-inspired jewelry",
-    wood: "natural wooden designs",
-    bright: "bold colorful pieces",
-    custom: "customizable designs"
-  };
-
-  return `Based on your interest in ${map[top[0]] || top[0]} pieces`;
+/* ================= TRENDING ENGINE ================= */
+function trending(){
+  return [...products]
+    .map(p=>{
+      const velocity = (p.adds || 0) / ((p.age || 1) + 1);
+      return {p, score:velocity};
+    })
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,6)
+    .map(x=>x.p);
 }
 
-document.getElementById("aiReason").innerText = explainRecommendations(cart);
-
-// ---------------- RECOMMENDATIONS ----------------
-function getRecommendations(products, cart, limit = 4) {
-  const cartIds = new Set(Object.values(cart).map(i => i.product.id));
-  const cartFeatures = getCartFeatures(cart);
+/* ================= “NEXT BEST PRODUCT” ENGINE ================= */
+function recommend(){
+  const cartIds = new Set(Object.values(cart).map(i=>i.product.id));
 
   return products
-    .filter(p => !cartIds.has(p.id))
-    .map(p => ({
-      product: p,
-      score: scoreProduct(p, cartFeatures)
-    }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(x => x.product);
+    .filter(p=>!cartIds.has(p.id))
+    .map(p=>({p,score:score(p)}))
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,6)
+    .map(x=>x.p);
 }
 
-// ---------------- RENDER RECS ----------------
-const recContainer = document.getElementById("recs");
+/* ================= BUNDLE AI ================= */
+function bundles(){
+  const last = Object.values(cart).map(i=>i.product);
 
-function renderRecs() {
-  const recommended = getRecommendations(products, cart);
+  const scores = {};
 
-  recContainer.innerHTML = "";
+  last.forEach(p=>{
+    products.forEach(x=>{
+      if(cart[x.id]) return;
 
-  recommended.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
+      let s = cosine(getVector(p), getVector(x));
 
-    card.innerHTML = `
-      <img src="${p.image}" style="width:100%; border-radius:10px;">
-      <p><b>${p.name}</b></p>
-      <p>$${p.price.toFixed(2)}</p>
-      <button onclick="addToCart('${p.id}')">Add</button>
+      scores[x.id] = (scores[x.id] || 0) + s;
+    });
+  });
+
+  return Object.entries(scores)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,4)
+    .map(x=>products.find(p=>p.id===x[0]))
+    .filter(Boolean);
+}
+
+/* ================= CONVERSION PREDICTION ================= */
+function conversionScore(p){
+  const base = score(p);
+
+  const priceFactor = p.price < 20 ? 0.3 : 0.1;
+  const popularity = (p.adds || 0) * 0.2;
+
+  return base + priceFactor + popularity;
+}
+
+/* ================= INSIGHT ENGINE ================= */
+function insight(){
+  const top = Object.entries(profile.vector)
+    .sort((a,b)=>b[1]-a[1])[0];
+
+  if(!top) return "Training AI model on your shopping behavior...";
+
+  return `Your neural profile strongly aligns with "${top[0]}" aesthetic patterns.`;
+}
+
+/* ================= RENDER ================= */
+function renderCart(){
+  let el=document.getElementById("cart");
+  el.innerHTML="";
+  let total=0;
+
+  Object.values(cart).forEach(({product,qty})=>{
+    total += product.price*qty;
+
+    let d=document.createElement("div");
+    d.className="item";
+    d.innerHTML=`
+      <span>${product.name} x${qty}</span>
+      <span>$${(product.price*qty).toFixed(2)}</span>
     `;
+    el.appendChild(d);
+  });
 
-    recContainer.appendChild(card);
+  document.getElementById("total").innerText="$"+total.toFixed(2);
+}
+
+/* ================= GENERIC RENDER ================= */
+function render(id,list,label){
+  const el=document.getElementById(id);
+  el.innerHTML="";
+
+  list.forEach(p=>{
+    let c=document.createElement("div");
+    c.className="card";
+    c.innerHTML=`
+      <img src="${p.image}">
+      <p><b>${p.name}</b></p>
+      <p>$${p.price}</p>
+      <p class="small">${label}</p>
+      <button onclick="add('${p.id}')">Add</button>
+    `;
+    el.appendChild(c);
   });
 }
 
-renderRecs();
+/* ================= ADD ================= */
+function add(id){
+  const p = products.find(x=>x.id===id);
 
-// ---------------- ADD TO CART ----------------
-function addToCart(id) {
-  const product = products.find(p => p.id === id);
-
-  if (!cart[id]) cart[id] = { product, qty: 1 };
+  if(!cart[id]) cart[id]={product:p,qty:1};
   else cart[id].qty++;
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  p.adds = (p.adds || 0) + 1;
 
-  renderCart();
-  renderRecs();
+  save();
+  location.reload();
 }
+
+/* ================= INIT ================= */
+learn();
+updateProfile();
+
+document.getElementById("insight").innerText = insight();
+
+renderCart();
+render("recs", recommend(), "AI Match");
+render("trending", trending(), "🔥 Trending Velocity");
+render("bundles", bundles(), "Frequently Bought Together");
+
+</script>
+
+</body>
+</html>
