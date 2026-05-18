@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Cart</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .item { display:flex; justify-content:space-between; margin-bottom:10px; }
+    .recommendations { margin-top:40px; }
+    .rec-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
+    .card { border:1px solid #ddd; padding:10px; border-radius:10px; }
+  </style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+<div id="cartSummary"></div>
+
+<h2>Total</h2>
+<div id="total"></div>
+
+<div class="recommendations">
+  <h2>You may also like</h2>
+  <div class="rec-grid" id="recs"></div>
+</div>
+
+<h2>AI Picks For You</h2>
+<p id="aiReason" style="opacity:0.7;font-size:0.9rem;"></p>
+
+<script>
+const products = JSON.parse(localStorage.getItem("products")) || [];
+const cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+// ---------------- CART RENDER ----------------
+function renderCart() {
+  const container = document.getElementById("cartSummary");
+  let total = 0;
+
+  container.innerHTML = "";
+
+  Object.values(cart).forEach(({ product, qty }) => {
+    total += product.price * qty;
+
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <span>${product.name} x${qty}</span>
+      <span>$${(product.price * qty).toFixed(2)}</span>
+    `;
+    container.appendChild(div);
+  });
+
+  document.getElementById("total").innerText = "$" + total.toFixed(2);
+}
+
+renderCart();
+
+// ---------------- AI FEATURES ----------------
+function getCartFeatures(cart) {
+  const featureCount = {};
+
+  Object.values(cart).forEach(({ product }) => {
+    (product.features || []).forEach(f => {
+      featureCount[f] = (featureCount[f] || 0) + 1;
+    });
+  });
+
+  return featureCount;
+}
+
+function scoreProduct(product, cartFeatures) {
+  let score = 0;
+
+  (product.features || []).forEach(f => {
+    if (cartFeatures[f]) score += cartFeatures[f];
+  });
+
+  return score;
+}
+
+function explainRecommendations(cart) {
+  const features = getCartFeatures(cart);
+  const entries = Object.entries(features);
+
+  if (entries.length === 0) return "Based on your browsing style";
+
+  const top = entries.sort((a,b)=>b[1]-a[1])[0];
+
+  const map = {
+    cosmic: "cosmic-inspired jewelry",
+    wood: "natural wooden designs",
+    bright: "bold colorful pieces",
+    custom: "customizable designs"
+  };
+
+  return `Based on your interest in ${map[top[0]] || top[0]} pieces`;
+}
+
+document.getElementById("aiReason").innerText = explainRecommendations(cart);
+
+// ---------------- RECOMMENDATIONS ----------------
+function getRecommendations(products, cart, limit = 4) {
+  const cartIds = new Set(Object.values(cart).map(i => i.product.id));
+  const cartFeatures = getCartFeatures(cart);
+
+  return products
+    .filter(p => !cartIds.has(p.id))
+    .map(p => ({
+      product: p,
+      score: scoreProduct(p, cartFeatures)
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(x => x.product);
+}
+
+// ---------------- RENDER RECS ----------------
+const recContainer = document.getElementById("recs");
+
+function renderRecs() {
+  const recommended = getRecommendations(products, cart);
+
+  recContainer.innerHTML = "";
+
+  recommended.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${p.image}" style="width:100%; border-radius:10px;">
+      <p><b>${p.name}</b></p>
+      <p>$${p.price.toFixed(2)}</p>
+      <button onclick="addToCart('${p.id}')">Add</button>
+    `;
+
+    recContainer.appendChild(card);
+  });
+}
+
+renderRecs();
+
+// ---------------- ADD TO CART ----------------
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+
+  if (!cart[id]) cart[id] = { product, qty: 1 };
+  else cart[id].qty++;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  renderCart();
+  renderRecs();
+}
