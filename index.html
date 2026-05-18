@@ -131,7 +131,7 @@
   padding: 0 2rem;
 
   display: grid;
-  grid-template-columns: minmax(0, 4fr) 280px;
+  grid-template-columns: minmax(0, 1fr) 260px;
   gap: 2.5rem;
   align-items: start;
 }
@@ -184,7 +184,7 @@
   display: grid;
 
   grid-template-columns:
-    repeat(auto-fit, minmax(260px, 1fr));
+    repeat(auto-fit, minmax(200px, 1fr));
 
   gap: 1.5rem;
 }
@@ -291,22 +291,23 @@
 
     /* ===== CART ===== */
     .cart {
-      background: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      position: sticky;
-      top: 5rem;
-      max-height: calc(100vh - 8rem);
-      overflow-y: auto;
-      .cart {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  position: sticky;
+  top: 5rem;
+
   width: 100%;
   max-width: 280px;
+
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
 }
-    }
 
     .cart-items {
       flex: 1 1 auto;
@@ -470,9 +471,6 @@
 
 <main>
 
-  <div>
-     <main>
-
   <!-- LEFT COLUMN -->
   <div>
 
@@ -513,6 +511,8 @@
         Questions or custom requests? Email:
         <a href="mailto:autumnaa2110@gmail.com">autumnaa2110@gmail.com</a>
       </p>
+
+      </section>
 
   </div>
 
@@ -915,11 +915,7 @@ Order: ${orderDetails}
   <div class="caption">This piece was inspired by the curiosity of mice</div>
 </div>
 
-</body>
-
-</html>
-
- <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
+<div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
   <img id="lightbox-img" style="max-width:90%; max-height:90%; margin:auto; display:block;" />
 </div>
 
@@ -932,5 +928,8 @@ Order: ${orderDetails}
   function closeLightbox() {
     document.getElementById('lightbox').style.display = 'none';
   }
-
 </script>
+
+</body>
+
+</html>
