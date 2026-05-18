@@ -54,6 +54,17 @@
       text-decoration: none;
     }
 
+    body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(white 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
     header {
       background: #fff;
       border-bottom: 1px solid var(--border);
@@ -164,6 +175,23 @@
       max-width: 32rem;
     }
 
+    .trust-bar {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.7);
+
+  text-align: center;
+
+  font-size: 0.9rem;
+  color: var(--accent-dark);
+
+  font-weight: 600;
+
+  backdrop-filter: blur(6px);
+}
+
     .hero-tagline {
       margin-top: 0.75rem;
       font-size: 0.95rem;
@@ -200,12 +228,27 @@
   flex-direction: column;
 }
 
+.product-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 28px rgba(0,0,0,0.12);
+}
+
     .product-image {
       width: 100%;
       height: 250px;
       object-fit: cover;
       border-radius: 8px;
     }
+
+    .product-image {
+  aspect-ratio: 1 / 1;
+}
 
     /* Placeholder gradients using your palette */
     .img-1 { background: linear-gradient(135deg, var(--yellow), var(--orange)); }
@@ -357,6 +400,13 @@
       font-weight: 700;
     }
 
+    .checkout {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding-top: 1rem;
+}
+
     .checkout label {
       display: flex;
       flex-direction: column;
@@ -473,6 +523,10 @@
 
   <!-- LEFT COLUMN -->
   <div>
+
+<div class="trust-bar">
+  ✨ Handmade • Small Batch • Custom Pieces Available
+</div>
 
     <section class="hero">
       <div class="hero-content">
@@ -915,8 +969,8 @@ Order: ${orderDetails}
   <div class="caption">This piece was inspired by the curiosity of mice</div>
 </div>
 
-<div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:black;">
-  <img id="lightbox-img" style="max-width:90%; max-height:90%; margin:auto; display:block;" />
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" />
 </div>
 
 <script>
