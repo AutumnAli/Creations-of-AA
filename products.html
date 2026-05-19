@@ -4,10 +4,7 @@
 <meta charset="UTF-8" />
 <title>Shop All Products | Creations of AA</title>
 
-<link rel="stylesheet" href="style.css" />
-
 <style>
-/* ===== LAYOUT FIX ===== */
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
@@ -50,11 +47,28 @@ body {
   display: flex;
 }
 
-/* SIDEBAR */
+/* SIDEBAR FILTERS */
 .sidebar {
   width: 220px;
   padding: 20px;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.85);
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  font-weight: 600;
+}
+
+.sidebar button:hover {
+  background: #ff9f50;
+  color: white;
 }
 
 /* MAIN */
@@ -83,11 +97,12 @@ body {
   transform: translateY(-5px);
 }
 
-/* FIX ALL IMAGE ISSUES */
+/* FIXED IMAGE SYSTEM (THIS SOLVES YOUR SIZE ISSUE) */
 .product-card img {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 180px;
+  object-fit: contain; /* IMPORTANT CHANGE */
+  background: #fff;
   border-radius: 10px;
 }
 
@@ -107,7 +122,6 @@ body {
   background: #e57f2c;
 }
 
-/* CART COUNTER */
 .cart-count {
   background: white;
   color: #e57f2c;
@@ -117,12 +131,10 @@ body {
   font-weight: bold;
 }
 </style>
-
 </head>
 
 <body>
 
-<!-- TOP BAR -->
 <div class="top-bar">
   <a href="index.html" class="back-home">← Back to Home</a>
 
@@ -133,48 +145,65 @@ body {
 
 <div class="layout">
 
-  <!-- SIDEBAR -->
+  <!-- FILTERS -->
   <aside class="sidebar">
     <h2>Shop</h2>
-    <ul>
-      <li><a href="products.html">All Products</a></li>
-      <li><a href="earrings.html">Earrings</a></li>
-      <li><a href="necklaces.html">Necklaces</a></li>
-      <li><a href="bracelets.html">Bracelets</a></li>
-    </ul>
+
+    <button onclick="filter('all')">All Products</button>
+    <button onclick="filter('earring')">Earrings</button>
+    <button onclick="filter('necklace')">Necklaces</button>
+    <button onclick="filter('bracelet')">Bracelets</button>
   </aside>
 
-  <!-- MAIN -->
+  <!-- PRODUCTS -->
   <main class="content">
-    <h1>All Products</h1>
-
+    <h1 id="title">All Products</h1>
     <section class="product-grid" id="grid"></section>
   </main>
 
 </div>
 
 <script>
-/* ================= CART ================= */
+
+/* CART */
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
-/* ================= PRODUCTS ================= */
+/* PRODUCTS (NOW FIXED WITH CATEGORIES) */
 const products = [
-  {id:"shooting-star",name:"Shooting Star",price:15,image: "products/shooting-star.png"},
-  {id:"the-ants",name:"The Ants",price:10,image:"products/the-ants.png"},
-  {id:"aligned",name:"Aligned",price:10,image:"products/aligned.png"},
-  {id:"constellations",name:"Constellations",price:15,image:"products/constellations.png"},
-  {id:"cerulean",name:"Cerulean",price:10,image:"products/cerulean.png"},
-  {id:"AA-collectable",name:"AA Collectable",price:15,image:"products/AA-collectable.png"},
-  {id:"custom-ms",name:"Custo M's",price:15,image:"products/Custo M's.png"},
-  {id:"the-mice",name:"The Mice",price:10,image:"products/the-mice.png"}
+  {id:"shooting-star",name:"Shooting Star",price:15,image:"products/shooting-star.png",cat:"earring"},
+  {id:"the-ants",name:"The Ants",price:10,image:"products/the-ants.png",cat:"earring"},
+  {id:"aligned",name:"Aligned",price:10,image:"products/aligned.png",cat:"earring"},
+  {id:"constellations",name:"Constellations",price:15,image:"products/constellations.png",cat:"necklace"},
+  {id:"cerulean",name:"Cerulean",price:10,image:"products/cerulean.png",cat:"earring"},
+  {id:"AA-collectable",name:"AA Collectable",price:15,image:"products/AA-collectable.png",cat:"earring"},
+  {id:"custom-ms",name:"Custo M's",price:15,image:"products/custom-ms.png",cat:"earring"},
+  {id:"the-mice",name:"The Mice",price:10,image:"products/the-mice.png",cat:"earring"},
+  {id:"keiper",name:"Keiper",price:5,image:"products/keiper.png",cat:"bracelet"},
+  {id:"solar",name:"Solar",price:5,image:"products/solar.png",cat:"bracelet"},
+  {id:"saturn",name:"Saturn",price:5,image:"products/saturn.png",cat:"bracelet"}
 ];
 
-/* ================= RENDER PRODUCTS ================= */
+let currentFilter = "all";
+
+/* FILTER SYSTEM */
+function filter(type) {
+  currentFilter = type;
+  document.getElementById("title").innerText =
+    type === "all" ? "All Products" : type.charAt(0).toUpperCase() + type.slice(1);
+
+  render();
+}
+
+/* RENDER */
 function render() {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
 
-  products.forEach(p => {
+  const filtered = products.filter(p =>
+    currentFilter === "all" ? true : p.cat === currentFilter
+  );
+
+  filtered.forEach(p => {
     grid.innerHTML += `
       <div class="product-card">
         <img src="${p.image}" alt="${p.name}">
@@ -190,7 +219,7 @@ function render() {
   updateCartCount();
 }
 
-/* ================= ADD TO CART ================= */
+/* CART */
 function add(id) {
   const p = products.find(x => x.id === id);
 
@@ -201,13 +230,12 @@ function add(id) {
   updateCartCount();
 }
 
-/* ================= CART COUNT ================= */
+/* COUNT */
 function updateCartCount() {
   let count = Object.values(cart).reduce((a,b)=>a+b.qty,0);
   document.getElementById("cartCount").innerText = count;
 }
 
-/* ================= GO TO CART ================= */
 function goToCart() {
   window.location.href = "cart.html";
 }
