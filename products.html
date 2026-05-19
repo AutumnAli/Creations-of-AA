@@ -64,6 +64,7 @@ body {
   cursor: pointer;
   background: white;
   font-weight: 600;
+  transition: 0.2s;
 }
 
 .sidebar button:hover {
@@ -97,16 +98,15 @@ body {
   transform: translateY(-5px);
 }
 
-/* FIXED IMAGE SYSTEM (THIS SOLVES YOUR SIZE ISSUE) */
+/* FIXED IMAGE CONSISTENCY */
 .product-card img {
   width: 100%;
   height: 180px;
-  object-fit: contain; /* IMPORTANT CHANGE */
-  background: #fff;
+  object-fit: contain;
+  background: white;
   border-radius: 10px;
 }
 
-/* BUTTON */
 .add-btn {
   background: #ff9f50;
   border: none;
@@ -131,6 +131,7 @@ body {
   font-weight: bold;
 }
 </style>
+
 </head>
 
 <body>
@@ -165,36 +166,45 @@ body {
 
 <script>
 
-/* CART */
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
+let currentFilter = "all";
 
-/* PRODUCTS (NOW FIXED WITH CATEGORIES) */
+/* ================= COMPLETE PRODUCT DATABASE ================= */
 const products = [
+  /* EARRINGS */
   {id:"shooting-star",name:"Shooting Star",price:15,image:"products/shooting-star.png",cat:"earring"},
   {id:"the-ants",name:"The Ants",price:10,image:"products/the-ants.png",cat:"earring"},
   {id:"aligned",name:"Aligned",price:10,image:"products/aligned.png",cat:"earring"},
-  {id:"constellations",name:"Constellations",price:15,image:"products/constellations.png",cat:"necklace"},
   {id:"cerulean",name:"Cerulean",price:10,image:"products/cerulean.png",cat:"earring"},
   {id:"AA-collectable",name:"AA Collectable",price:15,image:"products/AA-collectable.png",cat:"earring"},
   {id:"custom-ms",name:"Custo M's",price:15,image:"products/custom-ms.png",cat:"earring"},
   {id:"the-mice",name:"The Mice",price:10,image:"products/the-mice.png",cat:"earring"},
+
+  /* NECKLACES */
+  {id:"constellations",name:"Constellations",price:15,image:"products/constellations.png",cat:"necklace"},
+  {id:"expansions",name:"Expansions",price:18,image:"products/expansions.png",cat:"necklace"},
+  {id:"newton",name:"Newton",price:10,image:"products/newton.png",cat:"necklace"},
+  {id:"life",name:"Life",price:10,image:"products/life.png",cat:"necklace"},
+
+  /* BRACELETS */
   {id:"keiper",name:"Keiper",price:5,image:"products/keiper.png",cat:"bracelet"},
   {id:"solar",name:"Solar",price:5,image:"products/solar.png",cat:"bracelet"},
   {id:"saturn",name:"Saturn",price:5,image:"products/saturn.png",cat:"bracelet"}
 ];
 
-let currentFilter = "all";
-
-/* FILTER SYSTEM */
+/* ================= FILTER ================= */
 function filter(type) {
   currentFilter = type;
+
   document.getElementById("title").innerText =
-    type === "all" ? "All Products" : type.charAt(0).toUpperCase() + type.slice(1);
+    type === "all"
+      ? "All Products"
+      : type.charAt(0).toUpperCase() + type.slice(1);
 
   render();
 }
 
-/* RENDER */
+/* ================= RENDER ================= */
 function render() {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
@@ -219,7 +229,7 @@ function render() {
   updateCartCount();
 }
 
-/* CART */
+/* ================= CART ================= */
 function add(id) {
   const p = products.find(x => x.id === id);
 
@@ -230,7 +240,6 @@ function add(id) {
   updateCartCount();
 }
 
-/* COUNT */
 function updateCartCount() {
   let count = Object.values(cart).reduce((a,b)=>a+b.qty,0);
   document.getElementById("cartCount").innerText = count;
@@ -241,6 +250,7 @@ function goToCart() {
 }
 
 render();
+
 </script>
 
 </body>

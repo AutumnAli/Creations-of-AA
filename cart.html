@@ -182,20 +182,13 @@ const products = [
   {id:"shooting-star",name:"Shooting Star",price:15,tag:"Bright",image:"products/shooting-star.png"},
   {id:"the-ants",name:"The Ants",price:10,tag:"Popular",image:"products/the-ants.png"},
   {id:"constellations",name:"Constellations",price:15,tag:"Cosmic",image:"products/constellations.png"},
-  {id:"expansions",name:"Expansions",price:18,tag:"Intricate",image:"products/expansions.png"},
-  {id:"cerulean",name:"Cerulean",price:15,tag:"Bright",image:"products/cerulean.png"},
-  {id:"saturn",name:"Saturn",price:5,tag:"Cosmic",image:"products/saturn.png"},
-  {id:"life",name:"Life",price:10,tag:"Symbolic",image:"products/life.png"},
-  {id:"aligned",name:"Aligned",price:15,tag:"Classic",image:"products/aligned.png"},
-  {id:"custo m's",name:"Custo M's",price:15,tag:"Custom",image:"products/Custo M's.png"},
-  {id:"AA-collectable",name:"AA Collectable",price:15,tag:"Limited-Time (Custom)",image:"products/AA-collectable.png"},
-  {id:"the-mice",name:"The Mice",price:5,tag:"Unique",image:"products/the-mice.png"},
-  {id:"newton",name:"Newton",price:10,tag:"Symbolic",image:"products/newton.png"},
-  {id:"solar",name:"Solar",price:5,tag:"Cosmic",image:"products/solar.png"},
-  {id:"keiper",name:"Keiper",price:5,tag:"Cosmic",image:"products/keiper.png"}
+  {id:"expansions",name:"Expansions",price:18,tag:"Earthy",image:"products/expansions.png"},
+  {id:"cerulean",name:"Cerulean",price:10,tag:"Bright",image:"products/cerulean.png"},
+  {id:"saturn",name:"Saturn",price:5,tag:"Cosmic",image:"products/saturn.png"}
 ];
 
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
 /* RENDER CART */
 function renderCart() {
   const el = document.getElementById("cartGrid");
