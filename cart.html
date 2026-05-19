@@ -143,12 +143,12 @@ header {
    PRODUCTS (must match homepage IDs)
 ========================= */
 const products = [
-  {id:"shooting-star",name:"Shooting Star",price:15,tag:"Bright",image:"shooting-star.png"},
-  {id:"the-ants",name:"The Ants",price:10,tag:"Popular",image:"the-ants.png"},
-  {id:"constellations",name:"Constellations",price:15,tag:"Cosmic",image:"constellations.png"},
-  {id:"expansions",name:"Expansions",price:18,tag:"Earthy",image:"expansions.png"},
-  {id:"cerulean",name:"Cerulean",price:10,tag:"Bright",image:"cerulean.png"},
-  {id:"saturn",name:"Saturn",price:5,tag:"Cosmic",image:"saturn.png"}
+  {id:"shooting-star",name:"Shooting Star",price:15,tag:"Bright",image:"images/shooting-star.png"},
+  {id:"the-ants",name:"The Ants",price:10,tag:"Popular",image:"images/the-ants.png"},
+  {id:"constellations",name:"Constellations",price:15,tag:"Cosmic",image:"images/constellations.png"},
+  {id:"expansions",name:"Expansions",price:18,tag:"Earthy",image:"images/expansions.png"},
+  {id:"cerulean",name:"Cerulean",price:10,tag:"Bright",image:"images/cerulean.png"},
+  {id:"saturn",name:"Saturn",price:5,tag:"Cosmic",image:"images/saturn.png"}
 ];
 
 /* =========================
@@ -169,12 +169,20 @@ function renderCart() {
     total += i.product.price * i.qty;
 
     el.innerHTML += `
-  <div class="rec-card">
-    <img src="${p.image}" style="width:100%; border-radius:8px; margin-bottom:6px;">
-    <b>${p.name}</b>
-    <div class="small">${p.tag}</div>
-    <div>$${p.price}</div>
-    <button class="btn" onclick="add('${p.id}')">Add</button>
+  <div class="item">
+    <div style="display:flex; gap:10px; align-items:center;">
+      
+      <img src="${i.product.image}" 
+           style="width:50px;height:50px;object-fit:cover;border-radius:8px;">
+
+      <div>
+        <b>${i.product.name}</b>
+        <div class="small">x${i.qty}</div>
+      </div>
+
+    </div>
+
+    <div>$${(i.product.price * i.qty).toFixed(2)}</div>
   </div>
 `;
     });
