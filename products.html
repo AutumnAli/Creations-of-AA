@@ -20,18 +20,19 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 15px 20px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
   position: sticky;
   top: 0;
-  z-index: 10;
 }
 
 .back-home {
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
   color: #e57f2c;
 }
 
+/* CART */
 .cart-btn {
   background: #ff9f50;
   color: white;
@@ -47,27 +48,35 @@ body {
   display: flex;
 }
 
-/* SIDEBAR FILTERS */
+/* SIDEBAR (FIXED THE WHITE ISSUE) */
 .sidebar {
   width: 220px;
   padding: 20px;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255,255,255,0.2);
 }
 
-.sidebar button {
+.sidebar h2 {
+  color: #2b2b2b;
+}
+
+.sidebar a {
   display: block;
-  width: 100%;
-  margin: 6px 0;
-  padding: 10px;
+  padding: 8px;
+  margin: 5px 0;
   border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: white;
-  font-weight: 600;
+  text-decoration: none;
+  color: #2b2b2b;
   transition: 0.2s;
 }
 
-.sidebar button:hover {
+/* FILTER STYLE (ALL SAME LOOK) */
+.sidebar a:hover {
+  background: rgba(255,159,80,0.25);
+}
+
+.sidebar a.active {
   background: #ff9f50;
   color: white;
 }
@@ -87,7 +96,7 @@ body {
 
 /* CARD */
 .product-card {
-  background: white;
+  background: rgba(255,255,255,0.92);
   border-radius: 12px;
   padding: 10px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
@@ -98,15 +107,15 @@ body {
   transform: translateY(-5px);
 }
 
-/* FIXED IMAGE CONSISTENCY */
+/* FIX ALL IMAGE SIZES (Custo M + Mice INCLUDED) */
 .product-card img {
   width: 100%;
-  height: 180px;
-  object-fit: contain;
-  background: white;
+  height: 200px;
+  object-fit: cover;
   border-radius: 10px;
 }
 
+/* BUTTON */
 .add-btn {
   background: #ff9f50;
   border: none;
@@ -122,6 +131,7 @@ body {
   background: #e57f2c;
 }
 
+/* CART COUNT */
 .cart-count {
   background: white;
   color: #e57f2c;
@@ -131,7 +141,6 @@ body {
   font-weight: bold;
 }
 </style>
-
 </head>
 
 <body>
@@ -150,67 +159,51 @@ body {
   <aside class="sidebar">
     <h2>Shop</h2>
 
-    <button onclick="filter('all')">All Products</button>
-    <button onclick="filter('earring')">Earrings</button>
-    <button onclick="filter('necklace')">Necklaces</button>
-    <button onclick="filter('bracelet')">Bracelets</button>
+    <a href="#" class="active" onclick="filter('all')">All Products</a>
+    <a href="#" onclick="filter('earrings')">Earrings</a>
+    <a href="#" onclick="filter('necklaces')">Necklaces</a>
+    <a href="#" onclick="filter('bracelets')">Bracelets</a>
   </aside>
 
-  <!-- PRODUCTS -->
+  <!-- MAIN -->
   <main class="content">
-    <h1 id="title">All Products</h1>
+    <h1>Shop</h1>
     <section class="product-grid" id="grid"></section>
   </main>
 
 </div>
 
 <script>
-
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
-let currentFilter = "all";
 
-/* ================= COMPLETE PRODUCT DATABASE ================= */
 const products = [
-  /* EARRINGS */
-  {id:"shooting-star",name:"Shooting Star",price:15,image:"products/shooting-star.png",cat:"earring"},
-  {id:"the-ants",name:"The Ants",price:10,image:"products/the-ants.png",cat:"earring"},
-  {id:"aligned",name:"Aligned",price:10,image:"products/aligned.png",cat:"earring"},
-  {id:"cerulean",name:"Cerulean",price:10,image:"products/cerulean.png",cat:"earring"},
-  {id:"AA-collectable",name:"AA Collectable",price:15,image:"products/AA-collectable.png",cat:"earring"},
-  {id:"custom-ms",name:"Custo M's",price:15,image:"products/custom-ms.png",cat:"earring"},
-  {id:"the-mice",name:"The Mice",price:10,image:"products/the-mice.png",cat:"earring"},
+  {id:"shooting-star", name:"Shooting Star", price:15, image:"products/shooting-star.png", category:"earrings"},
+  {id:"the-ants", name:"The Ants", price:10, image:"products/the-ants.png", category:"earrings"},
+  {id:"aligned", name:"Aligned", price:10, image:"products/aligned.png", category:"earrings"},
+  {id:"constellations", name:"Constellations", price:15, image:"products/constellations.png", category:"earrings"},
 
-  /* NECKLACES */
-  {id:"constellations",name:"Constellations",price:15,image:"products/constellations.png",cat:"necklace"},
-  {id:"expansions",name:"Expansions",price:18,image:"products/expansions.png",cat:"necklace"},
-  {id:"newton",name:"Newton",price:10,image:"products/newton.png",cat:"necklace"},
-  {id:"life",name:"Life",price:10,image:"products/life.png",cat:"necklace"},
+  {id:"expansions", name:"Expansions", price:18, image:"products/expansions.png", category:"necklaces"},
+  {id:"newton", name:"Newton", price:10, image:"products/newton.png", category:"necklaces"},
+  {id:"life", name:"Life", price:10, image:"products/life.png", category:"necklaces"},
 
-  /* BRACELETS */
-  {id:"keiper",name:"Keiper",price:5,image:"products/keiper.png",cat:"bracelet"},
-  {id:"solar",name:"Solar",price:5,image:"products/solar.png",cat:"bracelet"},
-  {id:"saturn",name:"Saturn",price:5,image:"products/saturn.png",cat:"bracelet"}
+  {id:"AA-collectable", name:"AA Collectable", price:15, image:"products/AA-collectable.png", category:"earrings"},
+  {id:"custom-ms", name:"Custo M's", price:15, image:"products/Custo M's.png", category:"earrings"},
+
+  {id:"the-mice", name:"The Mice", price:10, image:"products/the-mice.png", category:"earrings"},
+
+  {id:"solar", name:"Solar", price:5, image:"products/solar.png", category:"bracelets"},
+  {id:"keiper", name:"Keiper", price:5, image:"products/keiper.png", category:"bracelets"},
+  {id:"saturn", name:"Saturn", price:5, image:"products/saturn.png", category:"bracelets"}
 ];
 
-/* ================= FILTER ================= */
-function filter(type) {
-  currentFilter = type;
+let currentFilter = "all";
 
-  document.getElementById("title").innerText =
-    type === "all"
-      ? "All Products"
-      : type.charAt(0).toUpperCase() + type.slice(1);
-
-  render();
-}
-
-/* ================= RENDER ================= */
 function render() {
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
 
   const filtered = products.filter(p =>
-    currentFilter === "all" ? true : p.cat === currentFilter
+    currentFilter === "all" ? true : p.category === currentFilter
   );
 
   filtered.forEach(p => {
@@ -219,9 +212,7 @@ function render() {
         <img src="${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
         <p>$${p.price}</p>
-        <button class="add-btn" onclick="add('${p.id}')">
-          Add to Cart
-        </button>
+        <button class="add-btn" onclick="add('${p.id}')">Add to Cart</button>
       </div>
     `;
   });
@@ -229,7 +220,15 @@ function render() {
   updateCartCount();
 }
 
-/* ================= CART ================= */
+function filter(type) {
+  currentFilter = type;
+  render();
+
+  // update active filter UI
+  document.querySelectorAll(".sidebar a").forEach(a => a.classList.remove("active"));
+  event.target.classList.add("active");
+}
+
 function add(id) {
   const p = products.find(x => x.id === id);
 
@@ -250,7 +249,6 @@ function goToCart() {
 }
 
 render();
-
 </script>
 
 </body>
