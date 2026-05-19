@@ -75,13 +75,15 @@
     }
 
     .nav {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0.75rem 1.25rem;
-      display: flex;
-      align-items: center;
-    justify-content: space-between;
-    }
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
     
     .brand {
   display: flex;
@@ -183,6 +185,24 @@
         grid-template-columns: 1fr;
       }
     }
+
+    @media (max-width: 850px) {
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .cart-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
 
     @keyframes pop {
   0% { transform: scale(0.98); opacity: 0.5; }
@@ -583,8 +603,6 @@
       <a href="#contact">Contact</a>
     </div>
 
-    <a href="index.html" class="home-button">← Back to Home</a>
-
     <button class="cart-button" id="cartButton">
       🛒 Cart <span class="cart-count" id="cartCount">0</span>
     </button>
@@ -807,7 +825,7 @@
   },
 
   {
-    id: "the-mice",
+    id: ".",
     name: "The Mice",
     description: "Step up your accessory game with these charming and unique earrings that blend natural warmth with a touch of metallic shine! Featuring a bold, earthy orange bead perfectly framed by sleek metallic spheres, these earrings bring a delightful balance of rustic and modern vibes to any outfit. Whether you're dressing up for a night out or adding a pop of personality to your everyday look, these earrings are your new go-to for effortless style. Lightweight and comfortable, they’re designed to make you feel as good as you look. Embrace the playful yet sophisticated spirit of these earrings and let them become your signature statement piece!",
     price: 5,
