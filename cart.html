@@ -15,6 +15,7 @@ body {
   color: #2b2b2b;
 }
 
+/* HEADER */
 header {
   text-align: center;
   padding: 20px;
@@ -23,15 +24,30 @@ header {
   color: white;
 }
 
+/* BACK BUTTON */
+.back-home {
+  display: inline-block;
+  margin: 10px 20px;
+  padding: 10px 16px;
+  background: white;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #2b2b2b;
+  font-weight: 600;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* LAYOUT */
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 2fr 1fr;
   gap: 20px;
 }
 
+/* CARDS */
 .card {
   background: white;
   padding: 15px;
@@ -39,12 +55,34 @@ header {
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-.item {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 8px;
+/* PRODUCT GRID (matches homepage style) */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.product-body {
+  padding: 10px;
+}
+
+.product-body h3 {
+  margin: 0;
+  font-size: 1rem;
 }
 
 .small {
@@ -52,6 +90,7 @@ header {
   color: #666;
 }
 
+/* BUTTON */
 .btn {
   background: #ff9f50;
   border: none;
@@ -60,15 +99,17 @@ header {
   border-radius: 20px;
   cursor: pointer;
   width: 100%;
+  margin-top: 8px;
 }
 
 .btn:hover {
   background: #e57f2c;
 }
 
+/* RECOMMENDATIONS */
 .rec-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: 1fr;
   gap: 10px;
 }
 
@@ -80,8 +121,10 @@ header {
 }
 
 .rec-card img {
+  width: 100%;
   height: 120px;
   object-fit: cover;
+  border-radius: 8px;
 }
 </style>
 </head>
@@ -89,17 +132,16 @@ header {
 <body>
 
 <header>🛒 Your Cart</header>
-
 <a href="index.html" class="back-home">← Back to Home</a>
 
 <div class="container">
 
-  <!-- LEFT: CART + CHECKOUT -->
+  <!-- LEFT -->
   <div>
 
     <div class="card">
-      <h2>Cart Items</h2>
-      <div id="cart"></div>
+      <h2>Your Items</h2>
+      <div id="cartGrid" class="product-grid"></div>
       <h3>Total: <span id="total">$0.00</span></h3>
       <p class="small" id="insight"></p>
     </div>
@@ -114,26 +156,20 @@ header {
 
         <input type="hidden" name="orderDetails" id="orderDetailsField">
 
-        <input id="name" placeholder="Full Name" required
-          style="width:100%;padding:8px;margin:5px 0;">
-
-        <input id="email" placeholder="Email" type="email" required
-          style="width:100%;padding:8px;margin:5px 0;">
-
-        <textarea id="address" placeholder="Address" required
-          style="width:100%;padding:8px;margin:5px 0;"></textarea>
+        <input id="name" placeholder="Full Name" required style="width:100%;padding:8px;margin:5px 0;">
+        <input id="email" placeholder="Email" type="email" required style="width:100%;padding:8px;margin:5px 0;">
+        <textarea id="address" placeholder="Address" required style="width:100%;padding:8px;margin:5px 0;"></textarea>
 
         <button class="btn" type="submit">Place Order</button>
-
         <p id="msg" class="small"></p>
       </form>
     </div>
 
   </div>
 
-  <!-- RIGHT: AI RECOMMENDATIONS -->
+  <!-- RIGHT -->
   <div class="card">
-    <h2>Recommended for you</h2>
+    <h2>Recommended</h2>
     <div class="rec-grid" id="recs"></div>
   </div>
 
@@ -141,9 +177,7 @@ header {
 
 <script>
 
-/* =========================
-   PRODUCTS (must match homepage IDs)
-========================= */
+/* PRODUCTS */
 const products = [
   {id:"shooting-star",name:"Shooting Star",price:15,tag:"Bright",image:"products/shooting-star.png"},
   {id:"the-ants",name:"The Ants",price:10,tag:"Popular",image:"products/the-ants.png"},
@@ -153,54 +187,58 @@ const products = [
   {id:"saturn",name:"Saturn",price:5,tag:"Cosmic",image:"products/saturn.png"}
 ];
 
-/* =========================
-   CART LOAD
-========================= */
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
-/* =========================
-   RENDER CART
-========================= */
+/* RENDER CART */
 function renderCart() {
-  const el = document.getElementById("cart");
+  const el = document.getElementById("cartGrid");
   el.innerHTML = "";
 
   let total = 0;
 
-  Object.values(cart).forEach(i => {
-    total += i.product.price * i.qty;
+  Object.values(cart).forEach(item => {
+    total += item.product.price * item.qty;
 
-    el.innerHTML += `
-  <div class="item">
-    <div style="display:flex; gap:10px; align-items:center;">
-      
-      <img src="${i.product.image}" 
-           style="width:50px;height:50px;object-fit:cover;border-radius:8px;">
+    const card = document.createElement("div");
+    card.className = "product-card";
 
-      <div>
-        <b>${i.product.name}</b>
-        <div class="small">x${i.qty}</div>
+    card.innerHTML = `
+      <img src="${item.product.image}">
+      <div class="product-body">
+        <h3>${item.product.name}</h3>
+        <p class="small">Qty: ${item.qty}</p>
+        <p>$${(item.product.price * item.qty).toFixed(2)}</p>
+
+        <button class="btn" onclick="changeQty('${item.product.id}', 1)">+</button>
+        <button class="btn" onclick="changeQty('${item.product.id}', -1)">-</button>
       </div>
+    `;
 
-    </div>
-
-    <div>$${(i.product.price * i.qty).toFixed(2)}</div>
-  </div>
-`;
-    });
+    el.appendChild(card);
+  });
 
   document.getElementById("total").innerText = "$" + total.toFixed(2);
-
   updateInsight();
 }
 
-/* =========================
-   SIMPLE AI INSIGHT
-========================= */
+/* QTY */
+function changeQty(id, delta) {
+  if (!cart[id]) return;
+
+  cart[id].qty += delta;
+
+  if (cart[id].qty <= 0) delete cart[id];
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+  renderRecs();
+}
+
+/* INSIGHT */
 function updateInsight() {
   if (Object.keys(cart).length === 0) {
     document.getElementById("insight").innerText =
-      "Add items to unlock AI recommendations.";
+      "Add items to unlock AI insights.";
     return;
   }
 
@@ -215,40 +253,29 @@ function updateInsight() {
     "AI Insight: You prefer " + top[0] + " styles.";
 }
 
-/* =========================
-   RECOMMENDATIONS ENGINE
-========================= */
-function getRecs() {
-  const owned = new Set(Object.keys(cart));
-
-  return products
-    .filter(p => !owned.has(p.id))
-    .sort((a,b) => (b.price + Math.random()*10) - (a.price + Math.random()*10))
-    .slice(0,4);
-}
-
-/* =========================
-   RENDER RECS
-========================= */
+/* RECS */
 function renderRecs() {
   const el = document.getElementById("recs");
   el.innerHTML = "";
 
-  getRecs().forEach(p => {
-    el.innerHTML += `
-      <div class="rec-card">
-        <b>${p.name}</b>
-        <div class="small">${p.tag}</div>
-        <div>$${p.price}</div>
-        <button class="btn" onclick="add('${p.id}')">Add</button>
-      </div>
-    `;
-  });
+  const owned = new Set(Object.keys(cart));
+
+  products
+    .filter(p => !owned.has(p.id))
+    .slice(0,4)
+    .forEach(p => {
+      el.innerHTML += `
+        <div class="rec-card">
+          <img src="${p.image}">
+          <b>${p.name}</b>
+          <div class="small">${p.tag}</div>
+          <button class="btn" onclick="add('${p.id}')">Add</button>
+        </div>
+      `;
+    });
 }
 
-/* =========================
-   ADD TO CART
-========================= */
+/* ADD */
 function add(id) {
   const p = products.find(x => x.id === id);
 
@@ -256,20 +283,15 @@ function add(id) {
   else cart[id].qty++;
 
   localStorage.setItem("cart", JSON.stringify(cart));
-
   renderCart();
   renderRecs();
 }
 
-/* =========================
-   CHECKOUT
-========================= */
+/* CHECKOUT */
 document.getElementById("checkoutForm").addEventListener("submit", function(e){
   e.preventDefault();
 
   const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const address = document.getElementById("address").value;
 
   const order = Object.values(cart)
     .map(i => `${i.product.name} x${i.qty}`)
@@ -277,18 +299,10 @@ document.getElementById("checkoutForm").addEventListener("submit", function(e){
 
   document.getElementById("orderDetailsField").value =
 `Name: ${name}
-Email: ${email}
-Address: ${address}
 Order: ${order}`;
 
   document.getElementById("msg").innerText =
     "Thanks " + name + "! Order sent.";
-
-  cart = {};
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  renderCart();
-  renderRecs();
 
   this.submit();
 });
