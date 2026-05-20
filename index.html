@@ -887,18 +887,34 @@ document.getElementById("cartButton").addEventListener("click", () => {
 });
 
     function addToCart(id) {
-      const product = products.find((p) => p.id === id);
-      if (!cart[id]) cart[id] = { product, qty: 1 };
-      else cart[id].qty++;
-      renderCart();
-    }
+  const product = products.find((p) => p.id === id);
+
+  if (!cart[id]) {
+    cart[id] = { product, qty: 1 };
+  } else {
+    cart[id].qty++;
+  }
+
+  saveCart();
+  renderCart();
+}
+
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
 
     function updateQty(id, delta) {
-      if (!cart[id]) return;
-      cart[id].qty += delta;
-      if (cart[id].qty <= 0) delete cart[id];
-      renderCart();
-    }
+  if (!cart[id]) return;
+
+  cart[id].qty += delta;
+
+  if (cart[id].qty <= 0) {
+    delete cart[id];
+  }
+
+  saveCart();
+  renderCart();
+}
 
     function calculateTotals() {
       let subtotal = 0;
@@ -994,9 +1010,7 @@ document.getElementById("cartButton").addEventListener("click", () => {
     });
 
     renderCart();
-    localStorage.setItem("cart", JSON.stringify(cart));
-    localStorage.setItem("products", JSON.stringify(products));
-
+    
     checkoutForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
