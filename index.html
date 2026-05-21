@@ -8,7 +8,9 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
+
   <style>
+
 
     :root {
       /* ===== YOUR COLOR PALETTE ===== */
@@ -18,6 +20,7 @@
       --blue: #5ca8ff;
       --yellow: #ffe66d;
       --mint: #b8f2e6;
+
 
       /* ===== SITE COLORS ===== */
       --bg: var(--cream);
@@ -31,12 +34,14 @@
       --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     }
 
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+
 
   body {
   background: radial-gradient(circle at center,
@@ -49,10 +54,12 @@
   font-family: sans-serif;
 }
 
+
     a {
       color: inherit;
       text-decoration: none;
     }
+
 
     body::before {
   content: "";
@@ -65,6 +72,7 @@
   pointer-events: none;
 }
 
+
     header {
       background: #fff;
       border-bottom: 1px solid var(--border);
@@ -73,6 +81,7 @@
       z-index: 20;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     }
+
 
     .nav {
   max-width: 1100px;
@@ -84,12 +93,13 @@
   gap: 0.75rem;
   flex-wrap: wrap;
 }
-    
+   
     .brand {
   display: flex;
   align-items: center;
   gap: 0.7rem;
 }
+
 
 .logo-image {
   width: 55px;
@@ -97,6 +107,7 @@
   object-fit: contain;
   border-radius: 50%;
 }
+
 
     .logo {
       font-weight: 700;
@@ -106,15 +117,18 @@
       color: var(--accent-dark);
     }
 
+
     .nav-links {
       display: flex;
       gap: 1rem;
       font-size: 0.9rem;
     }
 
+
     .nav-links a:hover {
       color: var(--accent-dark);
     }
+
 
     .cart-button {
       background: var(--accent);
@@ -129,6 +143,7 @@
       gap: 0.4rem;
     }
 
+
     .cart-count {
       background: #fff;
       color: var(--accent-dark);
@@ -137,6 +152,7 @@
       font-size: 0.75rem;
       font-weight: 600;
     }
+
 
     .home-button {
   background: #ff9f50;
@@ -148,9 +164,11 @@
   margin-left: 10px;
 }
 
+
 .home-button:hover {
   background: #e57f2c;
 }
+
 
 .back-home {
   display: inline-block;
@@ -165,14 +183,17 @@
   transition: 0.2s ease;
 }
 
+
 .back-home:hover {
   transform: translateY(-2px);
 }
+
 
    main {
   max-width: 1600px;
   margin: 1.5rem auto 2.5rem;
   padding: 0 2rem;
+
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) 260px;
@@ -180,11 +201,13 @@
   align-items: start;
 }
 
+
     @media (max-width: 850px) {
       main {
         grid-template-columns: 1fr;
       }
     }
+
 
     @media (max-width: 850px) {
   .nav {
@@ -192,11 +215,13 @@
     align-items: flex-start;
   }
 
+
   .nav-links {
     width: 100%;
     justify-content: flex-start;
     flex-wrap: wrap;
   }
+
 
   .cart-button {
     width: 100%;
@@ -204,14 +229,17 @@
   }
 }
 
+
     @keyframes pop {
   0% { transform: scale(0.98); opacity: 0.5; }
   100% { transform: scale(1); opacity: 1; }
 }
 
+
 .animate-summary {
   animation: pop 0.25s ease;
 }
+
 
 .cart-footer {
   display: flex;
@@ -220,6 +248,7 @@
   padding-top: 0.75rem;
 }
 
+
 .cart-row {
   display: flex;
   justify-content: space-between;
@@ -227,10 +256,12 @@
   color: var(--text);
 }
 
+
 .cart-total {
   font-weight: 700;
   color: var(--accent-dark);
 }
+
 
     /* ===== HERO ===== */
     .hero {
@@ -241,11 +272,13 @@
       margin-bottom: 1.5rem;
     }
 
+
     .hero-title {
       font-size: 2rem;
       font-weight: 700;
       color: var(--accent-dark);
     }
+
 
     .hero-subtitle {
       margin-top: 0.5rem;
@@ -254,22 +287,29 @@
       max-width: 32rem;
     }
 
+
     .trust-bar {
   margin: 1rem 0;
   padding: 0.75rem;
   border-radius: 999px;
 
+
   background: rgba(255,255,255,0.7);
 
+
   text-align: center;
+
 
   font-size: 0.9rem;
   color: var(--accent-dark);
 
+
   font-weight: 600;
+
 
   backdrop-filter: blur(6px);
 }
+
 
     .hero-tagline {
       margin-top: 0.75rem;
@@ -277,6 +317,7 @@
       color: var(--blue);
       font-weight: 600;
     }
+
 
     /* ===== PRODUCT GRID ===== */
     .product-section-title {
@@ -287,25 +328,32 @@
       color: var(--muted);
     }
 
+
     .product-grid {
   display: grid;
+
 
   grid-template-columns:
     repeat(auto-fit, minmax(200px, 1fr));
 
+
   gap: 1.5rem;
 }
+
 
     .product-card {
   background: var(--card-bg);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 
+
   overflow: hidden;
+
 
   display: flex;
   flex-direction: column;
 }
+
 
 .product-card {
   transition:
@@ -313,10 +361,12 @@
     box-shadow 0.25s ease;
 }
 
+
 .product-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 28px rgba(0,0,0,0.12);
 }
+
 
 .product-image,
 .art-image {
@@ -326,6 +376,7 @@
   border-radius: 12px;
 }
 
+
     .product-image {
       width: 100%;
       height: 220px;
@@ -334,9 +385,11 @@
       display: block;
     }
 
+
     .product-image {
   aspect-ratio: 1 / 1;
 }
+
 
     /* Placeholder gradients using your palette */
     .img-1 { background: linear-gradient(135deg, var(--yellow), var(--orange)); }
@@ -344,6 +397,7 @@
     .img-3 { background: linear-gradient(135deg, var(--orange), var(--cream)); }
     .img-4 { background: linear-gradient(135deg, var(--blue), var(--yellow)); }
     .img-5 { background: linear-gradient(135deg, var(--mint), var(--yellow)); }
+
 
     .product-body {
       padding: 1rem;
@@ -353,10 +407,12 @@
       flex: 1;
     }
 
+
     .product-name {
       font-weight: 600;
       font-size: 1rem;
     }
+
 
     .product-desc {
       font-size: 0.85rem;
@@ -364,16 +420,19 @@
       flex: 1;
     }
 
+
     .product-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
+
     .product-price {
       font-weight: 700;
       color: var(--accent-dark);
     }
+
 
     .product-tag {
       background: var(--yellow);
@@ -384,6 +443,7 @@
       font-weight: 600;
     }
 
+
     .product-desc {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -391,6 +451,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 
     .btn {
       border-radius: 999px;
@@ -400,14 +461,17 @@
       cursor: pointer;
     }
 
+
     .btn-primary {
       background: var(--accent);
       color: #fff;
     }
 
+
     .btn-primary:hover {
       background: var(--accent-dark);
     }
+
 
     .btn-outline {
       background: transparent;
@@ -415,10 +479,12 @@
       color: var(--muted);
     }
 
+
     .btn-outline:hover {
       border-color: var(--accent);
       color: var(--accent-dark);
     }
+
 
     /* ===== CART ===== */
     .cart {
@@ -430,17 +496,22 @@
   flex-direction: column;
   gap: 0.75rem;
 
+
   position: sticky;
   top: 5rem;
+
 
   width: 100%;
   max-width: 280px;
 
+
   max-height: calc(100vh - 8rem);
   overflow-y: auto;
 
+
   transition: all 0.2s ease;
 }
+
 
     .cart-items {
       flex: 1 1 auto;
@@ -452,11 +523,13 @@
       padding: 0.5rem 0;
     }
 
+
     .cart-empty {
       font-size: 0.85rem;
       color: var(--muted);
       padding: 0.75rem 0.1rem;
     }
+
 
     .cart-item {
       display: grid;
@@ -467,6 +540,7 @@
       font-size: 0.85rem;
     }
 
+
     .qty-btn {
       border-radius: 999px;
       border: 1px solid var(--border);
@@ -476,11 +550,13 @@
       cursor: pointer;
     }
 
+
     .checkout h2 {
       margin: 0 0 0.75rem;
       font-size: 1.1rem;
       font-weight: 700;
     }
+
 
    .checkout {
   display: flex;
@@ -489,14 +565,17 @@
   text-align: left;
   align-items: stretch;
 
+
   position: sticky;
   top: 5rem;
+
 
   background: white;
   padding: 1rem;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
+
 
     .checkout label {
       display: flex;
@@ -510,6 +589,7 @@
       word-break: keep-all;
     }
 
+
     .checkout input,
     .checkout textarea {
       width: 100%;
@@ -519,19 +599,23 @@
       font-size: 0.85rem;
     }
 
+
     .checkout textarea {
       min-height: 100px;
       resize: vertical;
     }
 
+
     .checkout button {
       width: 100%;
     }
+
 
     .checkout-message {
       min-height: 1.5rem;
       color: var(--accent-dark);
     }
+
 
     footer {
       text-align: center;
@@ -540,10 +624,12 @@
       color: var(--muted);
     }
 
+
    .art-card {
   display: flex;
   flex-direction: column;
 }
+
 
 .art-gallery {
   display: grid;
@@ -551,6 +637,7 @@
   gap: 12px;
   padding: 20px;
 }
+
 
 .art-image {
   width: 100%;
@@ -561,15 +648,18 @@
   transition: transform 0.2s ease;
 }
 
+
 .art-image:hover {
   transform: scale(1.03);
 }
+
 
 .caption {
   font-size: 0.8rem;
   margin-top: 6px;
   color: var(--muted);
 }
+
 
 .hero-button {
   display: inline-block;
@@ -585,17 +675,22 @@
 }
 
 
+
+
     </style>
     </head>
+
 
 <body>
   <header>
   <div class="nav">
 
+
     <div class="brand">
       <img src="Creations of AA Logo.png" alt="Creations of AA Logo" class="logo-image">
       <div class="logo">Creations of AA</div>
     </div>
+
 
     <div class="nav-links">
       <a href="products.html">Shop</a>
@@ -603,21 +698,27 @@
       <a href="#contact">Contact</a>
     </div>
 
+
     <button class="cart-button" id="cartButton">
       🛒 Cart <span class="cart-count" id="cartCount">0</span>
     </button>
 
+
   </div>
 </header>
 
+
 <main>
+
 
   <!-- LEFT COLUMN -->
   <div>
 
+
 <div class="trust-bar">
   ✨ Handmade • Small Batch • Custom Pieces Available
 </div>
+
 
     <section class="hero">
       <div class="hero-content">
@@ -625,14 +726,17 @@
           Handcrafted jewelry inspired by elegance, artistry, and the cosmos
         </p>
 
+
         <a href="products.html" class="hero-button">Shop Now</a>
       </div>
     </section>
+
 
     <section id="shop">
       <h2 class="product-section-title">Featured Pieces</h2>
       <div class="product-grid" id="productGrid"></div>
     </section>
+
 
     <section id="about"
       style="margin-top: 2rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
@@ -640,11 +744,13 @@
         About the Studio
       </h2>
 
+
       <p>
         Every piece is handmade with care, using thoughtfully sourced materials and a love for color.
         Your jewelry is crafted in small batches to ensure uniqueness and quality.
       </p>
     </section>
+
 
     <section id="contact"
       style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
@@ -652,20 +758,25 @@
         Contact
       </h2>
 
+
       <p>
         Questions or custom requests? Email:
         <a href="mailto:autumnaa2110@gmail.com">autumnaa2110@gmail.com</a>
       </p>
 
+
       </section>
 
+
   </div>
+
 
   <!-- RIGHT COLUMN -->
     <aside class="cart">
       <div class="cart-items" id="cartItems">
         <div class="cart-empty">Your cart is empty</div>
       </div>
+
 
       <div class="cart-footer">
         <div class="cart-row">
@@ -682,37 +793,48 @@
         </div>
       </div>
 
-      <form id="checkoutForm" class="checkout" action="https://formspree.io/f/xpqbqqyz" method="POST">
-        <input type="hidden" name="orderDetails" id="orderDetailsField">
-        <h2>Checkout</h2>
 
-        <label>
-          Full Name
-          <input type="text" id="customerName" required>
-        </label>
+      <form id="checkoutForm" class="checkout">
+  <input type="hidden" name="orderDetails" id="orderDetailsField">
 
-        <label>
-          Email Address
-          <input type="email" id="customerEmail" required>
-        </label>
 
-        <label>
-          Shipping Address
-          <textarea id="customerAddress" required></textarea>
-        </label>
+  <h2>Checkout</h2>
 
-        <button type="submit" class="btn btn-primary">Submit Order</button>
 
-        <div id="checkoutMessage" class="checkout-message"></div>
-      </form>
+  <label>
+    Full Name
+    <input type="text" id="customerName" required>
+  </label>
+
+
+  <label>
+    Email Address
+    <input type="email" id="customerEmail" required>
+  </label>
+
+
+  <label>
+    Shipping Address
+    <textarea id="customerAddress" required></textarea>
+  </label>
+
+
+  <button type="submit" class="btn btn-primary">Submit Order</button>
+
+
+  <div id="checkoutMessage" class="checkout-message"></div>
+</form>
     </aside>
   </main>
+
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
 
+
   function revealOnScroll() {
     const windowHeight = window.innerHeight;
+
 
     reveals.forEach(el => {
       const top = el.getBoundingClientRect().top;
@@ -722,17 +844,22 @@
     });
   }
 
+
   window.addEventListener('scroll', revealOnScroll);
   revealOnScroll();
 </script>
+
 
   <footer>
     © <span id="year"></span> Creations of AA · Handmade with love
   </footer>
 
+
   <script>
 
+
    const products = [
+
 
   {
     id: "shooting-star",
@@ -744,6 +871,7 @@
     features: ["cosmic", "colorful", "bold"]
   },
 
+
   {
     id: "the-ants",
     name: "The Ants",
@@ -753,6 +881,7 @@
     image: "products/the-ants.png",
     features: ["classic", "versatile", "elegant"]
 },
+
 
   {
     id: "constellations",
@@ -764,6 +893,7 @@
     features: ["cosmic", "colorful", "bold"]
   },
 
+
   {
     id: "expansions",
     name: "Expansions",
@@ -773,6 +903,7 @@
     image: "products/expansions.png",
     features: ["natural", "elegant", "handcrafted"]
   },
+
 
   {
     id: "keiper",
@@ -784,6 +915,7 @@
     features: ["cosmic", "space", "celestial"]
   },
 
+
   {
     id: "cerulean",
     name: "Cerulean",
@@ -793,6 +925,7 @@
     image: "products/cerulean.png",
     features: ["bright", "vibrant", "playful"]
   },
+
 
   {
     id: "aligned",
@@ -804,6 +937,7 @@
     features: ["classic", "versatile", "elegant"]
   },
 
+
   {
     id: "AA-collectable",
     name: "AA-collectable (Customizable)",
@@ -813,6 +947,7 @@
     image: "products/AA-collectable.png",
     features: ["limited-time", "customizable", "exclusive"]
   },
+
 
   {
     id: "custom m's",
@@ -824,6 +959,7 @@
     features: ["customizable", "playful", "versatile"]
   },
 
+
   {
     id: ".",
     name: "The Mice",
@@ -834,6 +970,7 @@
     features: ["unique", "playful", "versatile"]
   },
 
+
   {
     id: "saturn",
     name: "Saturn",
@@ -843,6 +980,7 @@
     image: "products/saturn.png",
     features: ["cosmic", "space", "celestial"]
   },
+
 
   {
     id: "solar",
@@ -886,8 +1024,10 @@ document.getElementById("cartButton").addEventListener("click", () => {
   window.location.href = "cart.html";
 });
 
+
     function addToCart(id) {
   const product = products.find((p) => p.id === id);
+
 
   if (!cart[id]) {
     cart[id] = { product, qty: 1 };
@@ -895,26 +1035,33 @@ document.getElementById("cartButton").addEventListener("click", () => {
     cart[id].qty++;
   }
 
+
   saveCart();
   renderCart();
 }
+
 
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
+
     function updateQty(id, delta) {
   if (!cart[id]) return;
 
+
   cart[id].qty += delta;
+
 
   if (cart[id].qty <= 0) {
     delete cart[id];
   }
 
+
   saveCart();
   renderCart();
 }
+
 
     function calculateTotals() {
       let subtotal = 0;
@@ -922,13 +1069,16 @@ function saveCart() {
         subtotal += product.price * qty;
       });
 
+
       let shipping = subtotal > 0 && subtotal < 60 ? 5 : 0;
       return { subtotal, shipping, total: subtotal + shipping };
     }
 
+
     function renderCart() {
       const entries = Object.values(cart);
       cartItemsEl.innerHTML = "";
+
 
       if (entries.length === 0) {
         cartItemsEl.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
@@ -951,6 +1101,7 @@ function saveCart() {
         });
       }
 
+
       const { subtotal, shipping, total } = calculateTotals();
       const totalQty = entries.reduce((sum, item) => sum + item.qty, 0);
       cartCountEl.textContent = totalQty;
@@ -961,6 +1112,7 @@ function saveCart() {
       void document.querySelector(".cart-footer")?.offsetWidth;
       document.querySelector(".cart-footer")?.classList.add("animate-summary");
     }
+
 
     function renderProducts() {
       if (!productGrid) {
@@ -989,13 +1141,16 @@ function saveCart() {
       console.log("Products rendered");
     }
 
+
     renderProducts();
+
 
     productGrid.addEventListener("click", (event) => {
       const addButton = event.target.closest("[data-add]");
       if (!addButton) return;
       addToCart(addButton.dataset.add);
     });
+
 
     cartItemsEl.addEventListener("click", (event) => {
       const plusButton = event.target.closest("[data-plus]");
@@ -1009,37 +1164,76 @@ function saveCart() {
       }
     });
 
+
     renderCart();
-    
-    checkoutForm.addEventListener("submit", (e) => {
+   
+   checkoutForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = document.getElementById("customerName").value;
   const email = document.getElementById("customerEmail").value;
-  const address = document.getElementById("customerAddress").value;
 
-  const orderDetails = Object.values(cart)
-    .map(({ product, qty }) => `${product.name} (x${qty})`)
-    .join(", ");
+  const cartItems = Object.values(cart).map(({ product, qty }) => ({
+    name: product.name,
+    price: product.price,
+    quantity: qty
+  }));
 
-  // Put order details into hidden field for Formspree
-  document.getElementById("orderDetailsField").value = `
-Name: ${name}
-Email: ${email}
-Address: ${address}
-Order: ${orderDetails}
-  `;
+  if (cartItems.length === 0) {
+    checkoutMessage.textContent = "Your cart is empty.";
+    return;
+  }
 
-  checkoutMessage.textContent =
-    `Thank you, ${name}! Your order has been sent. ` +
-    `We will contact you at ${email} to arrange payment.`;
+  try {
+    const res = await fetch("http://localhost:3000/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email,
+        cart: cartItems
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      // Redirect user to Stripe Checkout
+      window.location.href = data.url;
+    } else {
+      checkoutMessage.textContent = "Failed to start checkout.";
+    }
+
+  } catch (err) {
+    console.error(err);
+    checkoutMessage.textContent = "Something went wrong.";
+  }
+});
+.then(res => res.json())
+.then(data => {
+  window.location.href = data.url;
+});
+.then(res => res.json())
+.then(data => {
+  console.log(data);
 
   // Clear cart
   for (let key in cart) delete cart[key];
-  renderCart();
 
-  // Now actually submit the form to Formspree
-  checkoutForm.submit();
+
+  renderCart();
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+
+  checkoutForm.reset();
+})
+.catch(err => {
+  console.error(err);
+
+
+  checkoutMessage.textContent =
+    "Something went wrong sending your order.";
 });
   </script>
 
@@ -1054,6 +1248,7 @@ Order: ${orderDetails}
   </div>
 
   <p class="copyright">© 2026 Creations of AA — All Rights Reserved</p>
+
 
   <div class="art-gallery">
  <div class="art-card">
@@ -1109,6 +1304,7 @@ Order: ${orderDetails}
   function closeLightbox() {
     document.getElementById('lightbox').style.display = 'none';
   }
+
 </script>
 
 </body>

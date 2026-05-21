@@ -2,25 +2,39 @@
   "name": "creationsofaa_v2",
   "version": "1.0.0",
   "description": "✨ AA’s Creations ✨",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
+
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AutumnAli/Creations-of-AA.git"
   },
-  "keywords": [],
+
+  "keywords": [
+    "jewelry",
+    "ecommerce",
+    "stripe",
+    "express"
+  ],
+
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+
   "bugs": {
     "url": "https://github.com/AutumnAli/Creations-of-AA/issues"
   },
+
   "homepage": "https://github.com/AutumnAli/Creations-of-AA#readme",
+
   "dependencies": {
-    "cors": "^2.8.6",
+    "cors": "^2.8.5",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "stripe": "^18.2.1"
   }
 }
