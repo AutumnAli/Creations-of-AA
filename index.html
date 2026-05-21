@@ -1172,17 +1172,13 @@ function saveCart() {
 
   const name = document.getElementById("customerName").value;
   const email = document.getElementById("customerEmail").value;
+  const address = document.getElementById("customerAddress").value;
 
-  const cartItems = Object.values(cart).map(({ product, qty }) => ({
+  const orderDetails = Object.values(cart).map(({ product, qty }) => ({
     name: product.name,
     price: product.price,
     quantity: qty
   }));
-
-  if (cartItems.length === 0) {
-    checkoutMessage.textContent = "Your cart is empty.";
-    return;
-  }
 
   try {
     const res = await fetch("http://localhost:3000/create-checkout-session", {
@@ -1192,49 +1188,33 @@ function saveCart() {
       },
       body: JSON.stringify({
         email,
-        cart: cartItems
+        cart: orderDetails
       })
     });
 
     const data = await res.json();
 
     if (data.url) {
-      // Redirect user to Stripe Checkout
+      // 🔥 THIS IS THE STRIPE REDIRECT
       window.location.href = data.url;
     } else {
-      checkoutMessage.textContent = "Failed to start checkout.";
+      checkoutMessage.textContent = "Stripe session failed.";
     }
 
   } catch (err) {
     console.error(err);
-    checkoutMessage.textContent = "Something went wrong.";
+    checkoutMessage.textContent = "Server error. Try again.";
   }
 });
-.then(res => res.json())
-.then(data => {
-  window.location.href = data.url;
-});
-.then(res => res.json())
-.then(data => {
-  console.log(data);
 
   // Clear cart
-  for (let key in cart) delete cart[key];
+for (let key in cart) delete cart[key];
 
+renderCart();
+localStorage.setItem("cart", JSON.stringify(cart));
 
-  renderCart();
-  localStorage.setItem("cart", JSON.stringify(cart));
+checkoutForm.reset();
 
-
-  checkoutForm.reset();
-})
-.catch(err => {
-  console.error(err);
-
-
-  checkoutMessage.textContent =
-    "Something went wrong sending your order.";
-});
   </script>
 
   <footer class="site-footer" id="support">
