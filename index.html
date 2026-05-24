@@ -388,30 +388,34 @@
 
 .product-image-wrapper {
   position: relative;
+}
+
+.hover-description {
+  max-height: 0;
   overflow: hidden;
-  border-radius: 8px;
-}
 
-.image-description {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  color: white;
-  padding: 1rem;
-  font-size: 0.82rem;
-  line-height: 1.4;
   opacity: 0;
-  transition: opacity 0.25s ease;
-  overflow-y: auto;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    padding 0.25s ease;
+
+  background: #fff8f0;
+  color: var(--text);
+
+  font-size: 0.82rem;
+  line-height: 1.5;
+
+  border-top: 1px solid var(--border);
+
+  padding: 0 0.9rem;
 }
 
-.product-image-wrapper:hover .image-description {
+.product-image-wrapper:hover .hover-description {
+  max-height: 300px;
   opacity: 1;
+  padding: 0.9rem;
 }
 
 
@@ -1161,7 +1165,7 @@ function saveCart() {
       <div class="product-image-wrapper">
   <img class="product-image" src="${p.image}" alt="${p.name}" />
 
-  <div class="image-description">
+  <div class="hover-description">
     ${p.description}
   </div>
 </div>
