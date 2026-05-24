@@ -1,20 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Creations of AA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-
-
   <style>
-
-
-    :root {
-      /* ===== YOUR COLOR PALETTE ===== */
-      --cream: #fffdf7;
+:root {
+      --cream: #fff8f0;
       --orange: #ff9f50;
       --orange-dark: #e57f2c;
       --blue: #5ca8ff;
@@ -368,26 +357,12 @@
 }
 
 
-.product-image,
-.art-image {
+.product-image {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  border-radius: 12px;
-}
-
-
-    .product-image {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 8px;
-      display: block;
-    }
-
-
-    .product-image {
   aspect-ratio: 1 / 1;
+  border-radius: 8px;
 }
 
 
@@ -804,7 +779,9 @@
   </label>
 
 
-  <button type="submit" class="btn btn-primary">Submit Order</button>
+ <button type="submit" id="payBtn" class="btn btn-primary"></button>
+  Pay Exact Total
+</button>
 
 
   <div id="checkoutMessage" class="checkout-message"></div>
@@ -855,7 +832,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 15,
     tag: "Bright",
     image: "products/shooting-star.png",
-    features: ["cosmic", "colorful", "bold"]
+    features: ["cosmic", "colorful", "bold"],
+    inStock: true
   },
 
 
@@ -866,7 +844,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 10,
     tag: "Popular",
     image: "products/the-ants.png",
-    features: ["classic", "versatile", "elegant"]
+    features: ["classic", "versatile", "elegant"],
+    inStock: true
 },
 
 
@@ -877,7 +856,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 15,
     tag: "Cosmic",
     image: "products/constellations.png",
-    features: ["cosmic", "colorful", "bold"]
+    features: ["cosmic", "colorful", "bold"],
+    inStock: true
   },
 
 
@@ -888,7 +868,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 18,
     tag: "Intricate",
     image: "products/expansions.png",
-    features: ["natural", "elegant", "handcrafted"]
+    features: ["natural", "elegant", "handcrafted"],
+    inStock: true
   },
 
 
@@ -899,7 +880,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 5,
     tag: "Cosmic",
     image: "products/keiper.png",
-    features: ["cosmic", "space", "celestial"]
+    features: ["cosmic", "space", "celestial"],
+    inStock: true
   },
 
 
@@ -910,7 +892,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 15,
     tag: "Bright",
     image: "products/cerulean.png",
-    features: ["bright", "vibrant", "playful"]
+    features: ["bright", "vibrant", "playful"],
+    inStock: true
   },
 
 
@@ -921,7 +904,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 10,
     tag: "Classic",
     image: "products/aligned.png",
-    features: ["classic", "versatile", "elegant"]
+    features: ["classic", "versatile", "elegant"],
+    inStock: true
   },
 
 
@@ -932,7 +916,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 15,
     tag: "Limited-Time (Custom)",
     image: "products/AA-collectable.png",
-    features: ["limited-time", "customizable", "exclusive"]
+    features: ["limited-time", "customizable", "exclusive"],
+    inStock: true
   },
 
 
@@ -943,18 +928,20 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 15,
     tag: "Custom",
     image: "products/Custo M's.png",
-    features: ["customizable", "playful", "versatile"]
+    features: ["customizable", "playful", "versatile"],
+    inStock: true
   },
 
 
   {
-    id: ".",
+    id: "the-mice",
     name: "The Mice",
     description: "Step up your accessory game with these charming and unique earrings that blend natural warmth with a touch of metallic shine! Featuring a bold, earthy orange bead perfectly framed by sleek metallic spheres, these earrings bring a delightful balance of rustic and modern vibes to any outfit. Whether you're dressing up for a night out or adding a pop of personality to your everyday look, these earrings are your new go-to for effortless style. Lightweight and comfortable, they’re designed to make you feel as good as you look. Embrace the playful yet sophisticated spirit of these earrings and let them become your signature statement piece!",
     price: 5,
     tag: "Unique",
     image: "products/the-mice.png",
-    features: ["unique", "playful", "versatile"]
+    features: ["unique", "playful", "versatile"],
+    inStock: true
   },
 
 
@@ -965,7 +952,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 5,
     tag: "Cosmic",
     image: "products/saturn.png",
-    features: ["cosmic", "space", "celestial"]
+    features: ["cosmic", "space", "celestial"],
+    inStock: true
   },
 
 
@@ -976,7 +964,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 5,
     tag: "Cosmic",
     image: "products/solar.png",
-    features: ["cosmic", "space", "celestial"]
+    features: ["cosmic", "space", "celestial"],
+    inStock: true
   },
   {
     id: "newton",
@@ -985,7 +974,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 10,
     tag: "Symbolic",
     image: "products/newton.png",
-    features: ["natural", "elegant", "handcrafted"]
+    features: ["natural", "elegant", "handcrafted"],
+    inStock: true
   },
   {
     id: "life",
@@ -994,7 +984,8 @@ emailjs.init("OyXgVg6KtEcRAkunx");
     price: 10,
     tag: "Symbolic",
     image: "products/life.png",
-    features: ["natural", "elegant", "handcrafted"]
+    features: ["natural", "elegant", "handcrafted"],
+    inStock: true
   },
 ];
     const cart = JSON.parse(localStorage.getItem("cart")) || {};
@@ -1119,8 +1110,11 @@ function saveCart() {
             <div class="product-meta">
               <span class="product-price">$${p.price.toFixed(2)}</span>
               <span class="product-tag">${p.tag}</span>
+           ${p.inStock
+  ? `<button class="btn btn-primary" data-add="${p.id}">Add to cart</button>`
+  : `<button class="btn btn-outline" disabled>Sold Out</button>`
+}
             </div>
-            <button class="btn btn-primary" data-add="${p.id}">Add to cart</button>
           </div>
         `;
         productGrid.appendChild(card);
@@ -1153,9 +1147,6 @@ function saveCart() {
 
 
     renderCart();
-   
-  checkoutForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
 
   const name = document.getElementById("customerName").value;
   const email = document.getElementById("customerEmail").value;
@@ -1173,28 +1164,49 @@ function saveCart() {
 
   checkoutMessage.textContent = "Sending order...";
 
-  try {
-    await emailjs.send(
-      "service_z6oulqc",
-      "template_249959r",
-      {
-        customer_name: name,
-        customer_email: email,
-        customer_address: address,
-        order_details: formattedOrder
-      }
-    );
+  function payWithCashApp() {
+  const { total } = calculateTotals();
+  const amount = total.toFixed(2);
 
+  const cashAppUrl = `https://cash.app/$CreationsofAA/${amount}`;
+
+  checkoutMessage.textContent =
+    `Redirecting to Cash App for $${amount}...`;
+}
+
+checkoutForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  });
+
+  try { 
+    await emailjs.send(
+  "service_z6oulqc",
+  "template_249959r",
+  {
+    customer_name: name,
+    customer_email: email,
+    customer_address: address,
+    order_details: formattedOrder
+  }
+);
     checkoutMessage.textContent =
       "Redirecting you to Cash App...";
 
-    localStorage.setItem("latestOrder", JSON.stringify({
-      name,
-      email,
-      address,
-      items: orderDetails,
-      date: new Date().toISOString()
-    }));
+   const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+
+const newOrder = {
+  id: "AA-" + Date.now(),
+  name,
+  email,
+  address,
+  items: orderDetails,
+  total: total,
+  date: new Date().toISOString(),
+  status: "pending payment"
+};
+
+existingOrders.push(newOrder);
+localStorage.setItem("orders", JSON.stringify(existingOrders));
 
     for (let key in cart) delete cart[key];
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -1210,7 +1222,9 @@ function saveCart() {
     checkoutMessage.textContent =
       "Failed to send order. Please try again.";
   }
-});
+
+  checkoutMessage.textContent =
+    `Redirecting to Cash App for $${amount}...`;
 
 </script>
 

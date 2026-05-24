@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard - Creations of AA</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f7f7f7;
+  padding: 20px;
+}
+
+h1 {
+  color: #e57f2c;
+}
+
+.top-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+input {
+  padding: 8px;
+  width: 250px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.clear { background: red; color: white; }
+.export { background: green; color: white; }
+
+.order {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.small {
+  font-size: 12px;
+  color: gray;
+}
+
+.status {
+  margin-top: 8px;
+  padding: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.pending { background: orange; color: white; }
+.paid { background: green; color: white; }
+.shipped { background: blue; color: white; }
+</style>
+</head>
+
+<body>
+
+<h1>Admin Order Dashboard</h1>
+
+<div class="top-bar">
+  <input id="searchInput" placeholder="Search by name or email..." oninput="renderOrders()" />
+
+  <button class="export" onclick="exportOrders()">Export</button>
+  <button class="clear" onclick="clearOrders()">Clear All</button>
+</div>
+
+<div id="orders"></div>
+
+<script>
+function getOrders() {
+  return JSON.parse(localStorage.getItem("orders")) || [];
+}
+
+function saveOrders(orders) {
+  localStorage.setItem("orders", JSON.stringify(orders));
+}
+
+function updateStatus(id, status) {
+  const orders = getOrders();
+
+  const updated = orders.map(order => {
+    if (order.id === id) {
+      order.status = status;
+    }
+    return order;
+  });
+
+  saveOrders(updated);
+  renderOrders();
+}
+
+function renderOrders() {
+  const orders = getOrders();
+  const search = document.getElementById("searchInput").value.toLowerCase();
+
+  const container = document.getElementById("orders");
+  container.innerHTML = "";
+
+  const filtered = orders.filter(o =>
+    o.name.toLowerCase().includes(search) ||
+    o.email.toLowerCase().includes(search)
+  );
+
+  if (filtered.length === 0) {
+    container.innerHTML = "<p>No orders found.</p>";
+    return;
+  }
+
+  filtered.reverse().forEach(order => {
+    const div = document.createElement("div");
+    div.className = "order";
+
+    div.innerHTML = `
+      <h3>${order.id}</h3>
+      <p><b>Name:</b> ${order.name}</p>
+      <p><b>Email:</b> ${order.email}</p>
+      <p><b>Address:</b> ${order.address}</p>
+      <p><b>Total:</b> $${order.total}</p>
+
+      <div class="status ${order.status.replace(" ", "")}">
+        Status: ${order.status}
+      </div>
+
+      <div style="margin-top:10px;">
+        <button onclick="updateStatus('${order.id}', 'pending payment')">Pending</button>
+        <button onclick="updateStatus('${order.id}', 'paid')">Paid</button>
+        <button onclick="updateStatus('${order.id}', 'shipped')">Shipped</button>
+      </div>
+
+      <p class="small">${new Date(order.date).toLocaleString()}</p>
+
+      <pre>${JSON.stringify(order.items, null, 2)}</pre>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function clearOrders() {
+  if (confirm("Delete all orders?")) {
+    localStorage.removeItem("orders");
+    renderOrders();
+  }
+}
+
+function exportOrders() {
+  const orders = getOrders();
+  const blob = new Blob([JSON.stringify(orders, null, 2)], {
+    type: "application/json"
+  });
+
+  function getAnalytics() {
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  let revenue = 0;
+  let productCount = {};
+
+  orders.forEach(order => {
+    revenue += Number(order.total);
+
+    order.items.forEach(item => {
+      productCount[item.name] =
+        (productCount[item.name] || 0) + item.quantity;
+    });
+  });
+
+  console.log("Total Revenue:", revenue);
+  console.log("Top Products:", productCount);
+}
+
+getAnalytics();
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "orders.json";
+  a.click();
+}
+
+renderOrders();
+</script>
+
+</body>
+</html>
+
+<style>
+    @media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .order {
+    font-size: 14px;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 5px;
+    }
+}
+</style>
