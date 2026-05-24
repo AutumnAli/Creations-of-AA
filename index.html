@@ -382,6 +382,38 @@
   border-radius: 8px;
 }
 
+.product-card {
+  position: relative;
+}
+
+.product-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.image-description {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  color: white;
+  padding: 1rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  overflow-y: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.product-image-wrapper:hover .image-description {
+  opacity: 1;
+}
+
 
     /* Placeholder gradients using your palette */
     .img-1 { background: linear-gradient(135deg, var(--yellow), var(--orange)); }
@@ -1126,7 +1158,13 @@ function saveCart() {
     card.className = "product-card";
 
     card.innerHTML = `
-      <img class="product-image" src="${p.image}" alt="${p.name}" />
+      <div class="product-image-wrapper">
+  <img class="product-image" src="${p.image}" alt="${p.name}" />
+
+  <div class="image-description">
+    ${p.description}
+  </div>
+</div>
 
       <div class="product-body">
         <div class="product-name">${p.name}</div>
