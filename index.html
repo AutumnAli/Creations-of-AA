@@ -674,12 +674,8 @@
   background: var(--accent-dark);
 }
 
-
-
-
     </style>
     </head>
-
 
 <body>
   <header>
@@ -698,18 +694,14 @@
       <a href="#contact">Contact</a>
     </div>
 
-
     <button class="cart-button" id="cartButton">
       🛒 Cart <span class="cart-count" id="cartCount">0</span>
     </button>
 
-
   </div>
 </header>
 
-
 <main>
-
 
   <!-- LEFT COLUMN -->
   <div>
@@ -719,24 +711,20 @@
   ✨ Handmade • Small Batch • Custom Pieces Available
 </div>
 
-
     <section class="hero">
       <div class="hero-content">
         <p class="hero-tagline">
           Handcrafted jewelry inspired by elegance, artistry, and the cosmos
         </p>
 
-
         <a href="products.html" class="hero-button">Shop Now</a>
       </div>
     </section>
-
 
     <section id="shop">
       <h2 class="product-section-title">Featured Pieces</h2>
       <div class="product-grid" id="productGrid"></div>
     </section>
-
 
     <section id="about"
       style="margin-top: 2rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
@@ -744,20 +732,17 @@
         About the Studio
       </h2>
 
-
       <p>
         Every piece is handmade with care, using thoughtfully sourced materials and a love for color.
         Your jewelry is crafted in small batches to ensure uniqueness and quality.
       </p>
     </section>
 
-
     <section id="contact"
       style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--muted); line-height: 1.5;">
       <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;">
         Contact
       </h2>
-
 
       <p>
         Questions or custom requests? Email:
@@ -827,8 +812,10 @@
     </aside>
   </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
+emailjs.init("OyXgVg6KtEcRAkunx");
   const reveals = document.querySelectorAll('.reveal');
 
 
@@ -1167,7 +1154,7 @@ function saveCart() {
 
     renderCart();
    
-   checkoutForm.addEventListener("submit", async (e) => {
+  checkoutForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const name = document.getElementById("customerName").value;
@@ -1180,52 +1167,65 @@ function saveCart() {
     quantity: qty
   }));
 
+  const formattedOrder = orderDetails
+    .map(item => `${item.name} x${item.quantity} - $${item.price}`)
+    .join("\n");
+
+  checkoutMessage.textContent = "Sending order...";
+
   try {
-    const res = await fetch("http://localhost:3000/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        cart: orderDetails
-      })
-    });
+    await emailjs.send(
+      "service_z6oulqc",
+      "template_249959r",
+      {
+        customer_name: name,
+        customer_email: email,
+        customer_address: address,
+        order_details: formattedOrder
+      }
+    );
 
-    const data = await res.json();
+    checkoutMessage.textContent =
+      "Redirecting you to Cash App...";
 
-    if (data.url) {
-      // 🔥 THIS IS THE STRIPE REDIRECT
-      window.location.href = data.url;
-    } else {
-      checkoutMessage.textContent = "Stripe session failed.";
-    }
+    localStorage.setItem("latestOrder", JSON.stringify({
+      name,
+      email,
+      address,
+      items: orderDetails,
+      date: new Date().toISOString()
+    }));
 
-  } catch (err) {
-    console.error(err);
-    checkoutMessage.textContent = "Server error. Try again.";
+    for (let key in cart) delete cart[key];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+    checkoutForm.reset();
+
+    setTimeout(() => {
+      window.location.href = "https://cash.app/$CreationsofAA";
+    }, 1500);
+
+  } catch (error) {
+    console.error(error);
+    checkoutMessage.textContent =
+      "Failed to send order. Please try again.";
   }
 });
 
-  // Clear cart
-for (let key in cart) delete cart[key];
-
-renderCart();
-localStorage.setItem("cart", JSON.stringify(cart));
-
-checkoutForm.reset();
-
-  </script>
+</script>
 
   <footer class="site-footer" id="support">
   <h3>Support Our Art</h3>
   <p>If you’d like to support our creations, you can send to my Cash App:</p>
-  <p class="cashtag">$Seraph21</p>
+  <p class="cashtag">$CreationsofAA</p>
 
-  <div class="social-links">
-    <a href="https://instagram.com/creations.of.aa" target="_blank">Instagram</a>
-    <a href="https://tiktok.com/@creations.of.aa" target="_blank">TikTok</a>
-  </div>
+ <div class="social-links">
+  <a href="https://instagram.com/creations.of.aa"
+     target="_blank"
+     rel="noopener noreferrer">
+     Instagram
+  </a>
+</div>
 
   <p class="copyright">© 2026 Creations of AA — All Rights Reserved</p>
 
