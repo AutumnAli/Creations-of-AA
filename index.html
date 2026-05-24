@@ -670,6 +670,14 @@
   gap: 0.5rem;
 }
 
+.payment-note {
+  font-size: 0.75rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+}
+
 
     footer {
       text-align: center;
@@ -868,12 +876,17 @@
   Pay Exact Total
 </button>
 
+<div class="payment-note">
+  Orders are manually verified before shipment.
+  Fake or unpaid submissions are cancelled.
+</div>
+
 <button
   type="button"
   id="confirmPaymentBtn"
   class="btn btn-outline"
 >
-  I Completed My Cash App Payment
+  Submit Order After Payment
 </button>
 
 <div id="checkoutMessage" class="checkout-message"></div>
@@ -1417,8 +1430,8 @@ Total Paid: $${pendingOrder.total.toFixed(2)}`
 
       checkoutForm.reset();
 
-      checkoutMessage.textContent =
-        "Order submitted successfully!";
+     checkoutMessage.textContent =
+  "Order received! Your payment will be manually verified before shipping.";
 
     } catch (error) {
 
