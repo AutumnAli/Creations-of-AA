@@ -2,6 +2,23 @@
 <html>
 <head>
   <style>
+
+    #lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+}
+
 :root {
       --cream: #fff8f0;
       --orange: #ff9f50;
@@ -779,7 +796,7 @@
   </label>
 
 
- <button type="submit" id="payBtn" class="btn btn-primary"></button>
+ <button type="submit" id="payBtn" class="btn btn-primary">
   Pay Exact Total
 </button>
 
@@ -1015,6 +1032,7 @@ document.getElementById("cartButton").addEventListener("click", () => {
 
 
   saveCart();
+  renderProducts();
   renderCart();
 }
 
@@ -1167,54 +1185,64 @@ function saveCart() {
 
   checkoutMessage.textContent = "Sending order...";
 
-  function payWithCashApp() {
-  const { total } = calculateTotals();
-  const amount = total.toFixed(2);
-
-  const cashAppUrl = `https://cash.app/$CreationsofAA/${amount}`;
-
-  checkoutMessage.textContent =
-    `Redirecting to Cash App for $${amount}...`;
-}
-
 checkoutForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  });
 
-  try { 
+  const name = document.getElementById("customerName").value;
+  const email = document.getElementById("customerEmail").value;
+  const address = document.getElementById("customerAddress").value;
+
+  const orderDetails = Object.values(cart).map(({ product, qty }) => ({
+    name: product.name,
+    price: product.price,
+    quantity: qty
+  }));
+
+  const formattedOrder = orderDetails
+    .map(item => `${item.name} x${item.quantity} - $${item.price}`)
+    .join("\n");
+
+  try {
+    checkoutMessage.textContent = "Sending order...";
+
+    const { total } = calculateTotals();
+    const amount = total.toFixed(2);
+
     await emailjs.send(
-  "service_z6oulqc",
-  "template_249959r",
-  {
-    customer_name: name,
-    customer_email: email,
-    customer_address: address,
-    order_details: formattedOrder
-  }
-);
-    checkoutMessage.textContent =
-      "Redirecting you to Cash App...";
+      "service_z6oulqc",
+      "template_249959r",
+      {
+        customer_name: name,
+        customer_email: email,
+        customer_address: address,
+        order_details: formattedOrder
+      }
+    );
 
-   const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+    // save order
+    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
 
-const newOrder = {
-  id: "AA-" + Date.now(),
-  name,
-  email,
-  address,
-  items: orderDetails,
-  total: total,
-  date: new Date().toISOString(),
-  status: "pending payment"
-};
+    existingOrders.push({
+      id: "AA-" + Date.now(),
+      name,
+      email,
+      address,
+      items: orderDetails,
+      total,
+      date: new Date().toISOString(),
+      status: "pending payment"
+    });
 
-existingOrders.push(newOrder);
-localStorage.setItem("orders", JSON.stringify(existingOrders));
+    localStorage.setItem("orders", JSON.stringify(existingOrders));
 
-    for (let key in cart) delete cart[key];
+    // clear cart
+    Object.keys(cart).forEach(key => delete cart[key]);
     localStorage.setItem("cart", JSON.stringify(cart));
     renderCart();
+
     checkoutForm.reset();
+
+    checkoutMessage.textContent = `Redirecting to Cash App for $${amount}...`;
 
     setTimeout(() => {
       window.location.href = "https://cash.app/$CreationsofAA";
@@ -1222,9 +1250,9 @@ localStorage.setItem("orders", JSON.stringify(existingOrders));
 
   } catch (error) {
     console.error(error);
-    checkoutMessage.textContent =
-      "Failed to send order. Please try again.";
+    checkoutMessage.textContent = "Failed to send order. Please try again.";
   }
+});
 
   checkoutMessage.textContent =
     `Redirecting to Cash App for $${amount}...`;
@@ -1301,8 +1329,6 @@ localStorage.setItem("orders", JSON.stringify(existingOrders));
   function closeLightbox() {
     document.getElementById('lightbox').style.display = 'none';
   }
-
-renderProducts();
 </script>
 
 </body>
