@@ -1185,22 +1185,7 @@ function saveCart() {
 
 
     renderCart();
-
-  const name = document.getElementById("customerName").value;
-  const email = document.getElementById("customerEmail").value;
-  const address = document.getElementById("customerAddress").value;
-
-  const orderDetails = Object.values(cart).map(({ product, qty }) => ({
-    name: product.name,
-    price: product.price,
-    quantity: qty
-  }));
-
-  const formattedOrder = orderDetails
-    .map(item => `${item.name} x${item.quantity} - $${item.price}`)
-    .join("\n");
-
-  checkoutMessage.textContent = "Sending order...";
+    renderProducts();
 
 checkoutForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -1336,6 +1321,8 @@ checkoutForm.addEventListener("submit", async (e) => {
 <div id="lightbox" onclick="closeLightbox()">
   <img id="lightbox-img" />
 </div>
+
+<div></div>
 
 <script>
   function openLightbox(src) {
