@@ -868,6 +868,26 @@
   Pay Exact Total
 </button>
 
+<div class="checkout-trust">
+  <div>🔒 Secure checkout via Cash App</div>
+  <div>🖐 Handmade in small batches</div>
+  <div>✨ Custom pieces available</div>
+  <div>📦 Ships in 3–5 business days</div>
+</div>
+
+<button type="submit" id="payBtn" class="btn btn-primary">
+  Pay Exact Total
+</button>
+
+<button
+  type="button"
+  id="confirmPaymentBtn"
+  class="btn btn-outline"
+>
+  I Completed My Cash App Payment
+</button>
+
+<div id="checkoutMessage" class="checkout-message"></div>
 
   <div id="checkoutMessage" class="checkout-message"></div>
 </form>
@@ -1264,9 +1284,16 @@ function saveCart() {
 checkoutForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  if (Object.keys(cart).length === 0) {
+    checkoutMessage.textContent = "Your cart is empty.";
+    return;
+  }
+
   const name = document.getElementById("customerName").value;
   const email = document.getElementById("customerEmail").value;
   const address = document.getElementById("customerAddress").value;
+
+  const { subtotal, shipping, total } = calculateTotals();
 
   const orderDetails = Object.values(cart).map(({ product, qty }) => ({
     name: product.name,
@@ -1275,63 +1302,145 @@ checkoutForm.addEventListener("submit", async (e) => {
   }));
 
   const formattedOrder = orderDetails
-    .map(item => `${item.name} x${item.quantity} - $${item.price}`)
+    .map(item =>
+      `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
+    )
     .join("\n");
 
-  try {
-    checkoutMessage.textContent = "Sending order...";
+  // save pending order BEFORE redirect
+  const pendingOrder = {
+    id: "AA-" + Date.now(),
+    name,
+    email,
+    address,
+    items: orderDetails,
+    subtotal,
+    shipping,
+    total,
+    date: new Date().toISOString(),
+    status: "awaiting payment"
+  };
 
-    const { total } = calculateTotals();
-    const amount = total.toFixed(2);
-
-    await emailjs.send(
-      "service_z6oulqc",
-      "template_249959r",
-      {
-        customer_name: name,
-        customer_email: email,
-        customer_address: address,
-        order_details: formattedOrder
-      }
-    );
-
-    // save order
-    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
-
-    existingOrders.push({
-      id: "AA-" + Date.now(),
-      name,
-      email,
-      address,
-      items: orderDetails,
-      total,
-      date: new Date().toISOString(),
-      status: "pending payment"
-    });
-
-    localStorage.setItem("orders", JSON.stringify(existingOrders));
-
-    // clear cart
-    Object.keys(cart).forEach(key => delete cart[key]);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
-
-    checkoutForm.reset();
-
-    checkoutMessage.textContent = `Redirecting to Cash App for $${amount}...`;
-
-    setTimeout(() => {
-      window.location.href = "https://cash.app/$CreationsofAA";
-    }, 1500);
-
-  } catch (error) {
-    console.error(error);
-    checkoutMessage.textContent = "Failed to send order. Please try again.";
-  }
-});
+  localStorage.setItem("pendingOrder", JSON.stringify(pendingOrder));
 
   checkoutMessage.textContent =
-    `Redirecting to Cash App for $${amount}...`;
+    `Redirecting to Cash App for $${total.toFixed(2)}...`;
+
+  // redirect customer to Cash App
+  setTimeout(() => {
+    window.location.href = "https://cash.app/$CreationsofAA";
+  }, 1200);
+});
+
+</script>
+
+<script>
+document
+  .getElementById("confirmPaymentBtn")
+
+  .addEventListener("click", async () => {
+
+    const pendingOrder =
+      JSON.parse(
+        localStorage.getItem("pendingOrder")
+      );
+
+    if (!pendingOrder) {
+
+      checkoutMessage.textContent =
+        "No pending order found.";
+
+      return;
+    }
+
+    const formattedOrder =
+      pendingOrder.items
+
+      .map(item =>
+        `${item.name} x${item.quantity} - $${(
+          item.price * item.quantity
+        ).toFixed(2)}`
+      )
+
+      .join("\n");
+
+    try {
+
+      checkoutMessage.textContent =
+        "Sending order confirmation...";
+
+      await emailjs.send(
+
+        "service_z6oulqc",
+
+        "template_249959r",
+
+        {
+          customer_name:
+            pendingOrder.name,
+
+          customer_email:
+            pendingOrder.email,
+
+          customer_address:
+            pendingOrder.address,
+
+          order_details:
+
+`${formattedOrder}
+
+Subtotal: $${pendingOrder.subtotal.toFixed(2)}
+Shipping: $${pendingOrder.shipping.toFixed(2)}
+Total Paid: $${pendingOrder.total.toFixed(2)}`
+        }
+      );
+
+      const existingOrders =
+        JSON.parse(
+          localStorage.getItem("orders")
+        ) || [];
+
+      pendingOrder.status =
+        "payment claimed";
+
+      existingOrders.push(
+        pendingOrder
+      );
+
+      localStorage.setItem(
+        "orders",
+        JSON.stringify(existingOrders)
+      );
+
+      Object.keys(cart)
+        .forEach(key => delete cart[key]);
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+      );
+
+      renderCart();
+
+      localStorage.removeItem(
+        "pendingOrder"
+      );
+
+      checkoutForm.reset();
+
+      checkoutMessage.textContent =
+        "Order submitted successfully!";
+
+    } catch (error) {
+
+      console.error(error);
+
+      checkoutMessage.textContent =
+        "Failed to send order.";
+    }
+
+});
+</script>
 
 </script>
 
@@ -1392,11 +1501,11 @@ checkoutForm.addEventListener("submit", async (e) => {
   <div class="caption">This piece was inspired by the curiosity of mice</div>
 </div>
 
+</div>
+
 <div id="lightbox" onclick="closeLightbox()">
   <img id="lightbox-img" />
 </div>
-
-<div></div>
 
 <script>
   function openLightbox(src) {
