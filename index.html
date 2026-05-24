@@ -1055,6 +1055,7 @@ function saveCart() {
 
 
   saveCart();
+  renderProducts();
   renderCart();
 }
 
@@ -1110,7 +1111,7 @@ function saveCart() {
     }
 
 
-    function renderProducts() {
+   function renderProducts() {
   const productGrid = document.getElementById("productGrid");
 
   if (!productGrid) {
@@ -1125,17 +1126,32 @@ function saveCart() {
     card.className = "product-card";
 
     card.innerHTML = `
-      <img class="product-image" src="${p.image}" alt="${p.name}" data-add="${p.id}" />
+      <img class="product-image" src="${p.image}" alt="${p.name}" />
+
       <div class="product-body">
         <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.description}</div>
+
+        <div class="product-desc">
+          ${p.description}
+        </div>
+
         <div class="product-meta">
-          <span class="product-price">$${p.price.toFixed(2)}</span>
-          <span class="product-tag">${p.tag}</span>
+          <span class="product-price">
+            $${p.price.toFixed(2)}
+          </span>
+
+          <span class="product-tag">
+            ${p.tag}
+          </span>
+
           ${
             p.inStock
-              ? `<button class="btn btn-primary" data-add="${p.id}">Add to cart</button>`
-              : `<button class="btn btn-outline" disabled>Sold Out</button>`
+              ? `<button class="btn btn-primary" data-add="${p.id}">
+                  Add to Cart
+                </button>`
+              : `<button class="btn btn-outline" disabled>
+                  Sold Out
+                </button>`
           }
         </div>
       </div>
@@ -1143,8 +1159,9 @@ function saveCart() {
 
     productGrid.appendChild(card);
   });
+
+  console.log("✅ Products rendered");
 }
-      console.log("Products rendered");
     
 
     productGrid.addEventListener("click", (event) => {
