@@ -1093,38 +1093,41 @@ function saveCart() {
 
 
     function renderProducts() {
-      if (!productGrid) {
-        console.error("productGrid element not found");
-        return;
-      }
-      productGrid.innerHTML = "";
-      console.log("Rendering", products.length, "products");
-      products.forEach((p) => {
-        const card = document.createElement("article");
-        card.className = "product-card";
-        card.innerHTML = `
-          <img class="product-image" src="${p.image}" alt="${p.name}" data-add="${p.id}" />
-          <div class="product-body">
-            <div class="product-name">${p.name}</div>
-            <div class="product-desc">${p.description}</div>
-            <div class="product-meta">
-              <span class="product-price">$${p.price.toFixed(2)}</span>
-              <span class="product-tag">${p.tag}</span>
-           ${p.inStock
-  ? `<button class="btn btn-primary" data-add="${p.id}">Add to cart</button>`
-  : `<button class="btn btn-outline" disabled>Sold Out</button>`
+  const productGrid = document.getElementById("productGrid");
+
+  if (!productGrid) {
+    console.error("❌ productGrid not found");
+    return;
+  }
+
+  productGrid.innerHTML = "";
+
+  products.forEach((p) => {
+    const card = document.createElement("article");
+    card.className = "product-card";
+
+    card.innerHTML = `
+      <img class="product-image" src="${p.image}" alt="${p.name}" data-add="${p.id}" />
+      <div class="product-body">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.description}</div>
+        <div class="product-meta">
+          <span class="product-price">$${p.price.toFixed(2)}</span>
+          <span class="product-tag">${p.tag}</span>
+          ${
+            p.inStock
+              ? `<button class="btn btn-primary" data-add="${p.id}">Add to cart</button>`
+              : `<button class="btn btn-outline" disabled>Sold Out</button>`
+          }
+        </div>
+      </div>
+    `;
+
+    productGrid.appendChild(card);
+  });
 }
-            </div>
-          </div>
-        `;
-        productGrid.appendChild(card);
-      });
       console.log("Products rendered");
-    }
-
-
-    renderProducts();
-
+    
 
     productGrid.addEventListener("click", (event) => {
       const addButton = event.target.closest("[data-add]");
@@ -1299,6 +1302,7 @@ localStorage.setItem("orders", JSON.stringify(existingOrders));
     document.getElementById('lightbox').style.display = 'none';
   }
 
+renderProducts();
 </script>
 
 </body>
