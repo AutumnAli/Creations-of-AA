@@ -644,6 +644,32 @@
       color: var(--accent-dark);
     }
 
+    .checkout-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+
+  background: #fff8f0;
+
+  border: 1px solid var(--border);
+
+  border-radius: 12px;
+
+  padding: 0.9rem;
+
+  font-size: 0.82rem;
+
+  color: var(--text);
+
+  line-height: 1.4;
+}
+
+.checkout-trust div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 
     footer {
       text-align: center;
@@ -831,6 +857,12 @@
     <textarea id="customerAddress" required></textarea>
   </label>
 
+  <div class="checkout-trust">
+  <div>🔒 Secure checkout via Cash App</div>
+  <div>🖐 Handmade in small batches</div>
+  <div>✨ Custom pieces available</div>
+  <div>📦 Ships in 3–5 business days</div>
+</div>
 
  <button type="submit" id="payBtn" class="btn btn-primary">
   Pay Exact Total
