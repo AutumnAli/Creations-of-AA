@@ -1194,7 +1194,7 @@ function saveCart() {
       const totalQty = entries.reduce((sum, item) => sum + item.qty, 0);
       cartCountEl.textContent = totalQty;
       cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-      cartShippingEl.textContent = `$${shipping}`;
+      cartShippingEl.textContent = `$${shipping.toFixed(2)}`;
       cartTotalEl.textContent = `$${total.toFixed(2)}`;
       document.querySelector(".cart-footer")?.classList.remove("animate-summary");
       void document.querySelector(".cart-footer")?.offsetWidth;
