@@ -1152,15 +1152,26 @@ function saveCart() {
 
 
     function calculateTotals() {
-      let subtotal = 0;
-      Object.values(cart).forEach(({ product, qty }) => {
-        subtotal += product.price * qty;
-      });
+  let subtotal = 0;
 
+  Object.values(cart).forEach(({ product, qty }) => {
+    subtotal += Number(product.price) * Number(qty);
+  });
 
-      let shipping = subtotal >= 60 || subtotal === 0 ? 0 : 5.99;
-      return { subtotal, shipping, total: subtotal + shipping };
-    }
+  let shipping = 0;
+
+  if (subtotal > 0 && subtotal < 60) {
+    shipping = 5.99;
+  }
+
+  const total = subtotal + shipping;
+
+  return {
+    subtotal,
+    shipping,
+    total
+  };
+}
 
 
     function renderCart() {
@@ -1187,6 +1198,17 @@ function saveCart() {
           `;
           cartItemsEl.appendChild(item);
         });
+
+        const { subtotal, shipping, total } = calculateTotals();
+
+cartSubtotalEl.textContent =
+  `$${subtotal.toFixed(2)}`;
+
+cartShippingEl.textContent =
+  `$${shipping.toFixed(2)}`;
+
+cartTotalEl.textContent =
+  `$${total.toFixed(2)}`;
       }
 
 
