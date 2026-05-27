@@ -1157,7 +1157,7 @@ function saveCart() {
       });
 
 
-      let shipping = subtotal > 0 && subtotal < 60 ? 5 : 0;
+      let shipping = subtotal >= 60 || subtotal === 0 ? 0 : 5.99;
       return { subtotal, shipping, total: subtotal + shipping };
     }
 
