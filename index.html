@@ -1173,43 +1173,86 @@ function saveCart() {
   };
 }
 
+function renderCart() {
 
-    function renderCart() {
-      const entries = Object.values(cart);
-      cartItemsEl.innerHTML = "";
+  const entries = Object.values(cart);
 
+  cartItemsEl.innerHTML = "";
 
-      if (entries.length === 0) {
-        cartItemsEl.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
-      } else {
-        entries.forEach(({ product, qty }) => {
-          const item = document.createElement("div");
-          item.className = "cart-item";
-          item.innerHTML = `
-            <div>
-              <div>${product.name}</div>
-              <div style="color: var(--muted); font-size: 0.8rem;">$${product.price.toFixed(2)} each</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 0.25rem;">
-              <button class="qty-btn" data-minus="${product.id}">-</button>
-              <span>${qty}</span>
-              <button class="qty-btn" data-plus="${product.id}">+</button>
-            </div>
-          `;
-          cartItemsEl.appendChild(item);
-        });
+  if (entries.length === 0) {
 
-        const { subtotal, shipping, total } = calculateTotals();
+    cartItemsEl.innerHTML =
+      '<div class="cart-empty">Your cart is empty</div>';
 
-cartSubtotalEl.textContent =
-  `$${subtotal.toFixed(2)}`;
+  } else {
 
-cartShippingEl.textContent =
-  `$${shipping.toFixed(2)}`;
+    entries.forEach(({ product, qty }) => {
 
-cartTotalEl.textContent =
-  `$${total.toFixed(2)}`;
-      }
+      const item = document.createElement("div");
+
+      item.className = "cart-item";
+
+      item.innerHTML = `
+        <div>
+          <div>${product.name}</div>
+
+          <div style="color: var(--muted); font-size: 0.8rem;">
+            $${product.price.toFixed(2)} each
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.25rem;">
+          <button class="qty-btn" data-minus="${product.id}">
+            -
+          </button>
+
+          <span>${qty}</span>
+
+          <button class="qty-btn" data-plus="${product.id}">
+            +
+          </button>
+        </div>
+      `;
+
+      cartItemsEl.appendChild(item);
+
+    });
+
+  }
+
+  const { subtotal, shipping, total } =
+    calculateTotals();
+
+  const totalQty =
+    entries.reduce(
+      (sum, item) => sum + item.qty,
+      0
+    );
+
+  cartCountEl.textContent =
+    totalQty;
+
+  cartSubtotalEl.textContent =
+    `$${subtotal.toFixed(2)}`;
+
+  cartShippingEl.textContent =
+    `$${shipping.toFixed(2)}`;
+
+  cartTotalEl.textContent =
+    `$${total.toFixed(2)}`;
+
+  document
+    .querySelector(".cart-footer")
+    ?.classList.remove("animate-summary");
+
+  void document
+    .querySelector(".cart-footer")
+    ?.offsetWidth;
+
+  document
+    .querySelector(".cart-footer")
+    ?.classList.add("animate-summary");
+}
 
 
       const { subtotal, shipping, total } = calculateTotals();
@@ -1221,7 +1264,7 @@ cartTotalEl.textContent =
       document.querySelector(".cart-footer")?.classList.remove("animate-summary");
       void document.querySelector(".cart-footer")?.offsetWidth;
       document.querySelector(".cart-footer")?.classList.add("animate-summary");
-    }
+    
 
 
    function renderProducts() {
