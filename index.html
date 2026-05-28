@@ -1251,20 +1251,7 @@ function renderCart() {
     .querySelector(".cart-footer")
     ?.classList.add("animate-summary");
 }
-
-
-      const { subtotal, shipping, total } = calculateTotals();
-      const totalQty = entries.reduce((sum, item) => sum + item.qty, 0);
-      cartCountEl.textContent = totalQty;
-      cartSubtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-      cartShippingEl.textContent = `$${shipping.toFixed(2)}`;
-      cartTotalEl.textContent = `$${total.toFixed(2)}`;
-      document.querySelector(".cart-footer")?.classList.remove("animate-summary");
-      void document.querySelector(".cart-footer")?.offsetWidth;
-      document.querySelector(".cart-footer")?.classList.add("animate-summary");
     
-
-
    function renderProducts() {
   const productGrid = document.getElementById("productGrid");
 
