@@ -160,34 +160,98 @@ header {
     </div>
 
     <!-- CHECKOUT -->
-    <div class="card" style="margin-top:15px;">
-      <h2>Checkout</h2>
+<div class="card" style="margin-top:15px;">
+  <h2>Checkout</h2>
 
-     <form id="checkoutForm">
+  <form id="checkoutForm">
 
-        <input type="hidden" name="orderDetails" id="orderDetailsField">
+    <input
+      type="hidden"
+      name="orderDetails"
+      id="orderDetailsField"
+    >
 
-        <input id="name" placeholder="Full Name" required style="width:100%;padding:8px;margin:5px 0;">
-        <input id="email" placeholder="Email" type="email" required style="width:100%;padding:8px;margin:5px 0;">
-        <textarea id="address" placeholder="Address" required style="width:100%;padding:8px;margin:5px 0;"></textarea>
+    <input
+      id="name"
+      placeholder="Full Name"
+      required
+      style="width:100%;padding:8px;margin:5px 0;"
+    >
 
-        <button class="btn" type="submit">Place Order</button>
-        <p id="msg" class="small"></p>
-      </form>
+    <input
+      id="email"
+      placeholder="Email"
+      type="email"
+      required
+      style="width:100%;padding:8px;margin:5px 0;"
+    >
+
+    <textarea
+      id="address"
+      placeholder="Address"
+      required
+      style="width:100%;padding:8px;margin:5px 0;"
+    ></textarea>
+
+    <div style="
+      background:#fff8f0;
+      padding:12px;
+      border-radius:10px;
+      margin:10px 0;
+      font-size:0.9rem;
+      line-height:1.5;
+    ">
+      🔒 Secure checkout via Cash App<br>
+      📦 $5.99 shipping • Free over $60<br>
+      ✨ Handmade in small batches
     </div>
+
+    <button class="btn" type="submit">
+      Pay Exact Total
+    </button>
+
+    <p style="
+      font-size:0.8rem;
+      color:#666;
+      margin-top:8px;
+    ">
+      Orders are manually verified before shipment.
+    </p>
+
+    <button
+      type="button"
+      id="confirmPaymentBtn"
+      class="btn"
+      style="background:#fff;color:#2b2b2b;border:1px solid #ddd;"
+    >
+      Submit Order After Payment
+    </button>
+
+    <p id="msg" class="small"></p>
+
+  </form>
+</div>
 
   </div>
 
   <!-- RIGHT -->
-  <div class="card">
-    <h2>Recommended</h2>
-    <div class="rec-grid" id="recs"></div>
+  <div>
+
+    <div class="card">
+      <h2>Recommended for You</h2>
+      <div id="recs" class="rec-grid"></div>
+    </div>
+
   </div>
 
 </div>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
+emailjs.init("OyXgVg6KtEcRAkunx");
+</script>
 
+<script>
 /* PRODUCTS */
 const products = [
   {id:"shooting-star",name:"Shooting Star",price:18,tag:"Bright",image:"products/shooting-star.png"},
@@ -332,25 +396,156 @@ function add(id) {
 }
 
 /* CHECKOUT */
-document.getElementById("checkoutForm").addEventListener("submit", function(e){
-  e.preventDefault();
+document
+  .getElementById("checkoutForm")
+  .addEventListener("submit", async (e) => {
 
-  const name = document.getElementById("name").value;
+    e.preventDefault();
 
-  const order = Object.values(cart)
-    .map(i => `${i.product.name} x${i.qty}`)
-    .join(", ");
+    if (Object.keys(cart).length === 0) {
+      document.getElementById("msg").innerText =
+        "Your cart is empty.";
+      return;
+    }
 
-  document.getElementById("orderDetailsField").value =
-`Name: ${name}
-Order: ${order}`;
+    const name =
+      document.getElementById("name").value;
 
-  document.getElementById("msg").innerText =
-    "Thanks " + name + "! Order sent.";
+    const email =
+      document.getElementById("email").value;
 
-  this.submit();
+    const address =
+      document.getElementById("address").value;
+
+    let subtotal = 0;
+
+    Object.values(cart).forEach(item => {
+      subtotal += item.product.price * item.qty;
+    });
+
+    let shipping = 0;
+
+    if (subtotal > 0 && subtotal < 60) {
+      shipping = 5.99;
+    }
+
+    const total = subtotal + shipping;
+
+    const orderDetails =
+      Object.values(cart).map(item => ({
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.qty
+      }));
+
+    const pendingOrder = {
+      id: "AA-" + Date.now(),
+      name,
+      email,
+      address,
+      items: orderDetails,
+      subtotal,
+      shipping,
+      total,
+      date: new Date().toISOString(),
+      status: "awaiting payment"
+    };
+
+    localStorage.setItem(
+      "pendingOrder",
+      JSON.stringify(pendingOrder)
+    );
+
+    document.getElementById("msg").innerText =
+      `Redirecting to Cash App for $${total.toFixed(2)}...`;
+
+    setTimeout(() => {
+      window.location.href =
+        "https://cash.app/$CreationsofAA";
+    }, 1200);
+
 });
 
+document
+  .getElementById("confirmPaymentBtn")
+  .addEventListener("click", async () => {
+
+    const pendingOrder =
+      JSON.parse(
+        localStorage.getItem("pendingOrder")
+      );
+
+    if (!pendingOrder) {
+
+      document.getElementById("msg").innerText =
+        "No pending order found.";
+
+      return;
+    }
+
+    const formattedOrder =
+      pendingOrder.items
+        .map(item =>
+          `${item.name} x${item.quantity} - $${(
+            item.price * item.quantity
+          ).toFixed(2)}`
+        )
+        .join("\n");
+
+    try {
+
+      document.getElementById("msg").innerText =
+        "Sending order confirmation...";
+
+      await emailjs.send(
+        "service_z6oulqc",
+        "template_249959r",
+        {
+          customer_name:
+            pendingOrder.name,
+
+          customer_email:
+            pendingOrder.email,
+
+          customer_address:
+            pendingOrder.address,
+
+          order_details:
+
+`${formattedOrder}
+
+Subtotal: $${pendingOrder.subtotal.toFixed(2)}
+Shipping: $${pendingOrder.shipping.toFixed(2)}
+Total Paid: $${pendingOrder.total.toFixed(2)}`
+        }
+      );
+
+      localStorage.removeItem("pendingOrder");
+
+      localStorage.removeItem("cart");
+
+      cart = {};
+
+      renderCart();
+
+      renderRecs();
+
+      document
+        .getElementById("checkoutForm")
+        .reset();
+
+      document.getElementById("msg").innerText =
+        "Order received! Payment will be manually verified.";
+
+    } catch (error) {
+
+      console.error(error);
+
+      document.getElementById("msg").innerText =
+        "Failed to send order.";
+    }
+
+  });
 /* INIT */
 renderCart();
 renderRecs();
