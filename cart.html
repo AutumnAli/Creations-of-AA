@@ -142,7 +142,20 @@ header {
     <div class="card">
       <h2>Your Items</h2>
       <div id="cartGrid" class="product-grid"></div>
-      <h3>Total: <span id="total">$0.00</span></h3>
+      <div class="cart-row">
+  <span>Subtotal</span>
+  <span id="cartSubtotal">$0.00</span>
+</div>
+
+<div class="cart-row">
+  <span>Shipping</span>
+  <span id="cartShipping">$0.00</span>
+</div>
+
+<div class="cart-row">
+  <span>Total</span>
+  <span id="cartTotal">$0.00</span>
+</div>
       <p class="small" id="insight"></p>
     </div>
 
@@ -150,7 +163,7 @@ header {
     <div class="card" style="margin-top:15px;">
       <h2>Checkout</h2>
 
-     <form id="checkoutForm"></form>
+     <form id="checkoutForm">
 
         <input type="hidden" name="orderDetails" id="orderDetailsField">
 
@@ -192,10 +205,10 @@ function renderCart() {
   const el = document.getElementById("cartGrid");
   el.innerHTML = "";
 
-  let total = 0;
+  let subtotal = 0;
 
   Object.values(cart).forEach(item => {
-    total += item.product.price * item.qty;
+    subtotal += item.product.price * item.qty;
 
     const card = document.createElement("div");
     card.className = "product-card";
@@ -204,18 +217,51 @@ function renderCart() {
       <img src="${item.product.image}">
       <div class="product-body">
         <h3>${item.product.name}</h3>
-        <p class="small">Qty: ${item.qty}</p>
-        <p>$${(item.product.price * item.qty).toFixed(2)}</p>
 
-        <button class="btn" onclick="changeQty('${item.product.id}', 1)">+</button>
-        <button class="btn" onclick="changeQty('${item.product.id}', -1)">-</button>
+        <p class="small">
+          Qty: ${item.qty}
+        </p>
+
+        <p>
+          $${(item.product.price * item.qty).toFixed(2)}
+        </p>
+
+        <button
+          class="btn"
+          onclick="changeQty('${item.product.id}', 1)"
+        >
+          +
+        </button>
+
+        <button
+          class="btn"
+          onclick="changeQty('${item.product.id}', -1)"
+        >
+          -
+        </button>
       </div>
     `;
 
     el.appendChild(card);
   });
 
-  document.getElementById("total").innerText = "$" + total.toFixed(2);
+  let shipping = 0;
+
+  if (subtotal > 0 && subtotal < 60) {
+    shipping = 5.99;
+  }
+
+  const total = subtotal + shipping;
+
+  document.getElementById("cartSubtotal").innerText =
+    "$" + subtotal.toFixed(2);
+
+  document.getElementById("cartShipping").innerText =
+    "$" + shipping.toFixed(2);
+
+  document.getElementById("cartTotal").innerText =
+    "$" + total.toFixed(2);
+
   updateInsight();
 }
 
