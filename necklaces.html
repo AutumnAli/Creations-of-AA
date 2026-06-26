@@ -90,5 +90,31 @@
     revealOnScroll();
   </script>
 
+  <!-- Lightbox modal -->
+  <div id="lightbox" style="display:none;position:fixed;inset:0;align-items:center;justify-content:center;z-index:9999;background:rgba(0,0,0,0.75)"> 
+    <div style="position:relative;max-width:90%;max-height:90%;"> 
+      <button id="lightbox-close" style="position:absolute;top:-18px;right:-18px;background:#fff;border-radius:50%;border:none;width:36px;height:36px;cursor:pointer;font-weight:700">×</button>
+      <img id="lightbox-img" src="" alt="" style="display:block;max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.5)">
+      <div id="lightbox-caption" style="color:#fff;text-align:center;margin-top:8px"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('click', function (e) {
+      const img = e.target.closest('.product-card img');
+      if (!img) return;
+      e.preventDefault();
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-caption').textContent = img.alt || '';
+      lb.style.display = 'flex';
+    });
+
+    document.getElementById('lightbox-close').addEventListener('click', function () {
+      document.getElementById('lightbox').style.display = 'none';
+      document.getElementById('lightbox-img').src = '';
+    });
+  </script>
+
 </body>
 </html>

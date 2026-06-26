@@ -1600,7 +1600,18 @@ Total Paid: $${pendingOrder.total.toFixed(2)}`
     document.getElementById('lightbox').style.display = 'none';
   }
 </script>
+</script>
 
+<script>
+  // Open product images in existing lightbox when clicked
+  document.addEventListener('click', function (e) {
+    const img = e.target.closest('.product-image');
+    if (img) {
+      e.preventDefault();
+      openLightbox(img.src);
+    }
+  });
+</script>
 </body>
 
 </html>
