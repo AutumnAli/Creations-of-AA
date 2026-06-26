@@ -101,10 +101,32 @@ body {
   padding: 10px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   transition: 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
+}
+
+.product-description {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  max-height: 100px;
+  margin: 10px 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #2b2b2b;
+  padding-right: 6px;
+}
+
+.product-description::-webkit-scrollbar {
+  width: 7px;
+}
+
+.product-description::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 999px;
 }
 
 /* FIX ALL IMAGE SIZES (Custo M + Mice INCLUDED) */
@@ -177,27 +199,27 @@ body {
 let cart = JSON.parse(localStorage.getItem("cart")) || {};
 
 const products = [
-  {id:"shooting-star", name:"Shooting Star", price:18, image:"products/shooting-star.png", category:"earrings"},
-  {id:"the-ants", name:"The Ants", price:10, image:"products/the-ants.png", category:"earrings"},
-  {id:"aligned", name:"Aligned", price:10, image:"products/aligned.png", category:"earrings"},
-  {id:"constellations", name:"Constellations", price:18, image:"products/constellations.png", category:"earrings"},
-  {id:"cerulean", name:"Cerulean", price:18, image:"products/cerulean.png", category:"earrings"},
+  {id:"shooting-star", name:"Shooting Star", description:"Turn everyday style into a statement with these eye-catching handcrafted hoop earrings ✨ Featuring a sleek silver-toned hoop wrapped in an intricate woven design, these earrings catch the light from every angle—giving you that subtle sparkle without being over-the-top. These earrings are durable—whether you’re dressing up for a night out or adding a unique twist to your everyday look. The handcrafted texture gives each pair a one-of-a-kind feel, so you’re not just wearing jewelry—you’re wearing something truly special.", price:18, image:"products/shooting-star.png", category:"earrings"},
+  {id:"the-ants", name:"The Ants", description:"Add a touch of effortless elegance to your look with these stunning drop earrings ✨ Designed with sleek, glossy black beads stacked in a graceful line and accented by shimmering gold-tone spacers, these earrings bring just the right mix of bold and sophisticated. The gentle dangle creates beautiful movement, catching attention without saying a word. Lightweight and easy to wear, they’re perfect for everything from casual days to dressed-up nights—making them a versatile staple you’ll reach for again and again.", price:10, image:"products/the-ants.png", category:"earrings"},
+  {id:"aligned", name:"Aligned", description:"Add a touch of natural elegance to your look with these gorgeous handcrafted earrings! Featuring rich, earthy brown beads that bring warmth and sophistication, accented by subtle silver spacers for a hint of shine. Perfect for both casual days and special occasions, these earrings are lightweight, comfortable, and sure to become your favorite statement piece. Embrace the beauty of nature and let your style speak volumes with this charming accessory!", price:10, image:"products/aligned.png", category:"earrings"},
+  {id:"constellations", name:"Constellations", description:"Get ready to add a burst of vibrant charm to your style with this stunning beaded necklace! Featuring a playful mix of warm orange and rich brown beads, this piece is perfect for anyone who loves a touch of earthy elegance with a pop of color. The large, glossy beads at the center create a bold focal point, while the smaller beads add a fun, rhythmic pattern that catches the eye. Whether you're dressing up for a casual day out or adding a unique twist to your evening look, this necklace is your go-to accessory for effortless style and personality. Its lightweight design ensures comfort, making it easy to wear all day long. Embrace the spirit of creativity and nature with this delightful necklace that’s sure to spark compliments and brighten your wardrobe!", price:18, image:"products/constellations.png", category:"earrings"},
+  {id:"cerulean", name:"Cerulean", description:"Get ready to dazzle with this stunning set of jewelry that perfectly blends boldness and elegance! Featuring vibrant turquoise beads paired with sleek silver spheres, these earrings and bracelet create a captivating look that’s both playful and sophisticated. Whether you're dressing up for a night out or adding a pop of color to your everyday style, this set is your new go-to for effortless charm. Lightweight, eye-catching, and full of personality—grab this beautiful combo and let your style shine bright!", price:18, image:"products/cerulean.png", category:"earrings"},
 
-  {id:"expansions", name:"Expansions", price:20, image:"products/expansions.png", category:"necklaces"},
-  {id:"newton", name:"Newton", price:18, image:"products/newton.png", category:"necklaces"},
-  {id:"life", name:"Life", price:10, image:"products/life.png", category:"necklaces"},
-  {id:"emerald-glow", name:"Emerald Glow", price:12, image:"products/emerald-glow.png", category:"necklaces"},
-  {id:"midnight-oasis", name:"Midnight Oasis", price:12, image:"products/midnight-oasis.png", category:"necklaces"},
-  {id:"mystic-drop", name:"Mystic Drop", price:12, image:"products/mystic-drop.png", category:"necklaces"},
+  {id:"expansions", name:"Expansions", description:"Add a touch of natural elegance and timeless charm to your collection with this beautifully handcrafted wooden bead necklace! Featuring a harmonious blend of rich brown tones and subtle white accents, this necklace is perfect for those who appreciate earthy, organic style with a sophisticated twist. Its sleek, elongated design makes it versatile—wear it solo for a minimalist look or layer it with other pieces to create a boho-chic vibe. Lightweight and comfortable, this necklace is ideal for everyday wear or special occasions where you want to stand out with understated beauty.", price:20, image:"products/expansions.png", category:"necklaces"},
+  {id:"newton", name:"Newton", description:"Elevate your style with this stunning beaded necklace that perfectly blends rich, warm tones with natural elegance! Featuring a beautiful gradient of wooden beads—from deep, dark browns to soft, creamy hues—this necklace adds a cozy, earthy vibe to any outfit. Its simple yet striking design makes it a versatile accessory, perfect for layering or wearing solo as a statement piece. Lightweight and comfortable, it’s ideal for everyday wear or special occasions when you want to add a touch of natural charm. Don’t miss out—grab this eye-catching necklace now and let your look shine with effortless style and warmth!", price:18, image:"products/newton.png", category:"necklaces"},
+  {id:"life", name:"Life", description:"Add a touch of natural beauty and beachy vibes to your look with this gorgeous beaded necklace! Featuring a harmonious blend of smooth wooden beads in warm browns and creamy tones, accented by delicate seashell charms, this necklace is the perfect accessory to bring a fresh, earthy feel to any outfit. Whether you're dressing up for a casual day out or adding a unique statement to your ensemble, this lightweight and versatile piece will quickly become your go-to favorite. Don’t wait—grab this charming necklace now and let your style shine with effortless, nature-inspired elegance!", price:10, image:"products/life.png", category:"necklaces"},
+  {id:"emerald-glow", name:"Emerald Glow", description:"Turn heads with the Emerald Glow Beaded Necklace, a fresh and stylish piece that brings together earthy elegance and a pop of shine. Featuring a beautiful mix of cream, white, metallic silver, and rich green beads, this necklace has just the right balance of playful charm and polished style. The unique center detail adds a special touch that makes it feel one-of-a-kind, while the lightweight wire design keeps it comfortable for all-day wear. Perfect for dressing up a simple outfit or adding a little sparkle to your everyday look, this necklace is a must-have for anyone who loves accessories that feel both classy and fun. Grab yours now and let your style glow!", price:12, image:"products/emerald-glow.png", category:"necklaces"},
+  {id:"midnight-oasis", name:"Midnight Oasis", description:"Bring effortless style and bold personality to your look with the Midnight Oasis Beaded Necklace. This striking piece features a sleek mix of black, white, and deep green beads, creating a clean yet eye-catching design that feels both modern and timeless. Its long, lightweight style makes it easy to wear on its own for a simple statement or layer with other favorites for a more fashion-forward vibe. Perfect for everyday wear, special occasions, or adding a little extra flair to your outfit, this necklace is all about standing out with confidence and charm. If you love accessories that are unique, versatile, and full of character, this is the one for you.", price:12, image:"products/midnight-oasis.png", category:"necklaces"},
+  {id:"mystic-drop", name:"Mystic Drop", description:"Make a statement with the Mystic Drop Beaded Necklace, a stunning piece that blends elegance, color, and natural beauty in one unforgettable design. Featuring shimmering metallic beads, rich jewel-toned accents, and a graceful shell pendant, this necklace brings a touch of mystery and sophistication to any look. The long, flowing style makes it perfect for layering or wearing solo as a standout piece, while the unique drop detail adds just the right amount of charm and personality. Whether you’re dressing up for a special occasion or adding flair to your everyday style, this necklace is designed to turn heads and spark compliments. Add it to your collection and let your style shine with a little magic.", price:12, image:"products/mystic-drop.png", category:"necklaces"},
 
-  {id:"AA-collectable", name:"AA Collectable", price:18, image:"products/AA-collectable.png", category:"earrings"},
-  {id:"custom-ms", name:"Custo M's", price:18, image:"products/Custo M's.png", category:"earrings"},
+  {id:"AA-collectable", name:"AA Collectable", description:"Get ready to shine with our exclusive limited-time AA-shaped earrings—an absolute must-have for anyone who loves to stand out and represent our brand in style! These unique earrings aren’t just accessories; they’re a bold statement of identity and creativity. Crafted with beautiful beads in warm earthy tones and sleek black, they perfectly embody the spirit of our brand’s iconic AA shape. What makes these earrings truly special? They’re customizable, allowing you to add your personal touch while proudly showcasing the AA design that symbolizes our community and values. Wearing these earrings means you’re not just accessorizing—you’re joining a movement, celebrating individuality, and carrying a piece of our brand wherever you go. Don’t miss out on this limited-time opportunity to own a piece of our story and express your unique style with the AA Collectable earrings!", price:18, image:"products/AA-collectable.png", category:"earrings"},
+  {id:"custom-ms", name:"Custo M's", description:"Introducing the ultimate customizable earrings that are as unique as you are! These playful, beaded beauties let you express your personal style with every twist and turn. Crafted with charming white beads arranged in a fun, zigzag pattern, these earrings are perfect for anyone who loves to make a statement with their accessories. The best part? You can customize them to your heart’s content! Whether you want to add a pop of color, mix in some metallic accents, or even incorporate your favorite charms, these earrings are the perfect canvas for your creativity. They’re lightweight and comfortable, making them ideal for everyday wear or special occasions when you want to stand out. Embrace your individuality and let your style shine with these one-of-a-kind customizable earrings that are sure to turn heads and spark conversations wherever you go!", price:18, image:"products/Custo M's.png", category:"earrings"},
 
-  {id:"the-mice", name:"The Mice", price:8, image:"products/the-mice.png", category:"earrings"},
+  {id:"the-mice", name:"The Mice", description:"Step up your accessory game with these charming and unique earrings that blend natural warmth with a touch of metallic shine! Featuring a bold, earthy orange bead perfectly framed by sleek metallic spheres, these earrings bring a delightful balance of rustic and modern vibes to any outfit. Whether you're dressing up for a night out or adding a pop of personality to your everyday look, these earrings are your new go-to for effortless style. Lightweight and comfortable, they’re designed to make you feel as good as you look. Embrace the playful yet sophisticated spirit of these earrings and let them become your signature statement piece!", price:8, image:"products/the-mice.png", category:"earrings"},
 
-  {id:"solar", name:"Solar", price:8, image:"products/solar.png", category:"bracelets"},
-  {id:"keiper", name:"Keiper", price:8, image:"products/keiper.png", category:"bracelets"},
-  {id:"saturn", name:"Saturn", price:8, image:"products/saturn.png", category:"bracelets"}
+  {id:"solar", name:"Solar", description:"Add a touch of natural elegance and vibrant charm to your look with this beautifully crafted beaded bracelet! Featuring a delightful mix of smooth, colorful beads in earthy tones and soft pastels, this bracelet brings a fresh, playful vibe to any outfit. The unique combination of shapes and colors makes it a versatile accessory perfect for layering or wearing on its own as a statement piece. Lightweight and comfortable, it’s designed to brighten your day and complement your style effortlessly. Don’t miss out—grab this eye-catching bracelet now and let your wrist shine with personality and flair!", price:8, image:"products/solar.png", category:"bracelets"},
+  {id:"keiper", name:"Keiper", description:"Elevate your accessory collection with this beautifully crafted wooden bead bracelet that radiates natural warmth and timeless style! Each smooth, polished bead showcases rich, deep brown hues that bring a touch of earthy sophistication to any outfit. Perfectly sized to fit comfortably on your wrist, this bracelet is lightweight yet durable—ideal for everyday wear or special occasions. Whether you're dressing up a casual look or adding a subtle statement to your ensemble, this bracelet effortlessly blends simplicity with elegance.", price:8, image:"products/keiper.png", category:"bracelets"},
+  {id:"saturn", name:"Saturn", description:"Discover the perfect blend of natural charm and bold style with this stunning beaded bracelet, featuring a beautiful mix of warm wooden beads in rich browns and honey tones that bring a cozy, earthy vibe to any outfit. Its versatile design makes it ideal for layering or wearing solo as a standout piece, crafted for comfort and durability to add a touch of nature-inspired elegance to your everyday look or to gift someone special. Whether you’re dressing up or keeping it casual, this bracelet is sure to become your new favorite go-to accessory. Don’t wait—grab this eye-catching bracelet now and let your wrist do the talking with effortless style and natural beauty!", price:8, image:"products/saturn.png", category:"bracelets"}
 ];
 
 let currentFilter = "all";
@@ -216,6 +238,7 @@ function render() {
         <img src="${p.image}" alt="${p.name}">
         <h3>${p.name}</h3>
         <p>$${p.price}</p>
+        <div class="product-description">${p.description}</div>
         <button class="add-btn" onclick="add('${p.id}')">Add to Cart</button>
       </div>
     `;
